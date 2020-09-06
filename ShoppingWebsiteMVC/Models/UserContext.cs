@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data.
+using System.Data.Entity;
 
 namespace ShoppingWebsiteMVC.Models
 {
-    public class UserContext
+    public class UserContext:DbContext
     {
+        public UserContext()
+        {
+
+        }
+        public DbSet<User> Users { get; set; }
     }
 }
