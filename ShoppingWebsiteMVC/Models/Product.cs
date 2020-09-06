@@ -11,7 +11,7 @@ namespace ShoppingWebsiteMVC.Models
         [Key]
         [Required]
         [Display(Name ="ProductCode")]
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         [Required]
         [Display(Name ="ProductName")]
         public string ProductName { get; set; }
