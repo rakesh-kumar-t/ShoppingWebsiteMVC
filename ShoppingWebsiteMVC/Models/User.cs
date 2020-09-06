@@ -28,7 +28,7 @@ namespace ShoppingWebsiteMVC.Models
         public string Password { get; set; }
         
         [NotMapped]
-        [Compare("Password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Confirm Password required")]
         public string ConfirmPassword { get; set; }
