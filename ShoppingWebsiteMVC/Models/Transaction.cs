@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 
 namespace ShoppingWebsiteMVC.Models
 {
@@ -20,6 +20,5 @@ namespace ShoppingWebsiteMVC.Models
         public double Amount { get; set; }
         [DataType(DataType.Date)]
         public DateTime TDate { get; set; }
-
     }
 }
