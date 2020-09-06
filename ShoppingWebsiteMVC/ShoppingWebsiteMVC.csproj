@@ -133,6 +133,8 @@
     </Compile>
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductContext.cs" />
+    <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
