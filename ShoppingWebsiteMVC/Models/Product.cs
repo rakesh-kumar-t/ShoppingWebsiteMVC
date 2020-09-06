@@ -23,7 +23,6 @@ namespace ShoppingWebsiteMVC.Models
         public double Price { get; set; }
         [Required]
         [Display(Name ="Units")]
-
         public int Units { get; set; }
         [Display(Name ="Discount")]
         public double Discount { get; set; }
