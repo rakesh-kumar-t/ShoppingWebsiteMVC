@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.CategoryName, "Index", new { id = item.CategoryName }) |
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            @Html.ActionLink("All Products", "Index", new { id = "All" }) |
+        </td>
+    </tr>
+
+</table>
