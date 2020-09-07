@@ -11,6 +11,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class UserController : Controller
     {
+        UserContext db = new UserContext();
         // GET: User
         public ActionResult Index()
         {
@@ -26,12 +27,13 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             using(UserContext db=new UserContext())
             {
-                var v = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
-                if(v!=null)
+                var user = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
+                if(user!=null)
                 {
                     FormsAuthentication.SetAuthCookie(usr.UserId, false);
-                    Session["UserId"] = v.UserId.ToString();
-                    Session["Role"] = v.Role.ToString();
+                    Session["UserId"] = user.UserId.ToString();
+                    Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
+                    Session["Role"] = user.Role.ToString();
                     return RedirectToAction("Index");
                    
                 }
@@ -39,9 +41,38 @@ namespace ShoppingWebsiteMVC.Controllers
                 {
                     ModelState.AddModelError("", "Invalid login credentials");
                 }
-                return View(usr);
+              
             }
+            return View(usr);
 
+
+        }
+        public ActionResult Register()
+        {
+            return View();
+        }
+        //Post: Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register([Bind(Include = "UserId,Firstname,Lastname,Password,ConfirmPassword,Address,ContactNumber,City,Country,Role")]User usr)
+        {
+            if(ModelState.IsValid)
+            {
+                var check = db.Users.FirstOrDefault(a => a.UserId == usr.UserId);
+                if(check==null)
+                {
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    db.Users.Add(usr);
+                    db.SaveChanges();
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ViewBag.error = "Email already exist";
+                    return View();
+                }
+            }
+            return View();
         }
     }
 }
