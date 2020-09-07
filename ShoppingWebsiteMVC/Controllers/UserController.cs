@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Text;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace ShoppingWebsiteMVC.Controllers
 {
@@ -27,6 +30,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             using(UserContext db=new UserContext())
             {
+                usr.Password = encrypt(usr.Password);
                 var user = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
                 if(user!=null)
                 {
@@ -67,6 +71,8 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             if(ModelState.IsValid)
             {
+                usr.Password = encrypt(usr.Password);
+                usr.ConfirmPassword = encrypt(usr.ConfirmPassword);
                 var check = db.Users.FirstOrDefault(a => a.UserId == usr.UserId);
                 if(check==null)
                 {
@@ -86,6 +92,27 @@ namespace ShoppingWebsiteMVC.Controllers
                 ViewBag.error = "Incomplete Data";
             }
             return View();
+        }
+        public string encrypt(string clearText)
+        {
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (System.IO.MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    clearText = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return clearText;
         }
     }
 }
