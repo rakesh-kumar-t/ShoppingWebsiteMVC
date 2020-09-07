@@ -38,7 +38,7 @@ namespace ShoppingWebsiteMVC.Models
         [Display(Name = "ContactNumber")]
         [Required(ErrorMessage = "Contact number is required")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Your mobile number  is not valid")]
-        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please enter mobile number")]
+        [RegularExpression(@" ^ ([0 - 9]{10})$", ErrorMessage = "Please enter a valid mobile number")]
 
         public string ContactNumber { get; set; }
         [Display(Name = "City")]
