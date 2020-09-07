@@ -51,11 +51,20 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             return View();
         }
+        
         //Post: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "UserId,Firstname,Lastname,Password,ConfirmPassword,Address,ContactNumber,City,Country,Role")]User usr)
+        public ActionResult Register([Bind(Include = "UserId,Firstname,Lastname,Password,ConfirmPassword,Address,ContactNumber,City,Country")]User usr)
         {
+            if(Session["Role"] != null && Session["Role"].Equals("Admin"))
+            {
+                usr.Role = "Admin";
+            }
+            else
+            {
+                usr.Role = "User";
+            }
             if(ModelState.IsValid)
             {
                 var check = db.Users.FirstOrDefault(a => a.UserId == usr.UserId);
@@ -71,6 +80,10 @@ namespace ShoppingWebsiteMVC.Controllers
                     ViewBag.error = "Email already exist";
                     return View();
                 }
+            }
+            else
+            {
+                ViewBag.error = "Incomplete Data";
             }
             return View();
         }
