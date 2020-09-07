@@ -164,6 +164,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\**\*.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
