@@ -93,6 +93,14 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View();
         }
+        [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Login");
+        }
         public string encrypt(string clearText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
