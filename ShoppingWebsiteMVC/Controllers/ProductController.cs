@@ -48,8 +48,8 @@ namespace ShoppingWebsiteMVC.Controllers
                     }
                 }
             }
-            
         }
+        //Get Search product by productname
         public ActionResult Search(string ProductName)
         {
             List<Product> list = new List<Product>();
@@ -74,7 +74,5 @@ namespace ShoppingWebsiteMVC.Controllers
                 return View("Products", list);
             }
         }
-
-
     }
 }

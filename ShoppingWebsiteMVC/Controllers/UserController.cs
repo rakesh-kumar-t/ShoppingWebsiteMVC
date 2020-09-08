@@ -17,15 +17,13 @@ namespace ShoppingWebsiteMVC.Controllers
     public class UserController : Controller
     {
         UserContext db = new UserContext();
-        // GET: User
+        // GET: User Home page and Login
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult Login()
-        {
-            return View();
-        }
+        
+        // Post User Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(User usr )
@@ -47,12 +45,10 @@ namespace ShoppingWebsiteMVC.Controllers
                 {
                     ModelState.AddModelError("", "Invalid login credentials");
                 }
-              
             }
             return View(usr);
-
-
         }
+        //Get User Register Page
         public ActionResult Register()
         {
             return View();
@@ -95,6 +91,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View();
         }
+        //User Logout action
         [Authorize]
         public ActionResult Logout()
         {
@@ -103,6 +100,7 @@ namespace ShoppingWebsiteMVC.Controllers
             Session.Abandon();
             return RedirectToAction("Login");
         }
+        //Get Edit Current User info
         [Authorize]
         public ActionResult Edit()
         {
@@ -116,10 +114,8 @@ namespace ShoppingWebsiteMVC.Controllers
             model.City=user.City;
             model.Country = user.Country;
             return View(model);
-
-            
-
         }
+        //Post Edit Current user info
         [HttpPost]
         public ActionResult Edit(User usr)
         {
@@ -140,6 +136,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View(usr);
         }
+        //Encrypt password method
         public string encrypt(string clearText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
@@ -161,6 +158,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return clearText;
         }
+        //Get change password for the user
         [Authorize]
         public ActionResult ChangePassword()
         {
@@ -170,6 +168,7 @@ namespace ShoppingWebsiteMVC.Controllers
             model.Password = user.Password;
             return View(model);
         }
+        //Post change password for user
         [HttpPost]
         public ActionResult ChangePassword(User usr)
         {
@@ -185,7 +184,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View(usr);
         }
-        
+        //Get cart page of the user
         [Authorize]
         [HttpGet]
         public ActionResult Cart()
@@ -204,9 +203,9 @@ namespace ShoppingWebsiteMVC.Controllers
                         ViewBag.Error = "Cart Empty";
                     }
                     return View();
-                
             }
         }
+        //Get id for deleting cart details of user
         [Authorize]
         public ActionResult CartDelete(string UserId,string ProductId)
         {
@@ -224,6 +223,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 return View(cart);
             } 
         }
+        //Post delete cart details
         [Authorize]
         [HttpPost, ActionName("CartDelete")]
         [ValidateAntiForgeryToken]
