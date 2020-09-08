@@ -163,9 +163,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\**\**\*.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\Product\Products.cshtml" />
+    <Content Include="Views\**\*.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
