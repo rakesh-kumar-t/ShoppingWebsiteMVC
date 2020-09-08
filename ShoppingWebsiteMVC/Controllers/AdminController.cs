@@ -111,5 +111,46 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             base.Dispose(disposing);
         }
+        [Authorize]
+        public ActionResult AdminEdit()
+        {
+            using (UserContext db = new UserContext())
+            {
+                string username = User.Identity.Name;
+                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                User model = new User();
+                model.Firstname = user.Firstname;
+                model.Lastname = user.Lastname;
+                model.Address = user.Address;
+                model.ContactNumber = user.ContactNumber;
+                model.City = user.City;
+                model.Country = user.Country;
+                return View(model);
+            }
+        }
+        [HttpPost]
+        public ActionResult AdminEdit(User usr)
+        {
+            using (UserContext db = new UserContext())
+            {
+                if (ModelState.IsValid)
+                {
+                    string username = User.Identity.Name;
+                    User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                    user.Firstname = usr.Firstname;
+                    user.Lastname = usr.Lastname;
+                    user.Address = usr.Address;
+                    user.ContactNumber = usr.ContactNumber;
+                    user.City = usr.City;
+                    user.Country = usr.Country;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "User");
+
+                }
+                return View(usr);
+            }
+        }
+
     }
 }
