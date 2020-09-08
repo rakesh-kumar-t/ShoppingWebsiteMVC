@@ -64,7 +64,7 @@ namespace ShoppingWebsiteMVC.Controllers
 
                 }
                 ViewBag.Title= "Search Result";
-                return View("List", "list");
+                return View("List", list);
             }
         }
 
