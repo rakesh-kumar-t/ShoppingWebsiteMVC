@@ -161,7 +161,30 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return clearText;
         }
-        
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            string username = User.Identity.Name;
+            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+            User model = new User();
+            model.Password = user.Password;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(User usr)
+        {
+            usr.Password = encrypt(usr.Password);
+            if(ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                user.Password = usr.Password;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Login");
+            }
+            return View(usr);
+        }
         
         [Authorize]
         [HttpGet]
