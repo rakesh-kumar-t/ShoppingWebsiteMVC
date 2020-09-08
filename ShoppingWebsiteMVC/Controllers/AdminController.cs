@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ShoppingWebsiteMVC.Controllers
 {
-    public class AdminproductController : Controller
+    public class AdminController : Controller
     {
         // GET: Adminproduct
         ProductContext dbo = new ProductContext();
