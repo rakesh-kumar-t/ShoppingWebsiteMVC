@@ -122,5 +122,28 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return clearText;
         }
+        
+        
+        [Authorize]
+        [HttpGet]
+        public ActionResult Cart()
+        {
+            using (CartContext db = new CartContext())
+            {
+               string id = (string)Session["UserId"];
+                
+                    var carts = db.Carts.Where(c => c.UserId.Equals(id)).FirstOrDefault();
+                    if (carts != null)
+                    {
+                        return View(carts);
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Cart Empty";
+                    }
+                    return View();
+                
+            }
+        }
     }
 }
