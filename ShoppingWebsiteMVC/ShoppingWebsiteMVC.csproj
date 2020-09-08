@@ -164,6 +164,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\**\**\*.cshtml" />
+    <Content Include="Views\User\Cart.cshtml" />
+    <Content Include="Views\User\CartDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

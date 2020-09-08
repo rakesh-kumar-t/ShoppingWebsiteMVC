@@ -9,6 +9,7 @@ using System.Web.Security;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
+using System.Net;
 
 namespace ShoppingWebsiteMVC.Controllers
 {
@@ -143,6 +144,36 @@ namespace ShoppingWebsiteMVC.Controllers
                     }
                     return View();
                 
+            }
+        }
+        [Authorize]
+        public ActionResult CartDelete(string UserId,string ProductId)
+        {
+            using (CartContext db = new CartContext())
+            {
+                if (ProductId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Cart cart = db.Carts.Find(UserId, ProductId);
+                if (cart == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cart);
+            } 
+        }
+        [Authorize]
+        [HttpPost, ActionName("CartDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string UserId,string ProductId)
+        {
+            using (CartContext db = new CartContext())
+            {
+                Cart cart = db.Carts.Find(UserId,ProductId);
+                db.Carts.Remove(cart);
+                db.SaveChanges();
+                return RedirectToAction("Cart");
             }
         }
     }
