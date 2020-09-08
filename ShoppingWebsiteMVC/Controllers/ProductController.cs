@@ -39,7 +39,7 @@ namespace ShoppingWebsiteMVC.Controllers
                     {
                         ViewBag.Error = "Invalid Category";
                     }
-                    return View("Index");
+                    return View();
                 }
             }
         }
