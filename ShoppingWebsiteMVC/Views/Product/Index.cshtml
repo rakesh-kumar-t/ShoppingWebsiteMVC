@@ -22,13 +22,13 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.CategoryName, "Index", new { id = item.CategoryName }) |
+                @Html.ActionLink(item.CategoryName, "Index", new { category = item.CategoryName }) |
             </td>
         </tr>
     }
     <tr>
         <td>
-            @Html.ActionLink("All Products", "Index", new { id = "All" }) |
+            @Html.ActionLink("All Products", "Index", new { category = "All" }) |
         </td>
     </tr>
 

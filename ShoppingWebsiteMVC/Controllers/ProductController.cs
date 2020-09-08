@@ -10,38 +10,45 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
-        [Authorize]
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
         // GET : Products by Category
         [Authorize]
         [HttpGet]
         public ActionResult Index(string category)
         {
-            using(ProductContext db=new ProductContext())
+            if(category==null)
             {
-                category = category.ToLower();
-                if (category == "all")
+                // returns the category view(Index view)
+                return View();
+            }
+            else
+            {
+                using(ProductContext db=new ProductContext())
                 {
-                    return View(db.Products.ToList());
-                }
-                else
-                {
-                    var products = db.Products.Where(p => p.CategoryName.Equals(category)).FirstOrDefault();
-                    if (products != null)
+                    category = category.ToLower();
+                    if (category == "all")
                     {
-                        return View(products);
+                        // return the View named Products with all products list
+                        return View("Products",db.Products.ToList());
                     }
                     else
                     {
-                        ViewBag.Error = "Invalid Category";
+                        var products = db.Products.Where(p => p.CategoryName.Equals(category)).FirstOrDefault();
+                        if (products != null)
+                        {
+                            // return the View named Products with the required category lists 
+                            return View("Products",products);
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Invalid Category";
+                        }
+                        // return the View named Products without any data 
+                        return View("Products");
                     }
-                    return View();
                 }
             }
+            
         }
         public ActionResult Search(string ProductName)
         {
