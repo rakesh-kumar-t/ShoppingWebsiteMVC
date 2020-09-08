@@ -10,6 +10,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 using System.Net;
+using System.Data.Entity;
 
 namespace ShoppingWebsiteMVC.Controllers
 {
@@ -102,6 +103,43 @@ namespace ShoppingWebsiteMVC.Controllers
             Session.Abandon();
             return RedirectToAction("Login");
         }
+        [Authorize]
+        public ActionResult Edit()
+        {
+            string username = User.Identity.Name;
+            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+            User model = new User();
+            model.Firstname = user.Firstname;
+            model.Lastname = user.Lastname;
+            model.Address = user.Address;
+            model.ContactNumber = user.ContactNumber;
+            model.City=user.City;
+            model.Country = user.Country;
+            return View(model);
+
+            
+
+        }
+        [HttpPost]
+        public ActionResult Edit(User usr)
+        {
+            if(ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                user.Firstname = usr.Firstname;
+                user.Lastname = usr.Lastname;
+                user.Address = usr.Address;
+                user.ContactNumber = usr.ContactNumber;
+                user.City = usr.City;
+                user.Country = usr.Country;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "User"); 
+
+            }
+            return View(usr);
+        }
         public string encrypt(string clearText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
@@ -175,6 +213,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Cart");
             }
+            
         }
     }
 }
