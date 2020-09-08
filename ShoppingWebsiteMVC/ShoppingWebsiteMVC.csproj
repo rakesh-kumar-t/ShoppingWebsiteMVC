@@ -167,6 +167,7 @@
     <Content Include="Views\Adminproduct\Details.cshtml" />
     <Content Include="Views\Adminproduct\Create.cshtml" />
     <Content Include="Views\Adminproduct\Edit.cshtml" />
+    <Content Include="Views\Adminproduct\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
