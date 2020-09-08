@@ -20,7 +20,7 @@ namespace ShoppingWebsiteMVC.Controllers
             return View(dbo.Products.ToList());
         }
         [Authorize]
-        public ActionResult Details(int? ProductId)
+        public ActionResult Details(string ProductId)
         {
             if (ProductId == null)
             {
@@ -53,7 +53,7 @@ namespace ShoppingWebsiteMVC.Controllers
             return View(product);
         }
         [Authorize]
-        public ActionResult Edit(int? ProductId)
+        public ActionResult Edit(string ProductId)
         {
             if (ProductId == null)
             {
@@ -80,7 +80,7 @@ namespace ShoppingWebsiteMVC.Controllers
             return View(product);
         }
         [Authorize]
-        public ActionResult Delete(int? ProductId)
+        public ActionResult Delete(string ProductId)
         {
             if (ProductId == null)
             {
@@ -96,7 +96,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int ProductId)
+        public ActionResult DeleteConfirmed(string ProductId)
         {
             Product product = dbo.Products.Find(ProductId);
             dbo.Products.Remove(product);
