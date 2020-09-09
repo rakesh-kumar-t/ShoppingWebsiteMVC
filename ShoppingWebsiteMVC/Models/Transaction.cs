@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Policy;
 
 namespace ShoppingWebsiteMVC.Models
 {
@@ -22,9 +23,8 @@ namespace ShoppingWebsiteMVC.Models
         [DataType(DataType.Date)]
         public DateTime TDate { get; set; }
 
-        [ForeignKey("UserId")]
-        public User user{get;set;}
-        [ForeignKey("ProductId")]
-        public Product product { get; set; }
+        public virtual User user{get;set;}
+        public virtual Product product { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

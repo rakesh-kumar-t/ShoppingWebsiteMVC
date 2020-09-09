@@ -6,13 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using ShoppingWebsiteMVC.Models;
 using System.Data.Entity;
-
+using System.Web.DynamicData;
 
 namespace ShoppingWebsiteMVC.Controllers
 {
     public class ProductController : Controller
     {
-        
         // GET : Products by Category
         [Authorize]
         [HttpGet]
@@ -21,21 +20,23 @@ namespace ShoppingWebsiteMVC.Controllers
             if(category==null)
             {
                 // returns the category view(Index view)
-                return View();
+                using (ProductContext db = new ProductContext())
+                    return View(db.Products.ToList());
             }
             else
             {
                 using(ProductContext db=new ProductContext())
                 {
-                    category = category.ToLower();
-                    if (category == "all")
+                  
+                    if (category == "All")
                     {
                         // return the View named Products with all products list
                         return View("Products",db.Products.ToList());
                     }
                     else
                     {
-                        var products = db.Products.Where(p => p.CategoryName.Equals(category)).FirstOrDefault();
+                        var products = db.Products.Where(p => p.CategoryName.Equals(category)).ToList();
+                        
                         if (products != null)
                         {
                             // return the View named Products with the required category lists 
@@ -97,34 +98,38 @@ namespace ShoppingWebsiteMVC.Controllers
 
      
         [Authorize]
+        
         public ActionResult AddtoCart(string itemno,string ProductId)
         {
+          
             using (ProductContext db = new ProductContext())
             {
                 int noofunits = int.Parse(itemno);
                 if (String.IsNullOrEmpty(ProductId))
                 {
                     ViewBag.Error = "Empty";
+                    
                 }
                 else
                 {
                     var p = db.Products.Where(pro => pro.ProductId.Equals(ProductId)).FirstOrDefault();
 
-
+                    
                     if (noofunits > p.Units)
                     {
                         ViewBag.Error = "No stock available";
                     }
                     else
                     {
+                       
                         using (CartContext dbo=new CartContext())
                         {
                             Cart cart = new Cart();
                             cart.UserId = Session["UserId"].ToString();
                             cart.ProductId = p.ProductId;
                             cart.ProductName = p.ProductName;
-                            cart.Amount = p.GetAmount(p.Price,p.Discount,noofunits);
                             cart.NoofProduct = noofunits;
+                            cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
                             dbo.Carts.Add(cart);
                             dbo.SaveChanges();
                         }
@@ -172,6 +177,7 @@ namespace ShoppingWebsiteMVC.Controllers
                             Transaction Trx = new Transaction();
                             Trx.UserId = c.UserId;
                             Trx.ProductId = c.ProductId;
+                            Trx.ProductName = c.ProductName;
                             Trx.NoofProduct = c.NoofProduct;
                             Trx.Amount = c.Amount;
                             Trx.TDate = DateTime.Now;

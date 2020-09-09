@@ -9,7 +9,7 @@ namespace ShoppingWebsiteMVC.Models
 {
     public class TransactionContext:DbContext
     {
-        public TransactionContext()
+        public TransactionContext() : base("name=DBconfig")
         {
 
         }

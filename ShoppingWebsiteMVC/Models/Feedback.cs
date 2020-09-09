@@ -23,11 +23,8 @@ namespace ShoppingWebsiteMVC.Models
         public string UserId { get; set; }
         public string TId { get; set; }
 
-        [ForeignKey("ProductId")]
-        public Product product { get; set; }
-        [ForeignKey("UserId")]
-        public User user { get; set; }
-        [ForeignKey("TId")]
-        public Transaction transaction { get; set; }
+        public virtual Product product { get; set; }
+        public virtual User user { get; set; }
+        public virtual Transaction transaction { get; set; }
     }
 }

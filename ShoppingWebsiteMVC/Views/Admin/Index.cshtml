@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShoppingWebsiteMVC.Models.User>
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Product>
 
 @{
     ViewBag.Title = "Index";
@@ -12,28 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Firstname)
+            @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lastname)
+            @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.Units)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ContactNumber)
+            @Html.DisplayNameFor(model => model.Discount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role)
+            @Html.DisplayNameFor(model => model.SupplierName)
         </th>
         <th></th>
     </tr>
@@ -41,33 +35,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
+            @Html.DisplayFor(modelItem => item.ProductName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
+            @Html.DisplayFor(modelItem => item.CategoryName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
+            @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address)
+            @Html.DisplayFor(modelItem => item.Units)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ContactNumber)
+            @Html.DisplayFor(modelItem => item.Discount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City)
+            @Html.DisplayFor(modelItem => item.SupplierName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+            @Html.ActionLink("Edit", "Edit", new { ProductId=item.ProductId }) |
+            @Html.ActionLink("Details", "Details", new { ProductId=item.ProductId }) |
+            @Html.ActionLink("Delete", "Delete", new { ProductId=item.ProductId })
         </td>
     </tr>
 }

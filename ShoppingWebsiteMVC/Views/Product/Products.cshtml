@@ -58,7 +58,7 @@ else
                 @Html.DisplayFor(modelItem => item.SupplierName)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
+                @Html.ActionLink("Details", "ProductView", new { ProductId=item.ProductId }) |
             </td>
         </tr>
     }

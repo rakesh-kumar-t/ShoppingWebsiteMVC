@@ -26,25 +26,33 @@ namespace ShoppingWebsiteMVC.Controllers
         // Post User Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(User usr )
+        public ActionResult Index(User usr )
         {
             using(UserContext db=new UserContext())
             {
-                usr.Password = encrypt(usr.Password);
-                var user = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
-                if(user!=null)
-                {
-                    FormsAuthentication.SetAuthCookie(usr.UserId, false);
-                    Session["UserId"] = user.UserId.ToString();
-                    Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
-                    Session["Role"] = user.Role.ToString();
-                    return RedirectToAction("Index");
-                   
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid login credentials");
-                }
+               
+                    usr.Password = encrypt(usr.Password);
+                    var user = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
+                    if (user != null)
+                    {
+                        FormsAuthentication.SetAuthCookie(usr.UserId, false);
+                        Session["UserId"] = user.UserId.ToString();
+                        Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
+                        Session["Role"] = user.Role.ToString();
+                        if(user.Role=="Admin")
+                        return RedirectToAction("Index", "Admin");
+                        else
+                        return RedirectToAction("Index", "Product");
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid login credentials");
+                    }
+                
+               
+                    
+                
             }
             return View(usr);
         }
@@ -67,29 +75,23 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 usr.Role = "User";
             }
-            if(ModelState.IsValid)
-            {
+            
                 usr.Password = encrypt(usr.Password);
                 usr.ConfirmPassword = encrypt(usr.ConfirmPassword);
-                var check = db.Users.FirstOrDefault(a => a.UserId == usr.UserId);
+                var check = db.Users.Find(usr.UserId);
                 if(check==null)
                 {
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.Users.Add(usr);
                     db.SaveChanges();
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewBag.error = "Email already exist";
-                    return View();
+                ModelState.AddModelError("", "User already Exists");
+                return View();
                 }
-            }
-            else
-            {
-                ViewBag.error = "Incomplete Data";
-            }
-            return View();
+           
         }
         //User Logout action
         [Authorize]
@@ -193,7 +195,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                string id = (string)Session["UserId"];
                 
-                    var carts = db.Carts.Where(c => c.UserId.Equals(id)).FirstOrDefault();
+                    var carts = db.Carts.Where(c => c.UserId.Equals(id)).ToList();
                     if (carts != null)
                     {
                         return View(carts);
@@ -215,7 +217,8 @@ namespace ShoppingWebsiteMVC.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                Cart cart = db.Carts.Find(UserId, ProductId);
+                
+                Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId)&&c.ProductId.Equals(ProductId)).FirstOrDefault();
                 if (cart == null)
                 {
                     return HttpNotFound();
@@ -231,7 +234,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             using (CartContext db = new CartContext())
             {
-                Cart cart = db.Carts.Find(UserId,ProductId);
+                Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId) && c.ProductId.Equals(ProductId)).FirstOrDefault();
                 db.Carts.Remove(cart);
                 db.SaveChanges();
                 return RedirectToAction("Cart");
@@ -245,7 +248,7 @@ namespace ShoppingWebsiteMVC.Controllers
             using(TransactionContext db=new TransactionContext())
             {
                 string UserId = Session["UserId"].ToString();
-                var orders = db.Transactions.Find(UserId);
+                var orders = db.Transactions.Where(c => c.UserId.Equals(UserId)).ToList();
                 return View(orders);
             }
         }

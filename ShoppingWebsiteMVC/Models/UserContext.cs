@@ -8,7 +8,7 @@ namespace ShoppingWebsiteMVC.Models
 {
     public class UserContext:DbContext
     {
-        public UserContext()
+        public UserContext() : base("name=Dbconfig")
         {
 
         }

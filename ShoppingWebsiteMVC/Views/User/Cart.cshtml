@@ -35,8 +35,8 @@
             @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
-            @Html.ActionLink("Place Order", "BuyNow", new { UserId = item.UserId, ProductId = item.ProductId }) |
-            @Html.ActionLink("Delete Item", "CartItemDelete", new { UserId = item.UserId, ProductId = item.ProductId })
+            @Html.ActionLink("Place Order","../Product/BuyNow", new { UserId = item.UserId, ProductId = item.ProductId }) |
+            @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId })
         </td>
     </tr>
 }

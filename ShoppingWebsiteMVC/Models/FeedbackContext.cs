@@ -8,7 +8,7 @@ namespace ShoppingWebsiteMVC.Models
 {
     public class FeedbackContext:DbContext
     {
-        public FeedbackContext()
+        public FeedbackContext() : base("name=DBconfig")
         {
 
         }

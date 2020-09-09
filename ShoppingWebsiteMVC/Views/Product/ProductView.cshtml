@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-          <s>  @Html.DisplayFor(model => model.Price) </s>
+          <s>  @Html.DisplayFor(model => model.Price) </s> <br />@(Model.Price-Model.Discount/100*Model.Price)
         </dd>
 
         <dt>
@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Discount)
+            @Html.DisplayFor(model => model.Discount)% Off
         </dd>
         
         <dt>
@@ -54,13 +54,11 @@
 </div>
 <tr>
     <th align="right">
-        <form method="get">
-            @Html.TextBox("Itemno", new { @class = "form-control" })
-            @Html.TextBoxFor(m => m.ProductId, new { @class = "form-control",@value=Model.ProductId,@hidden="true" })
+        <form method="get" action="/Product/AddtoCart">
+            @Html.TextBox("Itemno"," ", new { @class = "form-control" })
+            @Html.HiddenFor(m => m.ProductId, new { @class = "form-control",@value=Model.ProductId})
             <input type="submit" value="Add To Cart" class="btn btn-primary" />
         </form>
     </th>
 </tr>
-<p>
-    @Html.ActionLink("Buy Now", "BuyNow", new { id = Model.ProductId }) |
-</p>
+

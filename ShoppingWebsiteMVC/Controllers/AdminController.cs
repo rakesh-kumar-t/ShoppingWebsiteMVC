@@ -44,7 +44,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,Price,Discount,SupplierName")] Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,Price,Units,Discount,SupplierName")] Product product)
         {
             if (ModelState.IsValid)
             {

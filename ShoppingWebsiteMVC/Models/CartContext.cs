@@ -8,7 +8,7 @@ namespace ShoppingWebsiteMVC.Models
 {
     public class CartContext:DbContext
     {
-        public CartContext()
+        public CartContext():base("name=DBconfig")
         {
 
         }

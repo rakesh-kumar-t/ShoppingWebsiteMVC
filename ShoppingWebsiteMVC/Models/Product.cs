@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoppingWebsiteMVC.Models
 {
@@ -29,12 +30,14 @@ namespace ShoppingWebsiteMVC.Models
         [Required]
         [Display(Name ="SupplierName")]
         public string SupplierName { get; set; }
-
         public double GetAmount(double price,double discount,int units)
         {
             double totamount = (price - (discount / 100) * price) * units;
             return totamount;
         }
+
+        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
 
     }
 }
