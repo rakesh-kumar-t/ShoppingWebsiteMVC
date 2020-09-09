@@ -16,6 +16,7 @@ namespace ShoppingWebsiteMVC.Models
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
         public string ProductId { get; set; }
+        public string ProductName { get; set; }
         public int NoofProduct { get; set; }
         public double Amount { get; set; }
         [DataType(DataType.Date)]
@@ -23,5 +24,7 @@ namespace ShoppingWebsiteMVC.Models
 
         [ForeignKey("UserId")]
         public User user{get;set;}
+        [ForeignKey("ProductId")]
+        public Product product { get; set; }
     }
 }

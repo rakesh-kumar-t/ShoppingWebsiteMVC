@@ -168,6 +168,8 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\Product\ProductView.cshtml" />
+    <Content Include="Views\Product\BuyNow.cshtml" />
+    <Content Include="Views\User\MyOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

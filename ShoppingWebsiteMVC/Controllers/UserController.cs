@@ -238,6 +238,17 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             
         }
+        //Get User Orders View
+        [Authorize]
+        public ActionResult MyOrders()
+        {
+            using(TransactionContext db=new TransactionContext())
+            {
+                string UserId = Session["UserId"].ToString();
+                var orders = db.Transactions.Find(UserId);
+                return View(orders);
+            }
+        }
        
     }
 }

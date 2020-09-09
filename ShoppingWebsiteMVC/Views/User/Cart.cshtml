@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.productName)
+            @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.NoofProduct)
@@ -26,7 +26,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.productName)
+            @Html.DisplayFor(modelItem => item.ProductName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NoofProduct)
@@ -35,10 +35,12 @@
             @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
-            @Html.ActionLink("Place Order", "Edit", new { UserId = item.UserId, ProductId = item.ProductId }) |
+            @Html.ActionLink("Place Order", "BuyNow", new { UserId = item.UserId, ProductId = item.ProductId }) |
             @Html.ActionLink("Delete Item", "CartItemDelete", new { UserId = item.UserId, ProductId = item.ProductId })
         </td>
     </tr>
 }
+    </table>
+  
+    @Html.ActionLink("Buy More Products","Index","Product")
 
-</table>

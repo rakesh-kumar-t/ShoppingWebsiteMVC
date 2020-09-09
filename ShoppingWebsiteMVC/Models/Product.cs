@@ -30,5 +30,11 @@ namespace ShoppingWebsiteMVC.Models
         [Display(Name ="SupplierName")]
         public string SupplierName { get; set; }
 
+        public double GetAmount(double price,double discount,int units)
+        {
+            double totamount = (price - (discount / 100) * price) * units;
+            return totamount;
+        }
+
     }
 }

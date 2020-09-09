@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Transaction>
+
+@{
+    ViewBag.Title = "MyOrders";
+}
+
+<h2>MyOrders</h2>
+
+<table class="table">
+    
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoofProduct)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TDate)
+        </td>
+        <td>
+            @Html.ActionLink("Cancel Order", "Delete", new { id=item.TId })
+        </td>
+        <td>
+            @Html.ActionLink("Give Feedback", "Feedback", new { id=item.TId })
+        </td>
+    </tr>
+}
+
+</table>

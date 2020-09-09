@@ -1,0 +1,25 @@
+﻿@model ShoppingWebsiteMVC.Models.User
+
+@{
+    ViewBag.Title = "BuyNow";
+}
+
+<h2>Pay Your Order</h2>
+
+<div>
+    <h4>Confirm Payment</h4>
+    <hr />
+
+    <p>Thankyou</p>
+    @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname)
+    <p>Your order will be deleverd to</p>
+    @Html.DisplayFor(model => model.Address)
+
+    @Html.DisplayFor(model => model.City)
+
+    @Html.DisplayFor(model => model.Country)
+    @Html.ActionLink("Pay Now", "ConfirmOrder", new { UserId = ViewBag.UserId,ProductId=ViewBag.ProductId})
+</div>
+<p>
+     @Html.ActionLink("Back to Shopping", "Index")
+</p>

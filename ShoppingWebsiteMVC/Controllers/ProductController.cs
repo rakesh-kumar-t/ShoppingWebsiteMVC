@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ShoppingWebsiteMVC.Models;
+using System.Data.Entity;
 
 
 namespace ShoppingWebsiteMVC.Controllers
@@ -101,17 +102,13 @@ namespace ShoppingWebsiteMVC.Controllers
             using (ProductContext db = new ProductContext())
             {
                 int noofunits = int.Parse(itemno);
-                Product p = new Product();
                 if (String.IsNullOrEmpty(ProductId))
                 {
                     ViewBag.Error = "Empty";
                 }
                 else
                 {
-                    var pro = from product in db.Products
-                              where product.ProductId.Contains(ProductId)
-                              select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName, Price = product.Price, Units = product.Units, Discount = product.Discount, SupplierName = product.SupplierName };
-                    p = (Product)pro;
+                    var p = db.Products.Where(pro => pro.ProductId.Equals(ProductId)).FirstOrDefault();
 
 
                     if (noofunits > p.Units)
@@ -126,13 +123,72 @@ namespace ShoppingWebsiteMVC.Controllers
                             cart.UserId = Session["UserId"].ToString();
                             cart.ProductId = p.ProductId;
                             cart.ProductName = p.ProductName;
-                            cart.Amount = p.Price;
+                            cart.Amount = p.GetAmount(p.Price,p.Discount,noofunits);
+                            cart.NoofProduct = noofunits;
+                            dbo.Carts.Add(cart);
+                            dbo.SaveChanges();
                         }
                     }
                 }
-                return View("Products", p);
+                return RedirectToAction("Cart","User");
             }
         }
+        [Authorize]
+        public ActionResult BuyNow(string UserId,string ProductId)
+        {
+            ViewBag.UserId = UserId;
+            ViewBag.ProductId = ProductId;
+            using (UserContext db = new UserContext())
+            {
+                var user=db.Users.Where(u => u.UserId.Equals(UserId)).FirstOrDefault();
+                return View(user);
+            }
+        }
+        [Authorize]
+        public ActionResult ConfirmOrder(string UserId, string ProductId)
+        {
+            
+            using (CartContext db = new CartContext())
+            using (ProductContext dbo=new ProductContext())  
+            {
+                
+                if (String.IsNullOrEmpty(ProductId))
+                {
+                    ViewBag.Error = "Empty";
+                }
+                else
+                {
+                    var c = db.Carts.Where(cart => cart.UserId.Equals(UserId)&&cart.ProductId.Equals(ProductId)).FirstOrDefault();
+
+                    var p = dbo.Products.Where(product => product.ProductId.Equals(ProductId)).FirstOrDefault();
+                    if (c.NoofProduct >p.Units )
+                    {
+                        ViewBag.Error = "No stock available";
+                    }
+                    else
+                    {
+                        using (TransactionContext dbc = new TransactionContext())
+                        {
+                            Transaction Trx = new Transaction();
+                            Trx.UserId = c.UserId;
+                            Trx.ProductId = c.ProductId;
+                            Trx.NoofProduct = c.NoofProduct;
+                            Trx.Amount = c.Amount;
+                            Trx.TDate = DateTime.Now;
+                            dbc.Transactions.Add(Trx);
+                            dbc.SaveChanges();
+                            p.Units = p.Units - c.NoofProduct;
+                            dbo.Entry(p).State = EntityState.Modified;
+                            dbo.SaveChanges();
+                        }
+
+                    }
+                }
+                return RedirectToAction("MyOrders","User");
+            }
+        }
+
+
 
     }
 }
