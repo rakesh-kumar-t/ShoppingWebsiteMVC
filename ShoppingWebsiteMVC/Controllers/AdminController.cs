@@ -19,6 +19,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             return View(dbo.Products.ToList());
         }
+        //Get details of a product 
         [Authorize]
         public ActionResult Details(string ProductId)
         {
@@ -33,11 +34,13 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View(product);
         }
+        //Get create view of new product
         [Authorize]
         public ActionResult Create()
         {
             return View();
         }
+        //Post create new product
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -52,6 +55,7 @@ namespace ShoppingWebsiteMVC.Controllers
 
             return View(product);
         }
+        //Edit Product details
         [Authorize]
         public ActionResult Edit(string ProductId)
         {
@@ -66,6 +70,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View(product);
         }
+        //Post edit product details
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,6 +84,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View(product);
         }
+        //Get Delete product 
         [Authorize]
         public ActionResult Delete(string ProductId)
         {
@@ -93,6 +99,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             return View(product);
         }
+        //Post Delete product
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -110,6 +117,48 @@ namespace ShoppingWebsiteMVC.Controllers
                 dbo.Dispose();
             }
             base.Dispose(disposing);
+        }
+        //Get edit admin details
+        [Authorize]
+        public ActionResult AdminEdit()
+        {
+            using (UserContext db = new UserContext())
+            {
+                string username = User.Identity.Name;
+                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                User model = new User();
+                model.Firstname = user.Firstname;
+                model.Lastname = user.Lastname;
+                model.Address = user.Address;
+                model.ContactNumber = user.ContactNumber;
+                model.City = user.City;
+                model.Country = user.Country;
+                return View(model);
+            }
+        }
+        //Post admin edit details
+        [HttpPost]
+        public ActionResult AdminEdit(User usr)
+        {
+            using (UserContext db = new UserContext())
+            {
+                if (ModelState.IsValid)
+                {
+                    string username = User.Identity.Name;
+                    User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                    user.Firstname = usr.Firstname;
+                    user.Lastname = usr.Lastname;
+                    user.Address = usr.Address;
+                    user.ContactNumber = usr.ContactNumber;
+                    user.City = usr.City;
+                    user.Country = usr.Country;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "User");
+
+                }
+                return View(usr);
+            }
         }
     }
 }

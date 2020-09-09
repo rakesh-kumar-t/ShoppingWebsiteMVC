@@ -12,11 +12,14 @@ namespace ShoppingWebsiteMVC.Models
     {
         [Key, Column(Order = 1)]
         [DataType(DataType.EmailAddress)]
-        public string UserId { get; set; }
+        public string UserId { get; set; }//Also a foreign key from user table
         [Key, Column(Order = 2)]
         public string ProductId { get; set; }
         public string productName { get; set; }
         public int NoofProduct { get; set; }
         public double Amount { get; set; }
+        
+        [ForeignKey("UserId")]
+        public User users{get;set;}
     }
 }
