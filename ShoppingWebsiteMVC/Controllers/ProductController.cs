@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ShoppingWebsiteMVC.Models;
@@ -74,5 +75,64 @@ namespace ShoppingWebsiteMVC.Controllers
                 return View("Products", list);
             }
         }
+        //Get details of a product 
+        [Authorize]
+        public ActionResult ProductView(string ProductId)
+        {
+            using (ProductContext db = new ProductContext())
+            {
+                if (ProductId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(ProductId);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
+            }
+        }
+
+     
+        [Authorize]
+        public ActionResult AddtoCart(string itemno,string ProductId)
+        {
+            using (ProductContext db = new ProductContext())
+            {
+                int noofunits = int.Parse(itemno);
+                Product p = new Product();
+                if (String.IsNullOrEmpty(ProductId))
+                {
+                    ViewBag.Error = "Empty";
+                }
+                else
+                {
+                    var pro = from product in db.Products
+                              where product.ProductId.Contains(ProductId)
+                              select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName, Price = product.Price, Units = product.Units, Discount = product.Discount, SupplierName = product.SupplierName };
+                    p = (Product)pro;
+
+
+                    if (noofunits > p.Units)
+                    {
+                        ViewBag.Error = "No stock available";
+                    }
+                    else
+                    {
+                        using (CartContext dbo=new CartContext())
+                        {
+                            Cart cart = new Cart();
+                            cart.UserId = Session["UserId"].ToString();
+                            cart.ProductId = p.ProductId;
+                            cart.ProductName = p.ProductName;
+                            cart.Amount = p.Price;
+                        }
+                    }
+                }
+                return View("Products", p);
+            }
+        }
+
     }
 }

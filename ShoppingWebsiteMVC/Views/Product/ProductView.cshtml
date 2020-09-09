@@ -1,0 +1,66 @@
+﻿@model ShoppingWebsiteMVC.Models.Product
+
+@{
+    ViewBag.Title = "ProductView";
+}
+
+<h2>ProductView</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+          <s>  @Html.DisplayFor(model => model.Price) </s>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierName)
+        </dd>
+
+    </dl>
+</div>
+<tr>
+    <th align="right">
+        <form method="get">
+            @Html.TextBox("Itemno", new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.ProductId, new { @class = "form-control",@value=Model.ProductId,@hidden="true" })
+            <input type="submit" value="Add To Cart" class="btn btn-primary" />
+        </form>
+    </th>
+</tr>
+<p>
+    @Html.ActionLink("Buy Now", "BuyNow", new { id = Model.ProductId }) |
+</p>
