@@ -20,5 +20,8 @@ namespace ShoppingWebsiteMVC.Models
         public double Amount { get; set; }
         [DataType(DataType.Date)]
         public DateTime TDate { get; set; }
+
+        [ForeignKey("UserId")]
+        public User user{get;set;}
     }
 }
