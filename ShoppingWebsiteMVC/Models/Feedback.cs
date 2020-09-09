@@ -10,6 +10,8 @@ namespace ShoppingWebsiteMVC.Models
     public class Feedback
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int FeedbackId { get; set; }
         [Required]
         public string ProductId { get; set; }
         [Required]
@@ -19,9 +21,13 @@ namespace ShoppingWebsiteMVC.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
+        public string TId { get; set; }
 
         [ForeignKey("ProductId")]
-        public Product product{get;set;}
-
+        public Product product { get; set; }
+        [ForeignKey("UserId")]
+        public User user { get; set; }
+        [ForeignKey("TId")]
+        public Transaction transaction { get; set; }
     }
 }
