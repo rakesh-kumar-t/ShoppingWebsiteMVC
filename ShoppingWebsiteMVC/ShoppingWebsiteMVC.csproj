@@ -164,6 +164,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\**\**\*.cshtml" />
+    <Content Include="Views\**\*.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\Product\ProductView.cshtml" />
   </ItemGroup>
   <ItemGroup>
