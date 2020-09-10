@@ -100,7 +100,7 @@ namespace ShoppingWebsiteMVC.Controllers
             FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index");
         }
         //Get Edit Current User info
         [Authorize]
