@@ -20,7 +20,7 @@
                     <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
                     @if (Session["UserId"] != null)
                     {
-                        <li class="nav-item">@Html.ActionLink("Logout", "Logout", "User", new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Logout", "../User/Logout",null, new { @class = "nav-link" })</li>
                     }
                 </ul>
             </div>
