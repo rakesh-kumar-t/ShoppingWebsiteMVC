@@ -17,8 +17,11 @@ namespace ShoppingWebsiteMVC.Models
         [Display(Name ="ProductName")]
         public string ProductName { get; set; }
         [Required]
-        [Display(Name ="Brand")]
+        [Display(Name ="Category")]
         public string CategoryName { get; set; }
+        [Required]
+        [Display(Name ="Brand")]
+        public string BrandName { get; set; }
         [Required]
         [Display(Name ="Cost")]
         public double Price { get; set; }

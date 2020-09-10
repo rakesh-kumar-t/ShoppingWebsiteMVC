@@ -26,13 +26,7 @@ else
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Units)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupplierName)
             </th>
             <th></th>
         </tr>
@@ -48,14 +42,9 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Units)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierName)
             </td>
             <td>
                 @Html.ActionLink("Details", "ProductView", new { ProductId=item.ProductId }) |

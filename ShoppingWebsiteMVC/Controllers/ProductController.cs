@@ -20,12 +20,12 @@ namespace ShoppingWebsiteMVC.Controllers
             if(category==null)
             {
                 // returns the category view(Index view)
-                using (ProductContext db = new ProductContext())
+                using (UserContext db = new UserContext())
                     return View(db.Products.ToList());
             }
             else
             {
-                using(ProductContext db=new ProductContext())
+                using(UserContext db=new UserContext())
                 {
                   
                     if (category == "All")
@@ -56,7 +56,7 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult Search(string ProductName)
         {
             List<Product> list = new List<Product>();
-            using(ProductContext db=new ProductContext())
+            using(UserContext db=new UserContext())
             {
                 if(String.IsNullOrEmpty(ProductName))
 
@@ -81,7 +81,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult ProductView(string ProductId)
         {
-            using (ProductContext db = new ProductContext())
+            using (UserContext db = new UserContext())
             {
                 if (ProductId == null)
                 {
@@ -102,7 +102,7 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult AddtoCart(string itemno,string ProductId)
         {
           
-            using (ProductContext db = new ProductContext())
+            using (UserContext db = new UserContext())
             {
                 int noofunits = int.Parse(itemno);
                 if (String.IsNullOrEmpty(ProductId))
@@ -154,7 +154,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             
             using (CartContext db = new CartContext())
-            using (ProductContext dbo=new ProductContext())  
+            using (UserContext dbo=new UserContext())  
             {
                 
                 if (String.IsNullOrEmpty(ProductId))

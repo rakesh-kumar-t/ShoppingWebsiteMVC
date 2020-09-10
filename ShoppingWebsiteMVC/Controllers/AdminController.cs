@@ -13,7 +13,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        ProductContext dbo = new ProductContext();
+        UserContext dbo = new UserContext();
         [Authorize]
         public ActionResult Index()
         {
@@ -74,7 +74,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,CategoryName,Price,Discount,SupplierName")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,CategoryName,Price,Units,Discount,SupplierName")] Product product)
         {
             if (ModelState.IsValid)
             {
