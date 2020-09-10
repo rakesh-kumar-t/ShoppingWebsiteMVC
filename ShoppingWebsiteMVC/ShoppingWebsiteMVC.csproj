@@ -134,14 +134,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\CartContext.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\FeedbackContext.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TransactionContext.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserContext.cs" />
+    <Compile Include="Models\ShoppingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

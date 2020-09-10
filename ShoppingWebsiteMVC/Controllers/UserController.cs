@@ -16,7 +16,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class UserController : Controller
     {
-        UserContext db = new UserContext();
+        ShoppingContext db = new ShoppingContext();
         // GET: User Home page and Login
         public ActionResult Index()
         {
@@ -28,32 +28,25 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(User usr )
         {
-            using(UserContext db=new UserContext())
+            usr.Password = encrypt(usr.Password);
+            var user = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
+            if (user != null)
             {
-               
-                    usr.Password = encrypt(usr.Password);
-                    var user = db.Users.Where(a => a.UserId.Equals(usr.UserId) && a.Password.Equals(usr.Password)).FirstOrDefault();
-                    if (user != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(usr.UserId, false);
-                        Session["UserId"] = user.UserId.ToString();
-                        Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
-                        Session["Role"] = user.Role.ToString();
-                        if(user.Role=="Admin")
-                        return RedirectToAction("Index", "Admin");
-                        else
-                        return RedirectToAction("Index", "Product");
+                FormsAuthentication.SetAuthCookie(usr.UserId, false);
+                Session["UserId"] = user.UserId.ToString();
+                Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
+                Session["Role"] = user.Role.ToString();
+                if(user.Role=="Admin")
+                return RedirectToAction("Index", "Admin");
+                else
+                return RedirectToAction("Index", "Product");
 
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Invalid login credentials");
-                    }
-                
-               
-                    
-                
             }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login credentials");
+            }
+                
             return View(usr);
         }
         //Get User Register Page
@@ -191,40 +184,34 @@ namespace ShoppingWebsiteMVC.Controllers
         [HttpGet]
         public ActionResult Cart()
         {
-            using (CartContext db = new CartContext())
-            {
-               string id = (string)Session["UserId"];
+            string id = (string)Session["UserId"];
                 
-                    var carts = db.Carts.Where(c => c.UserId.Equals(id)).ToList();
-                    if (carts != null)
-                    {
-                        return View(carts);
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Cart Empty";
-                    }
-                    return View();
-            }
+                var carts = db.Carts.Where(c => c.UserId.Equals(id)).ToList();
+                if (carts != null)
+                {
+                    return View(carts);
+                }
+                else
+                {
+                    ViewBag.Error = "Cart Empty";
+                }
+                return View();
         }
         //Get id for deleting cart details of user
         [Authorize]
         public ActionResult CartDelete(string UserId,string ProductId)
         {
-            using (CartContext db = new CartContext())
+            if (ProductId == null)
             {
-                if (ProductId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
                 
-                Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId)&&c.ProductId.Equals(ProductId)).FirstOrDefault();
-                if (cart == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(cart);
-            } 
+            Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId)&&c.ProductId.Equals(ProductId)).FirstOrDefault();
+            if (cart == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cart);
         }
         //Post delete cart details
         [Authorize]
@@ -232,25 +219,18 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string UserId,string ProductId)
         {
-            using (CartContext db = new CartContext())
-            {
-                Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId) && c.ProductId.Equals(ProductId)).FirstOrDefault();
-                db.Carts.Remove(cart);
-                db.SaveChanges();
-                return RedirectToAction("Cart");
-            }
-            
+            Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId) && c.ProductId.Equals(ProductId)).FirstOrDefault();
+            db.Carts.Remove(cart);
+            db.SaveChanges();
+            return RedirectToAction("Cart");
         }
         //Get User Orders View
         [Authorize]
         public ActionResult MyOrders()
         {
-            using(TransactionContext db=new TransactionContext())
-            {
-                string UserId = Session["UserId"].ToString();
-                var orders = db.Transactions.Where(c => c.UserId.Equals(UserId)).ToList();
-                return View(orders);
-            }
+            string UserId = Session["UserId"].ToString();
+            var orders = db.Transactions.Where(c => c.UserId.Equals(UserId)).ToList();
+            return View(orders);
         }
        
     }

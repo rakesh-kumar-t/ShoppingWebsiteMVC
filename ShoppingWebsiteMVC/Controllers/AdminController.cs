@@ -13,11 +13,11 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        UserContext dbo = new UserContext();
+        ShoppingContext db = new ShoppingContext();
         [Authorize]
         public ActionResult Index()
         {
-            return View(dbo.Products.ToList());
+            return View(db.Products.ToList());
         }
         //Get details of a product 
         [Authorize]
@@ -27,7 +27,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = dbo.Products.Find(ProductId);
+            Product product = db.Products.Find(ProductId);
             if (product == null)
             {
                 return HttpNotFound();
@@ -48,8 +48,8 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                dbo.Products.Add(product);
-                dbo.SaveChanges();
+                db.Products.Add(product);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -63,7 +63,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = dbo.Products.Find(ProductId);
+            Product product = db.Products.Find(ProductId);
             if (product == null)
             {
                 return HttpNotFound();
@@ -78,8 +78,8 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                dbo.Entry(product).State = EntityState.Modified;
-                dbo.SaveChanges();
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -92,7 +92,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = dbo.Products.Find(ProductId);
+            Product product = db.Products.Find(ProductId);
             if (product == null)
             {
                 return HttpNotFound();
@@ -105,16 +105,16 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string ProductId)
         {
-            Product product = dbo.Products.Find(ProductId);
-            dbo.Products.Remove(product);
-            dbo.SaveChanges();
+            Product product = db.Products.Find(ProductId);
+            db.Products.Remove(product);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                dbo.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -122,7 +122,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult AdminEdit()
         {
-            using (UserContext db = new UserContext())
+            using (ShoppingContext db = new ShoppingContext())
             {
                 string username = User.Identity.Name;
                 User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
@@ -140,7 +140,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [HttpPost]
         public ActionResult AdminEdit(User usr)
         {
-            using (UserContext db = new UserContext())
+            using (ShoppingContext db = new ShoppingContext())
             {
                 if (ModelState.IsValid)
                 {
