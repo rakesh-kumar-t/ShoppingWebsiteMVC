@@ -14,6 +14,7 @@ namespace ShoppingWebsiteMVC.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TId { get; set; }
+        public int BillNo { get; set; }
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
         public string ProductId { get; set; }
@@ -25,6 +26,7 @@ namespace ShoppingWebsiteMVC.Models
 
         public virtual User user{get;set;}
         public virtual Product product { get; set; }
+        public virtual Bill Bill { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

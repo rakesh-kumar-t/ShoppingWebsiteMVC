@@ -54,7 +54,7 @@ namespace ShoppingWebsiteMVC.Controllers
             List<Product> list = new List<Product>();
             if(String.IsNullOrEmpty(ProductName))
             {
-                var query = from product in db.Products select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName, Price = product.Price,Units=product.Units,Discount = product.Discount, SupplierName = product.SupplierName };
+                var query = from product in db.Products select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName,BrandName=product.BrandName, Price = product.Price,Units=product.Units,Discount = product.Discount, SupplierName = product.SupplierName };
                 list = query.ToList();
 
             }
@@ -62,7 +62,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 var query = from product in db.Products
                             where product.ProductName.ToLower().Contains(ProductName.ToLower())
-                            select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName, Price = product.Price, Units = product.Units, Discount = product.Discount, SupplierName = product.SupplierName };
+                            select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName,BrandName=product.BrandName, Price = product.Price, Units = product.Units, Discount = product.Discount, SupplierName = product.SupplierName };
                 list = query.ToList();
 
             }
@@ -87,8 +87,10 @@ namespace ShoppingWebsiteMVC.Controllers
 
      
         [Authorize]
+        [HttpPost]
         public ActionResult AddtoCart(string itemno,string ProductId)
         {
+            string UserId =Session["UserId"].ToString();
             int noofunits = int.Parse(itemno);
             if (String.IsNullOrEmpty(ProductId))
             {
@@ -97,21 +99,32 @@ namespace ShoppingWebsiteMVC.Controllers
             else
             {
                 var p = db.Products.Where(pro => pro.ProductId.Equals(ProductId)).FirstOrDefault();
-                    
+
                 if (noofunits > p.Units)
                 {
                     ViewBag.Error = "No stock available";
                 }
                 else
                 {
-                    Cart cart = new Cart();
-                    cart.UserId = Session["UserId"].ToString();
-                    cart.ProductId = p.ProductId;
-                    cart.ProductName = p.ProductName;
-                    cart.NoofProduct = noofunits;
-                    cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
-                    db.Carts.Add(cart);
-                    db.SaveChanges();
+                    if (db.Carts.Where(car => car.ProductId.Equals(ProductId)&&car.UserId.Equals(UserId)).FirstOrDefault() != null)
+                    {
+
+                        Cart cart = db.Carts.Where(car => car.ProductId.Equals(ProductId) && car.UserId.Equals(UserId)).FirstOrDefault();
+                        cart.NoofProduct= cart.NoofProduct+noofunits;
+                        db.Entry(cart).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        Cart cart = new Cart();
+                        cart.UserId = Session["UserId"].ToString();
+                        cart.ProductId = p.ProductId;
+                        cart.ProductName = p.ProductName;
+                        cart.NoofProduct = noofunits;
+                        cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
+                        db.Carts.Add(cart);
+                        db.SaveChanges();
+                    }
                 }
             }
             return RedirectToAction("Cart","User");
@@ -143,6 +156,14 @@ namespace ShoppingWebsiteMVC.Controllers
                 else
                 {
                     Transaction Trx = new Transaction();
+                    Bill newbill = new Bill();
+                    var t=db.Bills.Select(tn => tn.BillNo).DefaultIfEmpty(0).Max()+1;
+                    newbill.BillNo = t;
+                    newbill.Amount = c.Amount;
+                    db.Bills.Add(newbill);
+                    db.SaveChanges();
+                   
+                    Trx.BillNo = t;
                     Trx.UserId = c.UserId;
                     Trx.ProductId = c.ProductId;
                     Trx.ProductName = c.ProductName;
@@ -154,10 +175,68 @@ namespace ShoppingWebsiteMVC.Controllers
                     p.Units = p.Units - c.NoofProduct;
                     db.Entry(p).State = EntityState.Modified;
                     db.SaveChanges();
+                    db.Carts.Remove(c);
+                    db.SaveChanges(); 
                 }
             }
             return RedirectToAction("MyOrders","User");
         }
+        [Authorize]
+        public ActionResult BuyAll()
+        {
+            double sum = 0;
+            string UserId = Session["UserId"].ToString();
+            var cart = db.Carts.Where(c => c.UserId.Equals(UserId)).ToList();
+            foreach(Cart c in cart)
+            {
+                sum = sum + c.Amount;
+            }
+            ViewBag.TotalSum = sum;
+            var user = db.Users.Where(u => u.UserId.Equals(UserId)).FirstOrDefault();
+            ViewBag.Address = user.Address+"\n"+user.City+"\n"+user.Country;
+            ViewBag.Name = user.Firstname + " " + user.Lastname;
+            return View(cart);
+        }
+        [Authorize]
+        public ActionResult ConfirmAllOrder()
+        {
+            string UserId = Session["UserId"].ToString();
+            var cart = db.Carts.Where(c => c.UserId.Equals(UserId)).ToList();
+            var t = db.Transactions.Select(tn => tn.BillNo).DefaultIfEmpty(0).Max()+1;
+            Bill newbill = new Bill();
+            newbill.BillNo = t;
+            db.Bills.Add(newbill);
+            db.SaveChanges();
+            double sum = 0;
+           
+            for (int i=0;i<cart.Count;i++)
+            {
+                Transaction Trx = new Transaction();
+                Trx.BillNo = t;
+                Trx.UserId = cart[i].UserId;
+                var c = cart[i].ProductId.ToString();
+                Trx.ProductId = c;
+                Trx.ProductName = cart[i].ProductName;
+                Trx.NoofProduct = cart[i].NoofProduct;
+                Trx.Amount = cart[i].Amount;
+                sum = sum + Trx.Amount;
+                Trx.TDate = DateTime.Now;
+                db.Transactions.Add(Trx);
+                db.SaveChanges();
+                
+                var p = db.Products.Where(pro => pro.ProductId.Equals(c)).FirstOrDefault();
+                p.Units = p.Units - cart[i].NoofProduct;
+                db.Entry(p).State = EntityState.Modified;
+                db.SaveChanges();
+                db.Carts.Remove(cart[i]);
+                db.SaveChanges();
+            }
+            newbill.Amount = sum;
+            db.Entry(newbill).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("MyOrders", "User");
+        }
+
 
     }
 }

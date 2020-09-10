@@ -17,6 +17,7 @@ namespace ShoppingWebsiteMVC.Models
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Bill> Bills { get; set; }
 
     }
 

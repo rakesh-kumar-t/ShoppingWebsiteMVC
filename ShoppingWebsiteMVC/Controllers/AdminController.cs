@@ -44,7 +44,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,Price,Units,Discount,SupplierName")] Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,BrandName,Price,Units,Discount,SupplierName")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,CategoryName,Price,Units,Discount,SupplierName")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,CategoryName,BrandName,Price,Units,Discount,SupplierName")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -122,8 +122,6 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult AdminEdit()
         {
-            using (ShoppingContext db = new ShoppingContext())
-            {
                 string username = User.Identity.Name;
                 User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
                 User model = new User();
@@ -134,14 +132,13 @@ namespace ShoppingWebsiteMVC.Controllers
                 model.City = user.City;
                 model.Country = user.Country;
                 return View(model);
-            }
+            
         }
         //Post admin edit details
         [HttpPost]
         public ActionResult AdminEdit(User usr)
         {
-            using (ShoppingContext db = new ShoppingContext())
-            {
+            
                 if (ModelState.IsValid)
                 {
                     string username = User.Identity.Name;
@@ -158,7 +155,7 @@ namespace ShoppingWebsiteMVC.Controllers
 
                 }
                 return View(usr);
-            }
+            
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Cart>
 
 @{
-    ViewBag.Title = "Cart";
+    ViewBag.Title = "View Cart";
 }
 
-<h2>Cart</h2>
+<h2>My Cart</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -23,24 +20,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoofProduct)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.ActionLink("Place Order","../Product/BuyNow", new { UserId = item.UserId, ProductId = item.ProductId }) |
-            @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId })
-        </td>
-    </tr>
-}
-    </table>
-  
-    @Html.ActionLink("Buy More Products","Index","Product")
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoofProduct)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.ActionLink("Place Order", "BuyNow","Product", new { UserId = item.UserId, ProductId = item.ProductId },null) |
+                @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId })
+            </td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Buy All", "BuyAll", "Product",null,null)
+
+@Html.ActionLink("Buy More Products", "Index", "Product")
 

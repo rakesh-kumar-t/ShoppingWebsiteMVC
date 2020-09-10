@@ -229,7 +229,7 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult MyOrders()
         {
             string UserId = Session["UserId"].ToString();
-            var orders = db.Transactions.Where(c => c.UserId.Equals(UserId)).ToList();
+            var orders = db.Transactions.Where(c => c.UserId.Equals(UserId)).ToList().OrderBy(o=>o.TDate).ToList();
             return View(orders);
         }
        

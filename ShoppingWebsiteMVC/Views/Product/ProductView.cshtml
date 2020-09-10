@@ -19,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            @Html.DisplayNameFor(model => model.BrandName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CategoryName)
+            @Html.DisplayFor(model => model.BrandName)
         </dd>
 
         <dt>
@@ -54,11 +54,12 @@
 </div>
 <tr>
     <th align="right">
-        <form method="get" action="/Product/AddtoCart">
-            @Html.TextBox("Itemno"," ", new { @class = "form-control" })
-            @Html.HiddenFor(m => m.ProductId, new { @class = "form-control",@value=Model.ProductId})
-            <input type="submit" value="Add To Cart" class="btn btn-primary" />
-        </form>
+        @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post))
+        {
+            @Html.TextBox("Itemno", " ", new { @class = "form-control" })
+            @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
+        <input type="submit" value="Add To Cart" class="btn btn-primary" />
+        }
     </th>
 </tr>
 

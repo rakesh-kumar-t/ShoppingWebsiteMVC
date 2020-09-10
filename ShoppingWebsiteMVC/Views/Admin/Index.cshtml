@@ -18,6 +18,9 @@
             @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.BrandName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
@@ -33,31 +36,34 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Units)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SupplierName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { ProductId=item.ProductId }) |
-            @Html.ActionLink("Details", "Details", new { ProductId=item.ProductId }) |
-            @Html.ActionLink("Delete", "Delete", new { ProductId=item.ProductId })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CategoryName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BrandName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Units)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Discount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SupplierName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { ProductId = item.ProductId }) |
+        @Html.ActionLink("Details", "Details", new { ProductId = item.ProductId }) |
+        @Html.ActionLink("Delete", "Delete", new { ProductId = item.ProductId })
+    </td>
+</tr>
 }
 
 </table>

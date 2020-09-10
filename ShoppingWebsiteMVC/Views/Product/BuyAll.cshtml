@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Cart>
+
+@{
+    ViewBag.Title = "Confirm Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Confirm Order</h2>
+
+<p>
+   ThankYou @ViewBag.Name
+</p>
+<br />
+<p>
+    Your Order will be delevered to - <br />
+    @ViewBag.Address
+</p>
+<table class="table">
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoofProduct)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+
+        </tr>
+    } 
+    <p> Total Amount to be Paid @ViewBag.TotalSum</p>
+    <br />
+
+    @Html.ActionLink("Pay Now", "ConfirmAllOrder","Product", null,null)
+    
+</table>
