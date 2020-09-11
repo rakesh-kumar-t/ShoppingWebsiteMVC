@@ -27,6 +27,6 @@ namespace ShoppingWebsiteMVC.Models
         public virtual User user{get;set;}
         public virtual Product product { get; set; }
         public virtual Bill Bill { get; set; }
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        
     }
 }

@@ -1,0 +1,52 @@
+﻿@model ShoppingWebsiteMVC.Models.Transaction
+
+@{
+    ViewBag.Title = "CancelOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CancelOrder</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoofProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoofProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="hidden" value=@Model.TId name="TId"/>
+            <input type="hidden" value="@Model.BillNo" name="BillNo" />
+            <input type="submit" value="Cancel Order" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to Orders", "MyOrders",null,new {@class="btn btn-success" })
+        </div>
+    }
+</div>

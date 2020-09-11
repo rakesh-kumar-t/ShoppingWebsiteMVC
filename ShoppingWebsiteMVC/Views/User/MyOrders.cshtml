@@ -9,7 +9,8 @@
 <table class="table">
     
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.UserId)
@@ -26,11 +27,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.TDate)
         </td>
+        @{ if (DateTime.Now < item.TDate.AddDays(5))
+           { 
+             <td>
+            @Html.ActionLink("Cancel Order", "CancelOrder", new { TId = item.TId, ProductId = item.ProductId })
+             </td>
+            }
+            }
         <td>
-            @Html.ActionLink("Cancel Order", "Delete", new { id=item.TId })
-        </td>
-        <td>
-            @Html.ActionLink("Give Feedback", "Feedback", new { id=item.TId })
+            @Html.ActionLink("Give Feedback", "Feedback", new { ProductId=item.ProductId })
         </td>
     </tr>
 }

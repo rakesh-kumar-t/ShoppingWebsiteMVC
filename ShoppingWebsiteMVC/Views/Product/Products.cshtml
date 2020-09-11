@@ -13,44 +13,37 @@
 }
 else
 {
-
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BrandName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)% off
-            </td>
-            <td>
-                @Html.ActionLink("Details", "ProductView", new { ProductId=item.ProductId }) |
-            </td>
-        </tr>
+    <form method="get" action="/Product/Search" class="form-inline mr-3">
+        @Html.TextBox("ProductName", null, new { @class = "form-control" })
+        <input type="submit" value="Search" class="btn btn-dark btn-sm" />
+    </form>
+    if (Model.ToList().Count==0)
+    {
+        <div class="alert-info">No products found. Search for another product!</div>
     }
-
-    </table>
+    else
+    {
+        <br />
+        <div class="row mr-3 ">
+        
+        @foreach (var item in Model)
+        {
+        <div class="card col-3 mr-2 p-1">
+            <div class="card-header text-center">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </div>
+            <div class="font-weight-bold text-center" style="font-size:large">
+                @Html.DisplayFor(modelItem => item.BrandName)
+            </div>
+            <div class="card-body text-center">
+                @Html.DisplayFor(modelItem => item.Price) <br />
+                <span class="alert-info">@Html.DisplayFor(modelItem => item.Discount)% off</span>
+            </div>
+            <div class="card-footer text-center">
+                @Html.ActionLink("Details", "ProductView", new { ProductId = item.ProductId },new { @class="btn btn-info"})
+            </div>
+        </div>
+        }
+    </div>
 }
+    }

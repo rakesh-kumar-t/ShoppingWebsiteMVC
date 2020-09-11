@@ -10,9 +10,9 @@
 <table class="table">
     <tr>
         <th align="right">
-            <form method="get">
+            <form method="get" action="/Product/Search" class="form-inline">
                 @Html.TextBox("ProductName",null, new { @class = "form-control" })
-                <input type="submit" value="Search" class="btn btn-default" />
+                <input type="submit" value="Search" class="btn btn-dark btn-sm" />
             </form>
         </th>
     </tr>
@@ -27,13 +27,13 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.CategoryName, "Index", new { category = item.CategoryName }) |
+                @Html.ActionLink(item.CategoryName, "Index", new { category = item.CategoryName }) 
             </td>
         </tr>
     }
     <tr>
         <td>
-            @Html.ActionLink("All Products", "Index", new { category = "All" }) |
+            @Html.ActionLink("All Products", "Index", new { category = "All" }) 
         </td>
     </tr>
 

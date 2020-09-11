@@ -15,16 +15,11 @@ namespace ShoppingWebsiteMVC.Models
         [Required]
         public string ProductId { get; set; }
         [Required]
-        public string ProductName { get; set; }
-        [Required]
         public string FeedBack { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
-        public string TId { get; set; }
-
         public virtual Product product { get; set; }
         public virtual User user { get; set; }
-        public virtual Transaction transaction { get; set; }
     }
 }

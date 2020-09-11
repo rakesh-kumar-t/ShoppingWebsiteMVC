@@ -49,25 +49,28 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         //Get Search product by productname
+        [Authorize]
         public ActionResult Search(string ProductName)
         {
-            List<Product> list = new List<Product>();
+            var list = new List<Product>();
             if(String.IsNullOrEmpty(ProductName))
             {
-                var query = from product in db.Products select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName,BrandName=product.BrandName, Price = product.Price,Units=product.Units,Discount = product.Discount, SupplierName = product.SupplierName };
-                list = query.ToList();
-
+                list = db.Products.ToList();
             }
             else
             {
-                var query = from product in db.Products
-                            where product.ProductName.ToLower().Contains(ProductName.ToLower())
-                            select new Product { ProductId = product.ProductId, ProductName = product.ProductName, CategoryName = product.CategoryName,BrandName=product.BrandName, Price = product.Price, Units = product.Units, Discount = product.Discount, SupplierName = product.SupplierName };
-                list = query.ToList();
-
+                list = db.Products.Where(p => p.ProductName.ToLower().Equals(ProductName.ToLower())).ToList();
+                if (list.Count == 0)
+                {
+                    list = db.Products.Where(p => p.CategoryName.ToLower().Equals(ProductName.ToLower())).ToList();
+                    if (list.Count == 0)
+                    {
+                        list = db.Products.Where(p => p.BrandName.ToLower().Equals(ProductName.ToLower())).ToList();
+                    }
+                }
             }
             ViewBag.Title= "Search Result";
-            return View("Products", list);
+            return View("Products",list);
         }
         //Get details of a product 
         [Authorize]
@@ -237,7 +240,7 @@ namespace ShoppingWebsiteMVC.Controllers
             db.SaveChanges();
             return RedirectToAction("MyOrders", "User");
         }
-
+       
 
     }
 }

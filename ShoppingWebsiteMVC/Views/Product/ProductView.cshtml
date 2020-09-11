@@ -7,14 +7,10 @@
 <h2>ProductView</h2>
 
 <div>
-    <h4>Product</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
+    <dl class="card p-3 col-3">
 
-        <dd>
+        <dd class="card-title font-weight-bold">
             @Html.DisplayFor(model => model.ProductName)
         </dd>
 
@@ -31,18 +27,24 @@
         </dt>
 
         <dd>
-          <s>  @Html.DisplayFor(model => model.Price) </s> <br />@(Model.Price-Model.Discount/100*Model.Price)
+            <s>  @Html.DisplayFor(model => model.Price) </s> <br />
+            @if (Model.Discount != 0)
+            {@(Model.Price - Model.Discount / 100 * Model.Price)}
         </dd>
+        @if (Model.Discount != 0)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Discount)
+            </dt>
+            <dd class="alert-info">
+                @Html.DisplayFor(model => model.Discount)% Off 
+            </dd>
+        }
+        else
+        {
+            <dt>No Discount Available!</dt>
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Discount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Discount)% Off 
-          
-        </dd>
-        
         <dt>
             @Html.DisplayNameFor(model => model.SupplierName)
         </dt>
@@ -55,11 +57,11 @@
 </div>
 <tr>
     <th align="right">
-        @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post))
+        @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post,new { @class="form-inline"}))
         {
             @Html.TextBox("Itemno", " ", new { @class = "form-control" })
             @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
-        <input type="submit" value="Add To Cart" class="btn btn-primary" />
+            <input type="submit" value="Add To Cart" class="btn btn-primary btn-sm" />
         }
     </th>
 </tr>

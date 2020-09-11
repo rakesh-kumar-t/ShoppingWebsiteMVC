@@ -6,18 +6,22 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <div class="navbar-brand">
+            <span ><i class="fa fa-shopping-cart"></i></span>
+            ShoppingBag
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Product",null, new { @class = "nav-link" })</li> 
+                    <li class="nav-item">@Html.ActionLink("MyOrders", "MyOrders", "User", null,new { @class = "nav-link" })</li> 
+                    <li class="nav-item">@Html.ActionLink("MyCart", "Cart", "User",null, new { @class = "nav-link" })</li> 
                     @if (Session["UserId"] != null)
                     {
                         <li class="nav-item">@Html.ActionLink("Logout", "../User/Logout",null, new { @class = "nav-link" })</li>
