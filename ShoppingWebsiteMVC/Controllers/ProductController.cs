@@ -82,7 +82,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 return HttpNotFound();
             }
-            
+           
             return View(product);
         }
 
