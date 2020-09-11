@@ -9,12 +9,12 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal card col-6 mt-2 mr-5" >
-        <h4 class="card-title">User Login</h4>
+    <div class="form-row card col-6 mt-2 mr-5 p-3" >
+        <h4 class="card-title">LOGIN HERE</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
@@ -22,7 +22,7 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
             </div>
@@ -33,15 +33,15 @@
                 <input type="submit" value="Login" class="btn btn-info" />
             </div>
         </div>
+    <div class="card-footer">
+        <p>
+            <span class="fa fa-user-plus"></span>New User?
+        </p>
+        @Html.ActionLink("Sign up", "Register",null,new { @class="btn btn-success btn-sm"})
+    </div>
     </div>
 }
 
-<div>
-    <p>
-        <span class="fa fa-user-plus"></span>New User?
-    </p>
-    @Html.ActionLink("Sign up", "Register",null,new { @class="btn btn-success btn-sm"})
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
