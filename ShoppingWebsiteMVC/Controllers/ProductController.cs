@@ -21,7 +21,8 @@ namespace ShoppingWebsiteMVC.Controllers
             if(category==null)
             {
                 // returns the category view(Index view)
-                return View(db.Products.ToList());
+                var p = db.Products.Select(o => o.CategoryName).ToList().Distinct().ToList();
+                return View(p);
             }
             else
             {
@@ -240,7 +241,15 @@ namespace ShoppingWebsiteMVC.Controllers
             db.SaveChanges();
             return RedirectToAction("MyOrders", "User");
         }
-       
+        //Dispose the database
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
     }
 }
