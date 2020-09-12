@@ -39,7 +39,9 @@
         </tr>
     }
 </table>
-@Html.ActionLink("Buy All", "BuyAll", "Product",null,null)
+@if(Model.ToList().Count>0){
+    @Html.ActionLink("Buy All", "BuyAll", "Product",null,new { @class="btn btn-info"})
+}
 
-@Html.ActionLink("Buy More Products", "Index", "Product")
+@Html.ActionLink("Buy More Products", "Index", "Product",null,new { @class="btn btn-success btn-sm"})
 

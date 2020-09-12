@@ -61,7 +61,7 @@
         {
             @Html.TextBox("Itemno",null,new { @class = "form-control", @placeholder = "Quantity" } )
             @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
-            <button type="submit" class="btn btn-primary btn-sm ml-2" >Add to Cart <i class="fa fa-cart-plus"></i></button>
+            <button type="submit" class="btn btn-success btn-sm ml-2" >Add to Cart <i class="fa fa-cart-plus"></i></button>
         }
     </th>
 </tr>

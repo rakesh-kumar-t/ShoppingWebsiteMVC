@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View Products</h2>
 
 @if (!string.IsNullOrEmpty(ViewBag.Error))
 {
@@ -13,7 +12,10 @@
 }
 else
 {
-    <form method="get" action="/Product/Search" class="form-inline mr-3">
+    <form method="get" action="/Product/Search" class="form-inline m-2">
+        <div class="h6 m-2">
+            View Products
+        </div>
         @Html.TextBox("ProductName", null, new { @class = "form-control" })
         <input type="submit" value="Search" class="btn btn-dark btn-sm" />
     </form>
