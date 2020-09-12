@@ -20,6 +20,25 @@ namespace ShoppingWebsiteMVC.Controllers
         // GET: User Home page and Login
         public ActionResult Index()
         {
+            string userid = "admin@gmail.com";
+            string password = "Admin@123";
+            var o = db.Users.Where(u=>u.UserId.Equals(userid)).FirstOrDefault();
+            if (o == null)
+            {
+                User user = new User();
+                user.UserId = userid;
+                user.Password = encrypt(password);
+                user.ConfirmPassword = encrypt(password);
+                user.Address = "abc";
+                user.City = "abc";
+                user.ContactNumber = "8888888888";
+                user.Country = "abc";
+                user.Firstname = "Admin";
+                user.Lastname = ".";
+                user.Role = "Admin";
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
             return View();
         }
         
