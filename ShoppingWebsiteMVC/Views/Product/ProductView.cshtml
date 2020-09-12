@@ -57,11 +57,11 @@
 </div>
 <tr>
     <th align="right">
-        @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post,new { @class="form-inline"}))
+        @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post, new { @class = "form-inline" }))
         {
-            @Html.TextBox("Itemno", " ", new { @class = "form-control" })
+            @Html.TextBox("Itemno","",new { @class = "form-control col-2" } )
             @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
-            <input type="submit" value="Add To Cart" class="btn btn-primary btn-sm" />
+            <button type="submit" class="btn btn-primary btn-sm" >Add to Cart <i class="fa fa-cart-plus"></i></button>
         }
     </th>
 </tr>
