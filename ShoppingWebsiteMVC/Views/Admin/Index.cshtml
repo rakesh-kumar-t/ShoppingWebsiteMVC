@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="m-2">All Products</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/admin/create" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Product</a>
 </p>
 <table class="table">
     <tr>
@@ -32,7 +32,7 @@
         <th>
             @Html.DisplayNameFor(model => model.SupplierName)
         </th>
-        <th></th>
+        <th>Actions</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -53,15 +53,15 @@
         @Html.DisplayFor(modelItem => item.Units)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Discount)
+        @Html.DisplayFor(modelItem => item.Discount)%
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.SupplierName)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { ProductId = item.ProductId }) |
-        @Html.ActionLink("Details", "Details", new { ProductId = item.ProductId }) |
-        @Html.ActionLink("Delete", "Delete", new { ProductId = item.ProductId })
+        <a href="/admin/edit?ProductId=@item.ProductId" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
+        <a href="/admin/details?ProductId=@item.ProductId" class="btn btn-dark btn-sm"><i class="fa fa-edit"></i> Details</a>
+        <a href="/admin/delete?ProductId=@item.ProductId" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Clear stock</a>
     </td>
 </tr>
 }

@@ -106,17 +106,15 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult DeleteConfirmed(string ProductId)
         {
             Product product = db.Products.Find(ProductId);
-            db.Products.Remove(product);
+            product.Units = 0;
+            db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        protected override void Dispose(bool disposing)
+        [Authorize]
+        public ActionResult Settings()
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
         //Get edit admin details
         [Authorize]
@@ -136,6 +134,7 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Post admin edit details
         [HttpPost]
+        [Authorize]
         public ActionResult AdminEdit(User usr)
         {
             
@@ -156,6 +155,15 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
                 return View(usr);
             
+        }
+        //Dispose the database
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
