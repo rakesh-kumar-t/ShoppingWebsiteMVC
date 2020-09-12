@@ -5,36 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<table class="table">
-    <tr>
-        <th align="right">
-            <form method="get" action="/Product/Search" class="form-inline">
+            <form method="get" action="/Product/Search" class="form-inline m-2">
+                <div class="h6 m-2" >
+                    Shop By Category
+                </div>
                 @Html.TextBox("ProductName",null, new { @class = "form-control" })
                 <input type="submit" value="Search" class="btn btn-dark btn-sm" />
             </form>
-        </th>
-    </tr>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(item.CategoryName, "Index", new { category = item.CategoryName }) 
-            </td>
-        </tr>
-    }
-    <tr>
-        <td>
-            @Html.ActionLink("All Products", "Index", new { category = "All" }) 
-        </td>
-    </tr>
-
-</table>
+    <div class="m-3">
+        @foreach (var item in Model)
+        {
+            @Html.ActionLink(item.CategoryName, "Index", new { category = item.CategoryName }, new { @class = "list-group-item list-group-item-action" })
+        }
+        @Html.ActionLink("All Products", "Index", new { category = "All" }, new { @class = "list-group-item list-group-item-action" })
+    </div>
