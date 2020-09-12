@@ -19,12 +19,21 @@
         </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item"><a href="../Products" class="nav-link">Home <i class="fa fa-home"></i></a></li> 
-                    <li class="nav-item"><a href="../User/Myorders" class="nav-link">My Orders<i class="fa fa-shopping-bag"></i></a></li> 
-                    <li class="nav-item"><a href="../User/Cart" class="nav-link">My Cart <i class="fa fa-shopping-cart"></i></a></li> 
+                    <li class="nav-item"><a href="../Products" class="nav-link">Home <i class="fa fa-home"></i></a></li>
+                    <li class="nav-item"><a href="../User/Myorders" class="nav-link">My Orders<i class="fa fa-shopping-bag"></i></a></li>
+                    <li class="nav-item"><a href="../User/Cart" class="nav-link">My Cart <i class="fa fa-shopping-cart"></i></a></li>
                     @if (Session["UserId"] != null)
                     {
-                        <li class="nav-item"><a href="../User/Logout" class="nav-link">Logout <i class="fa fa-sign-out"></i></a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Hi @Session["Username"]<i class="fa fa-user"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="../User/Logout">Logout <i class="fa fa-sign-out"></i></a>
+                            </div>
+                        </li>
                     }
                 </ul>
             </div>
