@@ -19,9 +19,18 @@
         </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item"><a href="../Product" class="nav-link">Home <i class="fa fa-home"></i></a></li>
-                    <li class="nav-item"><a href="../User/Myorders" class="nav-link">My Orders<i class="fa fa-shopping-bag"></i></a></li>
-                    <li class="nav-item"><a href="../User/Cart" class="nav-link">My Cart <i class="fa fa-shopping-cart"></i></a></li>
+                    @if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+                    {
+                        <li class="nav-item"><a href="/admin/" class="nav-link">Home <i class="fa fa-home"></i></a></li>
+                        <li class="nav-item"><a href="/admin/create" class="nav-link">New Product<i class="fa fa-plus"></i></a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a href="../Product" class="nav-link">Home <i class="fa fa-home"></i></a></li>
+                        <li class="nav-item"><a href="../User/Myorders" class="nav-link">My Orders<i class="fa fa-shopping-bag"></i></a></li>
+                        <li class="nav-item"><a href="../User/Cart" class="nav-link">My Cart <i class="fa fa-shopping-cart"></i></a></li>
+
+                    }
                     @if (Session["UserId"] != null)
                     {
                         <li class="nav-item dropdown">
