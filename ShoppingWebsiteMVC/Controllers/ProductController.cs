@@ -21,8 +21,8 @@ namespace ShoppingWebsiteMVC.Controllers
             if(category==null)
             {
                 // returns the category view(Index view)
-                var p = db.Products.Select(o => o.CategoryName).ToList().Distinct().ToList();
-                return View(p);
+                var cat = db.Products.GroupBy(m=>m.CategoryName).Select(y=>y.Count());
+                return View(cat);
             }
             else
             {
