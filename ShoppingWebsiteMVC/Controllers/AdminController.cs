@@ -138,22 +138,21 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult AdminEdit(User usr)
         {
             
-                if (ModelState.IsValid)
-                {
-                    string username = User.Identity.Name;
-                    User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
-                    user.Firstname = usr.Firstname;
-                    user.Lastname = usr.Lastname;
-                    user.Address = usr.Address;
-                    user.ContactNumber = usr.ContactNumber;
-                    user.City = usr.City;
-                    user.Country = usr.Country;
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "User");
+            string username = User.Identity.Name;
+            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+            user.Firstname = usr.Firstname;
+            user.Lastname = usr.Lastname;
+            Session["Username"] = usr.Firstname + " " + usr.Lastname;
+            user.Address = usr.Address;
+            user.ContactNumber = usr.ContactNumber;
+            user.City = usr.City;
+            user.Country = usr.Country;
+            user.Password = user.Password;
+            user.ConfirmPassword = user.Password;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
 
-                }
-                return View(usr);
+            return View(usr);
             
         }
         //Dispose the database
