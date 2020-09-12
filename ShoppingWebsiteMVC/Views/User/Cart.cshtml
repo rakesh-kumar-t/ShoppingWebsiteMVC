@@ -6,7 +6,9 @@
 
 <h2>My Cart</h2>
 
-<table class="table">
+@if (Model.ToList().Count > 0)
+{
+<table class="table m-3 p-3">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
@@ -33,14 +35,17 @@
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                @Html.ActionLink("Place Order", "BuyNow","Product", new { UserId = item.UserId, ProductId = item.ProductId },null) |
-                @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId })
+                @Html.ActionLink("Place Order", "BuyNow","Product", new { UserId = item.UserId, ProductId = item.ProductId },new { @class = "btn btn-info btn-sm" }) 
+                @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
             </td>
         </tr>
     }
 </table>
-@if(Model.ToList().Count>0){
-    @Html.ActionLink("Buy All", "BuyAll", "Product",null,new { @class="btn btn-info"})
+    @Html.ActionLink("Buy All", "BuyAll", "Product",null,new { @class="btn btn-info btn-sm"})
+}
+else
+{ 
+    <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
 }
 
 @Html.ActionLink("Buy More Products", "Index", "Product",null,new { @class="btn btn-success btn-sm"})
