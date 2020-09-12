@@ -308,6 +308,7 @@
     <Content Include="Views\Product\BuyAll.cshtml" />
     <Content Include="Views\User\CancelOrder.cshtml" />
     <Content Include="Views\User\Feedback.cshtml" />
+    <Content Include="Views\User\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

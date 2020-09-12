@@ -109,26 +109,26 @@ namespace ShoppingWebsiteMVC.Controllers
             model.City=user.City;
             model.Country = user.Country;
             return View(model);
+
         }
         //Post Edit Current user info
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(User usr)
         {
-            if(ModelState.IsValid)
-            {
-                string username = User.Identity.Name;
-                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
-                user.Firstname = usr.Firstname;
-                user.Lastname = usr.Lastname;
-                user.Address = usr.Address;
-                user.ContactNumber = usr.ContactNumber;
-                user.City = usr.City;
-                user.Country = usr.Country;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", "User"); 
-
-            }
+            string username = User.Identity.Name;
+            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+            user.Firstname = usr.Firstname;
+            user.Lastname = usr.Lastname;
+            user.Address = usr.Address;
+            user.ContactNumber = usr.ContactNumber;
+            user.City = usr.City;
+            user.Country = usr.Country;
+            user.Password = user.Password;
+            user.ConfirmPassword = user.Password;
+            Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
             return View(usr);
         }
         //Encrypt password method
@@ -276,6 +276,11 @@ namespace ShoppingWebsiteMVC.Controllers
             db.Feedbacks.Add(fed);
             db.SaveChanges();
             return RedirectToAction("MyOrders");
+        }
+        [Authorize]
+        public ActionResult Settings()
+        {
+            return View();
         }
     }
 }

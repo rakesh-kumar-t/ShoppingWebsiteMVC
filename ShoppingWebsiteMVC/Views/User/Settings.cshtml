@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="h2 mt-2">Settings</h2>
+
+<div class="list-group m-3">
+    @Html.ActionLink("Change account details", "Edit", "User", null, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("My Orders", "MyOrders", "User", null, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("My Cart", "Cart", "User", null, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("Logout", "Logout", "User", null, new { @class = "list-group-item list-group-item-action list-group-item-danger" })
+</div>
+
