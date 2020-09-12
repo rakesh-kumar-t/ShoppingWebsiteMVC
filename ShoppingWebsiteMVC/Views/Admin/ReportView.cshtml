@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Transaction>
+
+@{
+    ViewBag.Title = "ReportView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ReportView</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bill.BillNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoofProduct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TDate)
+        </th>
+        <th></th>
+    </tr>
+     @{double sum = 0; }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bill.BillNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoofProduct)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount) @{ sum = sum + item.Amount;}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TDate)
+        </td>
+    </tr>
+}
+
+</table>
+<div class="alert-info p-3">Total Sales Amount : ₹ @sum </div>
+

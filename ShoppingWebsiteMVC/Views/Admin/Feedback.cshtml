@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Feedback>
+
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Feedback</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.product.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeedBack)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.product.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedBack)
+            </td>
+
+
+
+        </tr>
+    }
+
+
+</table>
+@Html.ActionLink("Back", "Settings", null, new { @class = "btn btn-info" })

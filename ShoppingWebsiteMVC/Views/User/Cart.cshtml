@@ -40,13 +40,13 @@
             </td>
         </tr>
     }
-    @Html.ActionLink("Buy All", "BuyAll", "Product",null,new { @class="btn btn-info btn-sm"})
 </table>
+    @Html.ActionLink("Buy All", "BuyAll", "Product",null,new { @class="btn btn-success col-3 "})
 }
 else
 { 
     <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
 }
-
-@Html.ActionLink("Buy More Products", "Index", "Product",null,new { @class="btn btn-success btn-sm m-2"})
+<br />
+@Html.ActionLink("Buy More Products", "Index", "Product",null,new { @class="btn btn-info btn-sm mt-2"})
 

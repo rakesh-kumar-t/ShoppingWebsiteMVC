@@ -13,9 +13,9 @@
                 <input type="submit" value="Search" class="btn btn-dark btn-sm" />
             </form>
     <div class="m-3">
-        @foreach (var item in Model)
+        @foreach (var item in (List<string>)ViewBag.category)
         {
-            @Html.ActionLink(item.CategoryName, "Index", new { category = item.CategoryName }, new { @class = "list-group-item list-group-item-action" })
+            @Html.ActionLink(item, "Index", new { category = item }, new { @class = "list-group-item list-group-item-action" })
         }
         @Html.ActionLink("All Products", "Index", new { category = "All" }, new { @class = "list-group-item list-group-item-action" })
     </div>

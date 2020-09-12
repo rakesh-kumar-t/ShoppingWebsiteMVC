@@ -4,17 +4,32 @@
     ViewBag.Title = "MyOrders";
 }
 
-<h2>MyOrders</h2>
+<h2 class="m-3 h2 alert-success p-2">MyOrders</h2>
 
-<table class="table">
     
-
+@if (Model.ToList().Count > 0)
+{
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoofProduct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TDate)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
 @foreach (var item in Model)
 {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductName)
         </td>
@@ -27,17 +42,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.TDate)
         </td>
-        @{ if (DateTime.Now < item.TDate.AddDays(5))
-           { 
              <td>
-            @Html.ActionLink("Cancel Order", "CancelOrder", new { TId = item.TId, ProductId = item.ProductId })
-             </td>
+        @{if (DateTime.Now < item.TDate.AddDays(5))
+            {
+            @Html.ActionLink("Cancel Order", "CancelOrder", new { TId = item.TId, ProductId = item.ProductId },new {@class="btn btn-danger btn-sm" })
             }
             }
-        <td>
-            @Html.ActionLink("Give Feedback", "Feedback", new { ProductId=item.ProductId })
+            @Html.ActionLink("Give Feedback", "Feedback", new { ProductId = item.ProductId },new { @class="btn btn-info btn-sm"})
         </td>
     </tr>
-}
-
+            }
 </table>
+            }
+
+            else
+            {
+                <div class="alert alert-info p-3">
+                    You haven't ordered anything yet
+                    <a href="/Product" class="btn btn-success btn-sm" >Buy Products</a>
+                </div>
+            }

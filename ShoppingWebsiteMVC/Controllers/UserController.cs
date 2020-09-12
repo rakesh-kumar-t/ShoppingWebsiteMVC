@@ -132,7 +132,7 @@ namespace ShoppingWebsiteMVC.Controllers
             return View(usr);
         }
         //Encrypt password method
-        public string encrypt(string clearText)
+        public static string encrypt(string clearText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);

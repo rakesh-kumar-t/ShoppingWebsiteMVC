@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="m-2">All Products</h2>
+<h2 class="m-1">All Products</h2>
 
 <p>
     <a href="/admin/create" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Product</a>
@@ -37,7 +37,7 @@
 
 @foreach (var item in Model) {
 <tr>
-    <td>
+    <td width="20">
         @Html.DisplayFor(modelItem => item.ProductName)
     </td>
     <td>

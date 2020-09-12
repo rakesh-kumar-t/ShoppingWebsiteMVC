@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Timers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,28 +18,45 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            if (Session["Role"].ToString() == "Admin")
+                return View(db.Products.ToList());
+            else
+                return RedirectToAction("Index", "Product");
         }
         //Get details of a product 
         [Authorize]
         public ActionResult Details(string ProductId)
         {
-            if (ProductId == null)
+            if (Session["Role"].ToString() == "Admin")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (ProductId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(ProductId);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
             }
-            Product product = db.Products.Find(ProductId);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Product");
             }
-            return View(product);
         }
         //Get create view of new product
         [Authorize]
         public ActionResult Create()
         {
-            return View();
+            if (Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Product");
+            }
         }
         //Post create new product
         [Authorize]
@@ -59,16 +77,23 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Edit(string ProductId)
         {
-            if (ProductId == null)
+            if (Session["Role"].ToString() == "Admin")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (ProductId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(ProductId);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
             }
-            Product product = db.Products.Find(ProductId);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Product");
             }
-            return View(product);
         }
         //Post edit product details
         [Authorize]
@@ -88,16 +113,23 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Delete(string ProductId)
         {
-            if (ProductId == null)
+            if (Session["Role"].ToString() == "Admin")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (ProductId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(ProductId);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
             }
-            Product product = db.Products.Find(ProductId);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Product");
             }
-            return View(product);
         }
         //Post Delete product
         [Authorize]
@@ -114,12 +146,21 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Settings()
         {
-            return View();
+            if (Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Settings", "User");
+            }
         }
         //Get edit admin details
         [Authorize]
         public ActionResult AdminEdit()
         {
+            if (Session["Role"].ToString() == "Admin")
+            {
                 string username = User.Identity.Name;
                 User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
                 User model = new User();
@@ -130,6 +171,11 @@ namespace ShoppingWebsiteMVC.Controllers
                 model.City = user.City;
                 model.Country = user.Country;
                 return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Edit", "User");
+            }
             
         }
         //Post admin edit details
@@ -155,6 +201,75 @@ namespace ShoppingWebsiteMVC.Controllers
             return View(usr);
             
         }
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        //Post change password for user
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePassword(User usr)
+        {
+            usr.Password =UserController.encrypt(usr.Password);
+            usr.ConfirmPassword = UserController.encrypt(usr.ConfirmPassword);
+            string username = User.Identity.Name;
+            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+            user.Password = usr.Password;
+            user.ConfirmPassword = usr.ConfirmPassword;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Settings");
+        }
+      
+        [Authorize]
+        public ActionResult Feedback()
+        {
+            if (Session["Role"].ToString() == "Admin")
+            {
+                return View(db.Feedbacks.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Product");
+            }
+        }
+        [Authorize]
+        public ActionResult Report()
+        {
+            if (Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("MyOrders", "User");
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult Report(string TDate)
+        {
+            DateTime dt;
+            if(DateTime.TryParse(TDate,out dt ))
+            {
+                var trs = db.Transactions.ToList();
+                for(int i=0;i<trs.Count;i++)
+                {
+                    if (trs[i].TDate.Month != dt.Month)
+                    {
+                        trs.Remove(trs[i]);
+                        i--;
+                    }
+                }
+                return View("ReportView",trs);
+            }
+            else
+            {
+                return RedirectToAction("Report");
+            }
+        }
+        
         //Dispose the database
         protected override void Dispose(bool disposing)
         {

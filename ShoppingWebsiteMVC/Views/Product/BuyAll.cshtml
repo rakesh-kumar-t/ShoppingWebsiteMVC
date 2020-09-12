@@ -5,37 +5,40 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Confirm Order</h2>
-
-<p>
-   ThankYou @ViewBag.Name
-</p>
-<br />
-<p>
-    Your Order will be delevered to - <br />
-    @ViewBag.Address
-</p>
-<table class="table">
-
-
-    @foreach (var item in Model)
-    {
+<h2>Pay Your Order</h2>
+    <h4>Confirm Payment</h4>
+    <p>
+        ThankYou @ViewBag.Name, for shopping with us
+    <p>Your order will be delivered to: </p>
+    <br />
+    <p>
+        Your Order will be delevered to - <br />
+        <blockquote> @ViewBag.Address</blockquote>
+    </p>
+    <div class="alert-info">Complete your payment by clicking paynow</div>
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoofProduct)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
+            <th colspan="3">
+                Review Your orders
+            </th>
 
         </tr>
-    } 
-    <p> Total Amount to be Paid @ViewBag.TotalSum</p>
-    <br />
 
-    @Html.ActionLink("Pay Now", "ConfirmAllOrder","Product", null,null)
-    
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoofProduct)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+
+            </tr>
+        }
+    <p> Total Amount to be Paid <b>₹@ViewBag.TotalSum</b></p>
+    </table>
+@Html.ActionLink("Pay Now", "ConfirmAllOrder", "Product", null, new { @class="btn btn-success col-4"})

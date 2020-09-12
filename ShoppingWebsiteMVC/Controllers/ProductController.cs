@@ -20,9 +20,13 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if(category==null)
             {
+                var cat= db.Products
+                                  .Select(p => p.CategoryName)
+                                  .Distinct();
+                ViewBag.category = cat.ToList();
                 // returns the category view(Index view)
-                var cat = db.Products.GroupBy(m=>m.CategoryName).Select(y=>y.Count());
-                return View(cat);
+                //var cat = db.Products.GroupBy(m=>m.CategoryName).Select(y=>y.Count());
+                return View();
             }
             else
             {
