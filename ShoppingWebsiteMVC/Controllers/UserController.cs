@@ -157,27 +157,22 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult ChangePassword()
         {
-            string username = User.Identity.Name;
-            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
-            User model = new User();
-            model.Password = user.Password;
-            return View(model);
+            return View();
         }
         //Post change password for user
+        [Authorize]
         [HttpPost]
         public ActionResult ChangePassword(User usr)
         {
             usr.Password = encrypt(usr.Password);
-            if(ModelState.IsValid)
-            {
-                string username = User.Identity.Name;
-                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
-                user.Password = usr.Password;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Login");
-            }
-            return View(usr);
+            usr.ConfirmPassword = encrypt(usr.ConfirmPassword);
+            string username = User.Identity.Name;
+            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+            user.Password = usr.Password;
+            user.ConfirmPassword = usr.ConfirmPassword;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Settings");
         }
         //Get cart page of the user
         [Authorize]
