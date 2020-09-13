@@ -9,7 +9,9 @@ Web UI casestudy - shopping website
 * Sql server 2014 or later
 * Best viewed in Chromium based browser
 
-> *An admin account is added into the project by default at first run. Its credentials are **admin@gmail.com** and password **Admin@123***
+> *An admin account is added into the project by default at first run. Its credentials are: *
+  User ID: **admin@gmail.com** 
+  Password **Admin@123***
 
 #### Project done by
 * [Swathi Madhavan](https://github.com/swathi363)
