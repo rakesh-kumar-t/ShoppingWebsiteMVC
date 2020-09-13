@@ -43,4 +43,25 @@ namespace ShoppingWebsiteMVC.Models
         public virtual ICollection<Transaction> Transactions { get; set; }
 
     }
+    public enum Category
+    {
+        Laptops,
+        SmartPhones,
+        Clothing,
+        Kitchen_Appliances,
+        Footwear,
+        Furniture,
+        Fashion,
+        Utilities,
+        Jewellery,
+        Electricals,
+        Electronics,
+        Wearables,
+        Refrigerators,
+        Home,
+        ToysBaby,
+        Sports,
+        Appliances,
+        Other
+    }
 }

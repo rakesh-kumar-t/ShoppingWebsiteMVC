@@ -34,7 +34,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.CategoryName,new SelectList(Enum.GetValues(typeof(ShoppingWebsiteMVC.Models.Category))),"Select Category",new { @class="form-control"})
             @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
         </div>
     </div>
