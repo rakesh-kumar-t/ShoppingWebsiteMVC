@@ -11,7 +11,7 @@ Web UI casestudy - shopping website
 
 > *An admin account is added into the project by default at first run. Its credentials are:*
 * User ID: **admin@gmail.com** 
-* Password **Admin@123***
+* Password **Admin@123**
 
 #### Project done by
 * [Swathi Madhavan](https://github.com/swathi363)
