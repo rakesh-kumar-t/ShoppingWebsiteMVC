@@ -27,9 +27,10 @@
         </dt>
 
         <dd>
-            <s>  @Html.DisplayFor(model => model.Price) </s> <br />
             @if (Model.Discount != 0)
-            {@(Model.Price - Model.Discount / 100 * Model.Price)}
+            {   <s>  @Html.DisplayFor(model => model.Price) </s> <br />}
+            
+            @(Model.Price - Model.Discount / 100 * Model.Price)
         </dd>
         @if (Model.Discount != 0)
         {
@@ -59,7 +60,7 @@
     <th align="right">
         @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post, new { @class = "form-inline" }))
         {
-            @Html.TextBox("Itemno",null,new { @class = "form-control", @placeholder = "Quantity" } )
+            @Html.TextBox("Itemno","1",new { @class = "form-control", @placeholder = "Quantity"} )
             @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
             <button type="submit" class="btn btn-success btn-sm ml-2" >Add to Cart <i class="fa fa-cart-plus"></i></button>
         }
