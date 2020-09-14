@@ -266,6 +266,11 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult CancelallConfirmed(int TId,int BillNo)
         {
             var transaction = db.Transactions.Find(TId);
+            var ProductId = transaction.ProductId;
+            var products = db.Products.Find(ProductId);
+            products.Units = products.Units + transaction.NoofProduct;
+            db.Entry(products).State = EntityState.Modified;
+            db.SaveChanges();
             double Amount = transaction.Amount;
             db.Transactions.Remove(transaction);
             db.SaveChanges();
