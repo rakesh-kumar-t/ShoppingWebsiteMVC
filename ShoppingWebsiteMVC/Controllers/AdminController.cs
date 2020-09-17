@@ -7,6 +7,7 @@ using System.Net;
 using System.Timers;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 
 namespace ShoppingWebsiteMVC.Controllers
@@ -62,12 +63,25 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,BrandName,Price,Units,Discount,SupplierName")] Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,BrandName,Price,Units,Discount,SupplierName")] Product product,HttpPostedFileBase Proimage)
         {
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
                 db.SaveChanges();
+                if (Proimage != null)
+                {
+                    if (Proimage.ContentLength > 0)
+                    {
+                        if(Path.GetExtension(Proimage.FileName).ToLower()==".jpg"
+                            || Path.GetExtension(Proimage.FileName).ToLower() == ".jpeg"
+                            || Path.GetExtension(Proimage.FileName).ToLower() == ".png")
+                        {
+                            var path = Path.Combine(Server.MapPath("~/Images/"), product.ProductId+".jpg");
+                            Proimage.SaveAs(path);
+                        }
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
