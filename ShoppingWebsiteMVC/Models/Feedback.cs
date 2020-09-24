@@ -19,7 +19,7 @@ namespace ShoppingWebsiteMVC.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
-        public virtual Product product { get; set; }
-        public virtual User user { get; set; }
+        public virtual Product Products { get; set; }
+        public virtual User Users { get; set; }
     }
 }

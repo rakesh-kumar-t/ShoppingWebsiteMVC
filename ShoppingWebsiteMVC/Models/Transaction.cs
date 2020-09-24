@@ -18,15 +18,14 @@ namespace ShoppingWebsiteMVC.Models
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
         public string ProductId { get; set; }
-        public string ProductName { get; set; }
         public int NoofProduct { get; set; }
         public double Amount { get; set; }
         [DataType(DataType.Date)]
         public DateTime TDate { get; set; }
 
-        public virtual User user{get;set;}
-        public virtual Product product { get; set; }
-        public virtual Bill Bill { get; set; }
+        public virtual User Users{get;set;}
+        public virtual Product Products { get; set; }
+        public virtual Bill Bills { get; set; }
         
     }
 }

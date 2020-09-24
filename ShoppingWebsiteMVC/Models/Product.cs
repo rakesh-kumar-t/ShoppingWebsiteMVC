@@ -41,6 +41,7 @@ namespace ShoppingWebsiteMVC.Models
 
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
     }
     public enum Category

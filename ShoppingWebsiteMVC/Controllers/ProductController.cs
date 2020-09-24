@@ -128,7 +128,6 @@ namespace ShoppingWebsiteMVC.Controllers
                         Cart cart = new Cart();
                         cart.UserId = Session["UserId"].ToString();
                         cart.ProductId = p.ProductId;
-                        cart.ProductName = p.ProductName;
                         cart.NoofProduct = noofunits;
                         cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
                         db.Carts.Add(cart);
@@ -175,7 +174,6 @@ namespace ShoppingWebsiteMVC.Controllers
                     Trx.BillNo = t;
                     Trx.UserId = c.UserId;
                     Trx.ProductId = c.ProductId;
-                    Trx.ProductName = c.ProductName;
                     Trx.NoofProduct = c.NoofProduct;
                     Trx.Amount = c.Amount;
                     Trx.TDate = DateTime.Now;
@@ -225,7 +223,6 @@ namespace ShoppingWebsiteMVC.Controllers
                 Trx.UserId = cart[i].UserId;
                 var c = cart[i].ProductId.ToString();
                 Trx.ProductId = c;
-                Trx.ProductName = cart[i].ProductName;
                 Trx.NoofProduct = cart[i].NoofProduct;
                 Trx.Amount = cart[i].Amount;
                 sum = sum + Trx.Amount;
