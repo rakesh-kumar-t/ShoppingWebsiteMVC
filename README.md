@@ -4,7 +4,7 @@ Web UI casestudy - shopping website
 > This is training time casestudy project done by us. The project contains admin-user authentication and database manipulation using local sql server.
 
 ---
-**Recommeneded Environment**
+**Recommended Environment**
 * Visual Studio 2019
 * Sql server 2014 or later
 * Best viewed in Chromium based browser
