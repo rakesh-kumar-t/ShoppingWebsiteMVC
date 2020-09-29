@@ -68,7 +68,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product,HttpPostedFileBase Proimage)
+        public ActionResult Create([Bind(Include = " ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product,HttpPostedFileBase Proimage)
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();
