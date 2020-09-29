@@ -295,6 +295,19 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
+        public ActionResult Suppliers()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View(db.Suppliers.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Index","User");
+            }
+        }
+
+        [Authorize]
         public ActionResult NewSupplier()
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
@@ -304,7 +317,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","User");
 
             }
         }
@@ -328,18 +341,6 @@ namespace ShoppingWebsiteMVC.Controllers
                 return RedirectToAction("Index","User");
             }
         }
-        public ActionResult SupplierView()
-        {
-            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
-            {
-                return View(db.Suppliers.ToList());
-            }
-            else
-            {
-                return RedirectToAction("Index","User");
-            }
-        }
-
         [Authorize]
         public ActionResult EditSupplier(string SupplierId)
         {
@@ -383,6 +384,97 @@ namespace ShoppingWebsiteMVC.Controllers
             else
             {
                 return RedirectToAction("Index","User");
+            }
+        }
+        [Authorize]
+        public ActionResult Categories()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+        [Authorize]
+        public ActionResult NewCategory()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+
+            }
+            else
+            {
+                return RedirectToAction("Index","User");
+
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewCategory([Bind(Include = "Name")] Category category)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Categories.Add(category);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(category);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+        [Authorize]
+        public ActionResult EditCategory(string id)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                }
+                Category category = db.Categories.Find(id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+
+                }
+                return View(category);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCategory([Bind(Include = "CategoryId,Name")] Category category)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(category).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+                return View(category);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
             }
         }
 
