@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        Models.DbContext db = new Models.DbContext();
+        DbShopContext db = new DbShopContext();
         [Authorize]
         public ActionResult Index()
         {
@@ -68,7 +68,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product,HttpPostedFileBase Proimage)
+        public ActionResult Create([Bind(Include = "ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product,HttpPostedFileBase Proimage)
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();

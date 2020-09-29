@@ -133,7 +133,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\Supplier.cs" />
@@ -143,7 +142,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\DbContext.cs" />
+    <Compile Include="Models\DbShopContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -461,6 +460,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
