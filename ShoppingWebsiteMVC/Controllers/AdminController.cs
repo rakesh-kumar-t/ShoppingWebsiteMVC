@@ -206,7 +206,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult AdminEdit()
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin")
             {
                 string username = User.Identity.Name;
                 User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
@@ -251,7 +251,12 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult ChangePassword()
         {
-            return View();
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "User");
         }
         //Post change password for user
         [Authorize]

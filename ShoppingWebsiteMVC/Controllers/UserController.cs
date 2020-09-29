@@ -89,14 +89,8 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Include = "UserId,Firstname,Lastname,Password,ConfirmPassword,Address,ContactNumber,City,Country")]User usr)
         {
-            if(Session["Role"] != null && Session["Role"].Equals("Admin"))
-            {
-                usr.Role = "Admin";
-            }
-            else
-            {
+            
                 usr.Role = "User";
-            }
             
                 usr.Password = encrypt(usr.Password);
                 usr.ConfirmPassword = encrypt(usr.ConfirmPassword);
