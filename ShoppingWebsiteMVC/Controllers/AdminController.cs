@@ -171,7 +171,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Settings()
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin")
             {
                 return View();
             }
@@ -391,7 +391,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-                return View();
+                return View(db.Categories.ToList());
             }
             else
             {
@@ -482,7 +482,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-                return View();
+                return View(db.SubCategories.ToList());
             }
             else
             {
@@ -494,6 +494,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
+                ViewBag.Category = db.Categories.ToList();
                 return View();
             }
             else
@@ -507,6 +508,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult NewSubCategory([Bind(Include = "Name")] SubCategory subcategory)
         {
+            ViewBag.Category = db.Categories.ToList();
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
                 if (ModelState.IsValid)
@@ -527,6 +529,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
+                ViewBag.Category = db.Categories.ToList();
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -553,6 +556,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
+                ViewBag.Category = db.Categories.ToList();
                 if (ModelState.IsValid)
                 {
                     db.Entry(subcategory).State = EntityState.Modified;

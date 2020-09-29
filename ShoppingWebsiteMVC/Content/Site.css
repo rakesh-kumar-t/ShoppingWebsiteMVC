@@ -28,13 +28,15 @@ body {
 
 .text-box {
     border: none;
+    border-bottom: 1.5px solid grey;
+}
+.text-box:focus {
     border-bottom: 1.5px solid blue;
 }
 textarea:focus, input:focus {
     outline: none;
 }
 .form-control:focus {
-    border-color: inherit;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
