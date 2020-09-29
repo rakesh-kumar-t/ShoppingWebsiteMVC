@@ -294,7 +294,108 @@ namespace ShoppingWebsiteMVC.Controllers
                 return RedirectToAction("Report");
             }
         }
-        
+        [Authorize]
+        public ActionResult CreateSupplier()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+
+            }
+            else
+            {
+                return RedirectToAction("Login");
+
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSupplier([Bind(Include = "SupplierId,SupplierName,Location")] Supplier supplier)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (ModelState.IsValid)
+                {
+                    
+                        db.Suppliers.Add(supplier);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    
+                }
+                return View(supplier);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        public ActionResult SupplierView()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+
+
+
+                return View(db.Suppliers.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        [Authorize]
+        public ActionResult EditSupplier(string SupplierId)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+
+
+
+                if (SupplierId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                }
+                Supplier supplier = db.Suppliers.Find(SupplierId);
+                if (supplier == null)
+                {
+                    return HttpNotFound();
+
+                }
+                return View(supplier);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSupplier([Bind(Include = "SupplierId,SupplierName,Location")] Supplier supplier)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(supplier).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+                return View(supplier);
+
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+
         //Dispose the database
         protected override void Dispose(bool disposing)
         {

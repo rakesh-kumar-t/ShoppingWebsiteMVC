@@ -9,7 +9,6 @@ namespace ShoppingWebsiteMVC.Models
     public class ShoppingDbContext:DbContext
     {
         public ShoppingDbContext()
-        public ShoppingContext()
         {
 
         }
