@@ -96,26 +96,34 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Edit Product details
         [Authorize]
-        public ActionResult Edit(string ProductId)
+        public ActionResult Edit(int? id)
         {
-            ViewBag.SubCategory = db.SubCategories.ToList();
-            ViewBag.Supplier = db.Suppliers.ToList();
-            if (Session["UserId"]!=null&&Session["Role"].ToString() == "Admin")
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-                if (ProductId == null)
+                if (id != null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    int ProductId = (int)id;
+                    ViewBag.SubCategory = db.SubCategories.ToList();
+                    ViewBag.Supplier = db.Suppliers.ToList();
+                    if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+                    {
+                        Product product = db.Products.Find(ProductId);
+                        if (product == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(product);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
-                Product product = db.Products.Find(ProductId);
-                if (product == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(product);
+                return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index","User");
             }
         }
         //Post edit product details
