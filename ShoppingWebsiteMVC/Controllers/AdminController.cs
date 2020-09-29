@@ -100,7 +100,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null&&Session["Role"].ToString() == "Admin")
             {
                 if (ProductId == null)
                 {

@@ -7,69 +7,76 @@
 
 
 }
-
+<div>
+    @Html.ActionLink(" Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm fa fa-backward mb-2" })
+</div>
 @using (Html.BeginForm("Create","Admin",FormMethod.Post,new { enctype="multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
     
-<div class="form-horizontal">
+<div class="form-horizontal ">
     <h4>New Product</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+<div class="form-row">
     <div class="form-group col-md-4">
         @Html.LabelFor(model => model.ProductName)
-            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control",@placeholder="Enter ProductName" } })
+        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group col-md-4">
-        @Html.LabelFor(model => model.SubCategoryId,"Category Name")
-            @Html.DropDownListFor(model => model.SubCategoryId,new SelectList(ViewBag.SubCategory, "SubCategoryId","Name"), "Select Category",new { @class="form-control"})
-            @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
+        @Html.LabelFor(model => model.SubCategoryId, "Category Name")
+        @Html.DropDownListFor(model => model.SubCategoryId, new SelectList(ViewBag.SubCategory, "SubCategoryId", "Name"), "Select Category", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
     </div>
+</div>
+<div class="form-row">
     <div class="form-group col-md-4">
         @Html.LabelFor(model => model.BrandName)
-            @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control",@placeholder = "Enter Brand Name" } })
+        @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group col-md-4">
         @Html.LabelFor(model => model.Price)
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Price" } })
+        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
     </div>
-
+</div>
+<div class="form-row">
     <div class="form-group col-md-4">
         @Html.LabelFor(model => model.Units)
-            @Html.EditorFor(model => model.Units, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Units, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Units, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter the Stock" } })
+        @Html.ValidationMessageFor(model => model.Units, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group col-md-4">
         @Html.LabelFor(model => model.Discount)
-            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Discount if any" } })
+        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
     </div>
+</div>
+<div class="form-row">
     <div class="form-group col-md-4">
-        @Html.LabelFor(model => model.SupplierId,"Supplier Name")
-            @Html.DropDownListFor(model => model.SupplierId, new SelectList(ViewBag.Supplier, "SupplierId", "Name"), "Select Supplier", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+        @Html.LabelFor(model => model.SupplierId, "Supplier Name")
+        @Html.DropDownListFor(model => model.SupplierId, new SelectList(ViewBag.Supplier, "SupplierId", "Name"), "Select Supplier", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
     </div>
+</div>
+<div class="form-row">
     <div class="form-group col-md-4">
-        <input type="file" class="custom-file-input" id="Proimage" name="Proimage">
         <label class="custom-file-label" for="Proimage">Choose file</label>
+        <input type="file" class="custom-file-input" id="Proimage" name="Proimage">
     </div>
-
-    <div class="form-group col-md-4">
-        <input type="submit" value="Add" class="btn btn-success btn-sm" />
+    <div class="form-group col-md-6 ml-2">
+        <input type="submit" value="Add" class="btn btn-success col-md-4" />
     </div>
+</div>
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index",null,new { @class="btn btn-success"})
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
