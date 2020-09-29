@@ -20,7 +20,7 @@ namespace ShoppingWebsiteMVC.Controllers
             string category = id;
             if(category==null)
             {
-                return View(db.Categories.ToList());
+                return View(db.Categories.Where(p => p.Name != null).ToList());
             }
             else
             {
