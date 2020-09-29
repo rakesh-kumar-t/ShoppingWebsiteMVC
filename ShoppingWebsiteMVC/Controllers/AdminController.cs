@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        ShoppingBagContext db = new ShoppingBagContext();
+        DBShoppingContext db = new DBShoppingContext();
         [Authorize]
         public ActionResult Index()
         {
