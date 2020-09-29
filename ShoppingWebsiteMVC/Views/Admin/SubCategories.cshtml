@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "SubCategories";
+    ViewBag.five = "active";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
@@ -22,20 +23,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SubCategoryId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SubCategoryId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SubCategoryId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SubCategoryId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SubCategoryId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SubCategoryId })
+            </td>
+        </tr>
+    }
 
 </table>

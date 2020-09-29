@@ -1,47 +1,70 @@
 ﻿<!-- Sidebar  -->
-<nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>Bootstrap Sidebar</h3>
+<nav id="sidebar" class="bg-light text-dark">
+    <div class="sidebar-header bg-light">
+        <h3 class="text-primary">Menu</h3>
     </div>
 
     <ul class="list-unstyled components">
-        <p>Dummy Heading</p>
-        <li class="active">
-            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
+        <li class="@ViewBag.one">
+            <a href="/Admin">Home</a>
+        </li>
+        <li class="@ViewBag.two">
+            <a href="#productmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
+            <ul class="collapse list-unstyled" id="productmenu">
                 <li>
-                    <a href="#">Home 1</a>
+                    <a href="/Admin/Create">Add Product</a>
+                </li>
+            </ul>
+        </li>
+        <li class="@ViewBag.three">
+            <a href="#suppliermenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Supplier</a>
+            <ul class="collapse list-unstyled" id="suppliermenu">
+                <li>
+                    <a href="/Admin/Suppliers">View Suppliers</a>
                 </li>
                 <li>
-                    <a href="#">Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Home 3</a>
+                    <a href="/Admin/NewSupplier">Add Supplier</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="#">About</a>
-        </li>
-        <li>
-            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
+        <li class="@ViewBag.four">
+            <a href="#categorymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Category</a>
+            <ul class="collapse list-unstyled" id="categorymenu">
                 <li>
-                    <a href="#">Page 1</a>
+                    <a href="/Admin/Categories">View Categories</a>
                 </li>
                 <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
+                    <a href="/Admin/NewCategory">Add Category</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="#">Portfolio</a>
+        <li class="@ViewBag.five">
+            <a href="#subcatmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">SubCategory</a>
+            <ul class="collapse list-unstyled" id="subcatmenu">
+                <li>
+                    <a href="/Admin/SubCategories">View Subcategories</a>
+                </li>
+                <li>
+                    <a href="/Admin/NewSubCategory">Add Subcategory</a>
+                </li>
+            </ul>
         </li>
-        <li>
-            <a href="#">Contact</a>
+        <li class="@ViewBag.six">
+            <a href="/Admin/Feedback">Feedbacks</a>
+        </li>
+        <li class="@ViewBag.seven">
+            <a href="/Admin/Report">Reports</a>
+        </li>
+        <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed p-0 pl-2">
+            <small>Account</small>
+        </li>
+        <li class="small @ViewBag.eight">
+            <a href="/Admin/AdminEdit">Change details</a>
+        </li>
+        <li class="small @ViewBag.nine">
+            <a href="/Admin/ChangePassword">Change Password</a>
         </li>
     </ul>
 

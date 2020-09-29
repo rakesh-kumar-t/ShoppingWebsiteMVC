@@ -19,7 +19,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin")
             {
                 
                 return View(db.Products.ToList());

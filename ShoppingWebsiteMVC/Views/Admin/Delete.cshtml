@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
+    ViewBag.one = "active";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 
@@ -30,7 +31,7 @@
             @Html.DisplayFor(model => model.BrandName)
         </dd>
 
-            Price: ₹ @Html.DisplayFor(model => model.Price)
+        Price: ₹ @Html.DisplayFor(model => model.Price)
 
         <dt>
             @Html.DisplayNameFor(model => model.Units)
@@ -58,12 +59,13 @@
 
     </div>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <button type="submit"  class="btn btn-danger" >Clear Stock <i class="fa fa-remove"></i></button>
-            @Html.ActionLink("Back to List", "Index",null,new { @class="btn btn-info"})
+            <button type="submit" class="btn btn-danger">Clear Stock <i class="fa fa-remove"></i></button>
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
         </div>
     }
 </div>

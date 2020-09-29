@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "AdminEdit";
+    ViewBag.eight = "active";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
@@ -11,7 +12,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4 class="m-2">Edit Details</h4>
         <hr />
@@ -68,8 +69,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" value="Save" class="btn btn-info" ><i class="fa fa-save"></i> Save</button>
-                @Html.ActionLink("Back to List", "Settings",null,new { @class="btn btn-success"})
+                <button type="submit" value="Save" class="btn btn-info"><i class="fa fa-save"></i> Save</button>
+                @Html.ActionLink("Back to List", "Settings", null, new { @class = "btn btn-success" })
             </div>
         </div>
     </div>
