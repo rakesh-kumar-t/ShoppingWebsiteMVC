@@ -8,15 +8,12 @@
 
 }
 
-<h2>Create</h2>
-
-
 @using (Html.BeginForm("Create","Admin",FormMethod.Post,new { enctype="multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Product</h4>
+    <h4>New Product</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -60,11 +57,12 @@
             @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-4">
-        @Html.TextBox("Proimage", null, new { @type="file"})
+        <input type="file" class="custom-file-input" id="Proimage">
+        <label class="custom-file-label" for="Proimage">Choose file</label>
     </div>
 
     <div class="form-group col-md-4">
-            <input type="submit" value="Add" class="btn btn-success btn-sm" />
+        <input type="submit" value="Add" class="btn btn-success btn-sm" />
     </div>
 </div>
 }
