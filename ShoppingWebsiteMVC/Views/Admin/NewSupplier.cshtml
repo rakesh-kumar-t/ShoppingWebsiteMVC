@@ -2,14 +2,15 @@
 
 @{
     ViewBag.Title = "CreateSupplier";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>CreateSupplier</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Supplier</h4>
         <hr />

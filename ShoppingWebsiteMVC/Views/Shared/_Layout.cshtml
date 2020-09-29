@@ -8,59 +8,67 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="//unpkg.com/bootstrap-select-country@4.0.0/dist/css/bootstrap-select-country.min.css" type="text/css" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="navbar-brand">
-            <span><i class="fa fa-shopping-cart"></i></span>
-            ShoppingBag
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="nav navbar-nav ml-auto">
-                @if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
-                {
-                    <li class="nav-item"><a href="/admin/" class="nav-link">Home <i class="fa fa-home"></i></a></li>
-                    <li class="nav-item"><a href="/admin/create" class="nav-link">New Product<i class="fa fa-plus"></i></a></li>
-                }
-                else
-                {
-                    <li class="nav-item"><a href="../Product" class="nav-link">Home <i class="fa fa-home"></i></a></li>
-                    <li class="nav-item"><a href="../User/Myorders" class="nav-link">My Orders<i class="fa fa-shopping-bag"></i></a></li>
-                    <li class="nav-item"><a href="../User/Cart" class="nav-link">My Cart <i class="fa fa-shopping-cart"></i></a></li>
+    <div class="wrapper">
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <div class="navbar-brand">
+                    <span><i class="fa fa-shopping-cart"></i></span>
+                    ShoppingBag
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav navbar-nav ml-auto">
+                        @if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+                        {
+                            <li class="nav-item"><a href="/admin/" class="nav-link">Home <i class="fa fa-home"></i></a></li>
+                            <li class="nav-item"><a href="/admin/create" class="nav-link">New Product<i class="fa fa-plus"></i></a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a href="../Product" class="nav-link">Home <i class="fa fa-home"></i></a></li>
+                            <li class="nav-item"><a href="../User/Myorders" class="nav-link">My Orders<i class="fa fa-shopping-bag"></i></a></li>
+                            <li class="nav-item"><a href="../User/Cart" class="nav-link">My Cart <i class="fa fa-shopping-cart"></i></a></li>
 
-                }
-                @if (Session["UserId"] != null)
-                {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hi @Session["Username"]<i class="fa fa-user"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -30px;">
-                            <a class="dropdown-item" href="/@Session["Role"]/Settings">Settings</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../User/Logout">Logout <i class="fa fa-sign-out"></i></a>
-                        </div>
-                    </li>
-                }
-            </ul>
+                        }
+                        @if (Session["UserId"] != null)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Hi @Session["Username"]<i class="fa fa-user"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -30px;">
+                                    <a class="dropdown-item" href="/@Session["Role"]/Settings">Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="../User/Logout">Logout <i class="fa fa-sign-out"></i></a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year -  ShoppingBag</p>
+                </footer>
+            </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year -  ShoppingBag</p>
-        </footer>
-    </div>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    <script src="//unpkg.com/bootstrap-select-country@4.0.0/dist/js/bootstrap-select-country.min.js"></script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <script src="//unpkg.com/bootstrap-select-country@4.0.0/dist/js/bootstrap-select-country.min.js"></script>
+
+        
 </body>
-
 </html>
