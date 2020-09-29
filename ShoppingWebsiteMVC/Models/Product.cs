@@ -10,6 +10,7 @@ namespace ShoppingWebsiteMVC.Models
     public class Product
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         [Display(Name ="ProductCode")]
         public string ProductId { get; set; }

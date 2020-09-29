@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        ShoppingDbContext db = new ShoppingDbContext();
+        ShoppingBagContext db = new ShoppingBagContext();
         [Authorize]
         public ActionResult Index()
         {
@@ -506,7 +506,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult NewSubCategory([Bind(Include = "Name")] SubCategory subcategory)
+        public ActionResult NewSubCategory([Bind(Include = "Name,CategoryId")] SubCategory subcategory)
         {
             ViewBag.Category = db.Categories.ToList();
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")

@@ -16,7 +16,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class UserController : Controller
     {
-        ShoppingDbContext db = new ShoppingDbContext();
+        ShoppingBagContext db = new ShoppingBagContext();
         // GET: User Home page and Login
         public ActionResult Index()
         {

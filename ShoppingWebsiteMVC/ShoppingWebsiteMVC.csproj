@@ -142,7 +142,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\ShoppingDbContext.cs" />
+    <Compile Include="Models\ShoppingBagContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

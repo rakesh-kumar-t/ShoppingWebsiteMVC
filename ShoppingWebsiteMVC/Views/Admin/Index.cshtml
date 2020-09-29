@@ -11,66 +11,68 @@
 <p>
     <a href="/admin/create" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Product</a>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BrandName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Units)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Supplier.Name)
-        </th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="table-responsive">
+    <table class="table table-primary">
         <tr>
-            <td width="20">
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubCategory.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Units)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)%
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.Name)
-            </td>
-            <td>
-                <a href="/admin/edit?ProductId=@item.ProductId" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                <a href="/admin/details?ProductId=@item.ProductId" class="btn btn-dark btn-sm"><i class="fa fa-edit"></i> Details</a>
-                <a href="/admin/delete?ProductId=@item.ProductId" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Clear stock</a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BrandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier.Name)
+            </th>
+            <th>Actions</th>
         </tr>
-    }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="20">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubCategory.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Units)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.Name)
+                </td>
+                <td>
+                    <a href="/admin/edit?ProductId=@item.ProductId" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="/admin/details?ProductId=@item.ProductId" class="btn btn-dark btn-sm"><i class="fa fa-edit"></i> Details</a>
+                    <a href="/admin/delete?ProductId=@item.ProductId" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Clear stock</a>
+                </td>
+            </tr>
+        }
 
 
-</table>
+    </table>
+</div>
 <div>
     <a href="/admin/NewSupplier" class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Add Supplier</a>
     <a href="/admin/SupplierView" class="btn btn-dark btn-sm"><i class="fa fa-eye"></i> View Suppliers</a>
