@@ -20,6 +20,22 @@ body {
 
 .card {
     border-radius: 10px;
-    box-shadow: 0px 10px 20px 0px rgba(50, 50, 50, 0.52);
+}
+
+#logincard {
+    box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.52);
+}
+
+.text-box {
+    border: none;
+    border-bottom: 1.5px solid blue;
+}
+textarea:focus, input:focus {
+    outline: none;
+}
+.form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
