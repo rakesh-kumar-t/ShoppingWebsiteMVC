@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BrandName)
@@ -30,7 +30,7 @@
             @Html.DisplayNameFor(model => model.Discount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SupplierName)
+            @Html.DisplayNameFor(model => model.Supplier.Name)
         </th>
         <th>Actions</th>
     </tr>
@@ -41,7 +41,7 @@
         @Html.DisplayFor(modelItem => item.ProductName)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.CategoryName)
+        @Html.DisplayFor(modelItem => item.SubCategory.Category.Name)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.BrandName)
@@ -56,7 +56,7 @@
         @Html.DisplayFor(modelItem => item.Discount)%
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.SupplierName)
+        @Html.DisplayFor(modelItem => item.Supplier.Name)
     </td>
     <td>
         <a href="/admin/edit?ProductId=@item.ProductId" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>

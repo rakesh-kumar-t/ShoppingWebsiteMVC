@@ -20,7 +20,10 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult Index()
         {
             if (Session["Role"].ToString() == "Admin")
+            {
+                
                 return View(db.Products.ToList());
+            }
             else
                 return RedirectToAction("Index", "Product");
         }
@@ -52,6 +55,8 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["Role"].ToString() == "Admin")
             {
+                ViewBag.SubCategory = db.SubCategories.ToList();
+                ViewBag.Supplier = db.Suppliers.ToList();
                 return View();
             }
             else
@@ -65,6 +70,8 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,CategoryName,BrandName,Price,Units,Discount,SupplierName")] Product product,HttpPostedFileBase Proimage)
         {
+            ViewBag.SubCategory = db.SubCategories.ToList();
+            ViewBag.Supplier = db.Suppliers.ToList();
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -91,6 +98,8 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Edit(string ProductId)
         {
+            ViewBag.SubCategory = db.SubCategories.ToList();
+            ViewBag.Supplier = db.Suppliers.ToList();
             if (Session["Role"].ToString() == "Admin")
             {
                 if (ProductId == null)
@@ -115,6 +124,8 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductId,ProductName,CategoryName,BrandName,Price,Units,Discount,SupplierName")] Product product)
         {
+            ViewBag.SubCategory = db.SubCategories.ToList();
+            ViewBag.Supplier = db.Suppliers.ToList();
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;

@@ -16,9 +16,7 @@ namespace ShoppingWebsiteMVC.Models
         [Required]
         [Display(Name ="ProductName")]
         public string ProductName { get; set; }
-        [Required]
-        [Display(Name ="Category")]
-        public string CategoryName { get; set; }
+
         [Required]
         [Display(Name ="Brand")]
         public string BrandName { get; set; }
@@ -30,9 +28,8 @@ namespace ShoppingWebsiteMVC.Models
         public int Units { get; set; }
         [Display(Name ="Discount")]
         public double Discount { get; set; }
-        [Required]
-        [Display(Name ="SupplierName")]
-        public string SupplierName { get; set; }
+        public int SubCategoryId { get; set; }
+        public int SupplierId { get; set; }
         public double GetAmount(double price,double discount,int units)
         {
             double totamount = (price - (discount / 100) * price) * units;
@@ -42,27 +39,9 @@ namespace ShoppingWebsiteMVC.Models
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
+        public virtual Supplier Supplier { get; set; }
 
     }
-    public enum Category
-    {
-        Laptops,
-        SmartPhones,
-        Clothing,
-        Kitchen_Appliances,
-        Footwear,
-        Furniture,
-        Fashion,
-        Utilities,
-        Jewellery,
-        Electricals,
-        Electronics,
-        Wearables,
-        Refrigerators,
-        Home,
-        ToysBaby,
-        Sports,
-        Appliances,
-        Other
-    }
+    
 }

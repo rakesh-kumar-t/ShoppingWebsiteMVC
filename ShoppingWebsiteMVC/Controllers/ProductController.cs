@@ -20,10 +20,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if(category==null)
             {
-                var cat= db.Products
-                                  .Select(p => p.CategoryName)
-                                  .Distinct();
-                ViewBag.category = cat.ToList();
+                ViewBag.category = db.Categories.ToList();
                 // returns the category view(Index view)
                 //var cat = db.Products.GroupBy(m=>m.CategoryName).Select(y=>y.Count());
                 return View();
@@ -37,7 +34,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
                 else
                 {
-                    var products = db.Products.Where(p => p.CategoryName.Equals(category)).ToList();
+                    var products = db.Products.Where(p => p.SubCategory.Category.Name.Equals(category)).ToList();
                         
                     if (products != null)
                     {
@@ -67,7 +64,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 list = db.Products.Where(p => p.ProductName.ToLower().Equals(ProductName.ToLower())).ToList();
                 if (list.Count == 0)
                 {
-                    list = db.Products.Where(p => p.CategoryName.ToLower().Equals(ProductName.ToLower())).ToList();
+                    list = db.Products.Where(p => p.SubCategory.Category.Name.ToLower().Equals(ProductName.ToLower())).ToList();
                     if (list.Count == 0)
                     {
                         list = db.Products.Where(p => p.BrandName.ToLower().Equals(ProductName.ToLower())).ToList();
