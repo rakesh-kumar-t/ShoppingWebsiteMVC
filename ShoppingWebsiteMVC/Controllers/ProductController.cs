@@ -12,7 +12,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class ProductController : Controller
     {
-        ShoppingContext db = new ShoppingContext();
+        ShoppingDbContext db = new ShoppingDbContext();
         // GET : Products by Category
         [Authorize]
         [HttpGet]
