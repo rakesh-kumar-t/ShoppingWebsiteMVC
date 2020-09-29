@@ -295,7 +295,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult CreateSupplier()
+        public ActionResult NewSupplier()
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
@@ -311,37 +311,32 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSupplier([Bind(Include = "SupplierId,SupplierName,Location")] Supplier supplier)
+        public ActionResult NewSupplier([Bind(Include = "Name,Location")] Supplier supplier)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
                 if (ModelState.IsValid)
                 {
-                    
-                        db.Suppliers.Add(supplier);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    
+                    db.Suppliers.Add(supplier);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 return View(supplier);
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","User");
             }
         }
         public ActionResult SupplierView()
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-
-
-
                 return View(db.Suppliers.ToList());
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","User");
             }
         }
 
@@ -350,9 +345,6 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-
-
-
                 if (SupplierId == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -368,7 +360,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","User");
 
             }
         }
@@ -387,11 +379,10 @@ namespace ShoppingWebsiteMVC.Controllers
 
                 }
                 return View(supplier);
-
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","User");
             }
         }
 
