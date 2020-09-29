@@ -16,7 +16,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class UserController : Controller
     {
-        ShoppingBagContext db = new ShoppingBagContext();
+        DBShoppingContext db = new DBShoppingContext();
         // GET: User Home page and Login
         public ActionResult Index(string ReturnUrl)
         {
@@ -61,8 +61,6 @@ namespace ShoppingWebsiteMVC.Controllers
                 Session["Role"] = user.Role.ToString();
                 if (user.Role == "Admin")
                 {
-                    if (TempData["ReturnUrl"] != null)
-                        return Redirect(TempData["ReturnUrl"].ToString());
                     return RedirectToAction("Index", "Admin");
                 }
                 else

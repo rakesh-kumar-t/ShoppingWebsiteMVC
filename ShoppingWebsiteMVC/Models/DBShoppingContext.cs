@@ -6,9 +6,9 @@ using System.Data.Entity;
 
 namespace ShoppingWebsiteMVC.Models
 {
-    public class ShoppingBagContext:DbContext
+    public class DBShoppingContext:DbContext
     {
-        public ShoppingBagContext()
+        public DBShoppingContext()
         {
 
         }

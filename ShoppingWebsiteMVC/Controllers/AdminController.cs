@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        ShoppingBagContext db = new ShoppingBagContext();
+        DBShoppingContext db = new DBShoppingContext();
         [Authorize]
         public ActionResult Index()
         {
@@ -468,7 +468,6 @@ namespace ShoppingWebsiteMVC.Controllers
                     db.Entry(category).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-
                 }
                 return View(category);
             }
