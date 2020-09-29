@@ -36,7 +36,7 @@ namespace ShoppingWebsiteMVC.Controllers
                     if (subcategory != null)
                     {
                         // return the View named Products with the required category lists 
-                        return View("Products",subcategory);
+                        return View("SubCategory",subcategory);
                     }
                     else
                     {
@@ -49,8 +49,9 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         
         //Get Search product by productname
-        public ActionResult Search(string ProductName)
+        public ActionResult Search(string id)
         {
+            string ProductName = id;
             var list = new List<Product>();
             if(String.IsNullOrEmpty(ProductName))
             {
