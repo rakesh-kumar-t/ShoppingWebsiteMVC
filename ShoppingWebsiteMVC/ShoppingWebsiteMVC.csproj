@@ -456,6 +456,8 @@
     <Content Include="Views\Admin\EditSubCategory.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Images\**" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
