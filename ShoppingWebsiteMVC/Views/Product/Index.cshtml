@@ -1,21 +1,22 @@
-﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Product>
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Category>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-            <form method="get" action="/Product/Search" class="form-inline m-2">
-                <div class="h6 m-2" >
-                    Shop By Category
-                </div>
-                @Html.TextBox("ProductName",null, new { @class = "form-control" })
-                <input type="submit" value="Search" class="btn btn-dark btn-sm" />
-            </form>
-    <div class="m-3">
-        @foreach (var item in (List<string>)ViewBag.category)
-        {
-            @Html.ActionLink(item, "Index", new { category = item }, new { @class = "list-group-item list-group-item-action" })
-        }
-        @Html.ActionLink("All Products", "Index", new { category = "All" }, new { @class = "list-group-item list-group-item-action" })
+<form method="get" action="/Product/Search" class="form-inline m-2">
+    <div class="h6 m-2">
+        Shop By Category
     </div>
+    @Html.TextBox("ProductName", null, new { @class = "form-control" })
+    <input type="submit" value="Search" class="btn btn-dark btn-sm" />
+</form>
+<div class="m-3">
+    @foreach (var item in Model)
+    {
+        @Html.ActionLink(item.Name, "Index", new { id = item.Name }, new { @class = "list-group-item list-group-item-action" })
+    }
+    @Html.ActionLink("All Products", "Index", new { id = "All" }, new { @class = "list-group-item list-group-item-action" })
+</div>
+

@@ -16,14 +16,12 @@ namespace ShoppingWebsiteMVC.Controllers
         // GET : Products by Category
         [Authorize]
         [HttpGet]
-        public ActionResult Index(string category)
+        public ActionResult Index(string id)
         {
+            string category = id;
             if(category==null)
             {
-                ViewBag.category = db.Categories.ToList();
-                // returns the category view(Index view)
-                //var cat = db.Products.GroupBy(m=>m.CategoryName).Select(y=>y.Count());
-                return View();
+                return View(db.Categories.ToList());
             }
             else
             {
