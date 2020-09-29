@@ -14,7 +14,6 @@ namespace ShoppingWebsiteMVC.Controllers
     {
         ShoppingBagContext db = new ShoppingBagContext();
         // GET : Products by Category
-        [Authorize]
         [HttpGet]
         public ActionResult Index(string id)
         {
@@ -32,12 +31,12 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
                 else
                 {
-                    var products = db.Products.Where(p => p.SubCategory.Category.Name.Equals(category)).ToList();
+                    var subcategory = db.SubCategories.Where(p => p.Category.Name.Equals(category)).ToList();
                         
-                    if (products != null)
+                    if (subcategory != null)
                     {
                         // return the View named Products with the required category lists 
-                        return View("Products",products);
+                        return View("Products",subcategory);
                     }
                     else
                     {
@@ -48,8 +47,8 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
             }
         }
+        
         //Get Search product by productname
-        [Authorize]
         public ActionResult Search(string ProductName)
         {
             var list = new List<Product>();
