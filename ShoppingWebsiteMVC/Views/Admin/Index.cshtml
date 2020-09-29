@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="m-1">All Products</h2>
+<h3>All Products</h3>
 
 <p>
     <a href="/admin/create" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Product</a>
@@ -15,11 +15,11 @@
     <table class="table table-primary table-striped">
         <thead class="thead-light">
             <tr>
-                <th style="width:250px!important">
+                <th style="width:270px!important">
                     @Html.DisplayNameFor(model => model.ProductName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
+                    Category
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.BrandName)
@@ -41,7 +41,7 @@
                         @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SubCategory.Category.Name)
+                        @Html.DisplayFor(modelItem => item.SubCategory.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.BrandName)
@@ -54,7 +54,7 @@
                     </td>
                     <td>
                         <a href="/admin/edit/@item.ProductId" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>
-                        <a href="/admin/details?ProductId=@item.ProductId" class="btn btn-dark btn-sm"><i class="fa fa-eye"></i>View</a>
+                        <a href="/admin/details/@item.ProductId" class="btn btn-dark btn-sm"><i class="fa fa-eye"></i>View</a>
                         <a href="/admin/delete?ProductId=@item.ProductId" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Clear stock</a>
                     </td>
                 </tr>

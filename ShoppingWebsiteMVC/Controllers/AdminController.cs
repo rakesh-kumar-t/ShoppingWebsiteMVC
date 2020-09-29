@@ -29,14 +29,11 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Get details of a product 
         [Authorize]
-        public ActionResult Details(string ProductId)
+        public ActionResult Details(int? id)
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin" && id!=null)
             {
-                if (ProductId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                int ProductId = (int)id;
                 Product product = db.Products.Find(ProductId);
                 if (product == null)
                 {
@@ -46,7 +43,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "User");
             }
         }
         //Get create view of new product
@@ -367,15 +364,15 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult EditSupplier(string SupplierId)
+        public ActionResult EditSupplier(int? id)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-                if (SupplierId == null)
+                if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
                 }
+                int SupplierId = (int)id;
                 Supplier supplier = db.Suppliers.Find(SupplierId);
                 if (supplier == null)
                 {
@@ -458,7 +455,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult EditCategory(string id)
+        public ActionResult EditCategory(int? id)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
@@ -549,7 +546,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult EditSubCategory(string id)
+        public ActionResult EditSubCategory(int? id)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
