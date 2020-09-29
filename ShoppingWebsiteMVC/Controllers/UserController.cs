@@ -61,8 +61,6 @@ namespace ShoppingWebsiteMVC.Controllers
                 Session["Role"] = user.Role.ToString();
                 if (user.Role == "Admin")
                 {
-                    if (TempData["ReturnUrl"] != null)
-                        return Redirect(TempData["ReturnUrl"].ToString());
                     return RedirectToAction("Index", "Admin");
                 }
                 else
