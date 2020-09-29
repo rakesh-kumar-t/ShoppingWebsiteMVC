@@ -122,7 +122,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product, HttpPostedFileBase Proimage)
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();
@@ -130,6 +130,23 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+                if (Proimage != null)
+                {
+                    if (Proimage.ContentLength > 0)
+                    {
+                        if (Path.GetExtension(Proimage.FileName).ToLower() == ".jpg"
+                            || Path.GetExtension(Proimage.FileName).ToLower() == ".jpeg"
+                            || Path.GetExtension(Proimage.FileName).ToLower() == ".png")
+                        {
+                            var path = Path.Combine(Server.MapPath("~/Images/"), product.ProductId + ".jpg");
+                            if (System.IO.File.Exists(path))
+                            {
+                                System.IO.File.Delete(path);
+                            }
+                            Proimage.SaveAs(path);
+                        }
+                    }
+                }
                 return RedirectToAction("Index");
             }
             return View(product);
