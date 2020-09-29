@@ -143,7 +143,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\DBShoppingContext.cs" />
+    <Compile Include="Models\DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
