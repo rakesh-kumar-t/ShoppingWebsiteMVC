@@ -12,7 +12,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class ProductController : Controller
     {
-        ShoppingContext db = new ShoppingContext();
+        ShoppingDbContext db = new ShoppingDbContext();
         // GET : Products by Category
         [Authorize]
         [HttpGet]
@@ -20,10 +20,7 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if(category==null)
             {
-                var cat= db.Products
-                                  .Select(p => p.CategoryName)
-                                  .Distinct();
-                ViewBag.category = cat.ToList();
+                ViewBag.category = db.Categories.ToList();
                 // returns the category view(Index view)
                 //var cat = db.Products.GroupBy(m=>m.CategoryName).Select(y=>y.Count());
                 return View();
@@ -37,7 +34,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
                 else
                 {
-                    var products = db.Products.Where(p => p.CategoryName.Equals(category)).ToList();
+                    var products = db.Products.Where(p => p.SubCategory.Category.Name.Equals(category)).ToList();
                         
                     if (products != null)
                     {
@@ -67,7 +64,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 list = db.Products.Where(p => p.ProductName.ToLower().Equals(ProductName.ToLower())).ToList();
                 if (list.Count == 0)
                 {
-                    list = db.Products.Where(p => p.CategoryName.ToLower().Equals(ProductName.ToLower())).ToList();
+                    list = db.Products.Where(p => p.SubCategory.Category.Name.ToLower().Equals(ProductName.ToLower())).ToList();
                     if (list.Count == 0)
                     {
                         list = db.Products.Where(p => p.BrandName.ToLower().Equals(ProductName.ToLower())).ToList();
@@ -128,7 +125,6 @@ namespace ShoppingWebsiteMVC.Controllers
                         Cart cart = new Cart();
                         cart.UserId = Session["UserId"].ToString();
                         cart.ProductId = p.ProductId;
-                        cart.ProductName = p.ProductName;
                         cart.NoofProduct = noofunits;
                         cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
                         db.Carts.Add(cart);
@@ -164,22 +160,21 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
                 else
                 {
-                    Transaction Trx = new Transaction();
-                    Bill newbill = new Bill();
-                    var t=db.Bills.Select(tn => tn.BillNo).DefaultIfEmpty(0).Max()+1;
-                    newbill.BillNo = t;
+                    Order Trx = new Order();
+                    Transaction newbill = new Transaction();
+                    var t=db.Orders.Select(tn => tn.TId).DefaultIfEmpty(0).Max()+1;
+                    newbill.TId = t;
                     newbill.Amount = c.Amount;
-                    db.Bills.Add(newbill);
+                    db.Transactions.Add(newbill);
                     db.SaveChanges();
                    
-                    Trx.BillNo = t;
+                    Trx.TId = t;
                     Trx.UserId = c.UserId;
                     Trx.ProductId = c.ProductId;
-                    Trx.ProductName = c.ProductName;
                     Trx.NoofProduct = c.NoofProduct;
                     Trx.Amount = c.Amount;
                     Trx.TDate = DateTime.Now;
-                    db.Transactions.Add(Trx);
+                    db.Orders.Add(Trx);
                     db.SaveChanges();
                     p.Units = p.Units - c.NoofProduct;
                     db.Entry(p).State = EntityState.Modified;
@@ -211,26 +206,25 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             string UserId = Session["UserId"].ToString();
             var cart = db.Carts.Where(c => c.UserId.Equals(UserId)).ToList();
-            var t = db.Transactions.Select(tn => tn.BillNo).DefaultIfEmpty(0).Max()+1;
-            Bill newbill = new Bill();
-            newbill.BillNo = t;
-            db.Bills.Add(newbill);
+            var t = db.Transactions.Select(tn => tn.TId).DefaultIfEmpty(0).Max()+1;
+            Transaction newbill = new Transaction();
+            newbill.TId = t;
+            db.Transactions.Add(newbill);
             db.SaveChanges();
             double sum = 0;
            
             for (int i=0;i<cart.Count;i++)
             {
-                Transaction Trx = new Transaction();
-                Trx.BillNo = t;
+                Order Trx = new Order();
+                Trx.TId = t;
                 Trx.UserId = cart[i].UserId;
                 var c = cart[i].ProductId.ToString();
                 Trx.ProductId = c;
-                Trx.ProductName = cart[i].ProductName;
                 Trx.NoofProduct = cart[i].NoofProduct;
                 Trx.Amount = cart[i].Amount;
                 sum = sum + Trx.Amount;
                 Trx.TDate = DateTime.Now;
-                db.Transactions.Add(Trx);
+                db.Orders.Add(Trx);
                 db.SaveChanges();
                 
                 var p = db.Products.Where(pro => pro.ProductId.Equals(c)).FirstOrDefault();

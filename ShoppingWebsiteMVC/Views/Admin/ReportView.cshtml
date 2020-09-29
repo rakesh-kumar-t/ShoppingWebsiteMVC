@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Transaction>
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.Order>
 
 @{
     ViewBag.Title = "ReportView";
@@ -7,16 +7,19 @@
 
 <h2>ReportView</h2>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Bill.BillNo)
+            @Html.DisplayNameFor(model => model.Products.ProductName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.user.Firstname)
+            @Html.DisplayNameFor(model => model.Transactions.TId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProductName)
+            @Html.DisplayNameFor(model => model.Users.Firstname)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.NoofProduct)
@@ -29,30 +32,33 @@
         </th>
         <th></th>
     </tr>
-     @{double sum = 0; }
+
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Bill.BillNo)
+            @Html.DisplayFor(modelItem => item.Products.ProductName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.user.Firstname)
+            @Html.DisplayFor(modelItem => item.Transactions.TId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
+            @Html.DisplayFor(modelItem => item.Users.Firstname)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NoofProduct)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Amount) @{ sum = sum + item.Amount;}
+            @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
 
 </table>
-<div class="alert-info p-3">Total Sales Amount : ₹ @sum </div>
-
