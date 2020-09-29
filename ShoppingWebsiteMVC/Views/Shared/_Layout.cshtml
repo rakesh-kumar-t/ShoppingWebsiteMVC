@@ -10,7 +10,15 @@
     <link rel="stylesheet" href="//unpkg.com/bootstrap-select-country@4.0.0/dist/css/bootstrap-select-country.min.css" type="text/css" />
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <style>
+        button:focus, btn:focus {
+            outline: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
 
+    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -21,6 +29,18 @@
                     <span><i class="fa fa-shopping-cart"></i></span>
                     ShoppingBag
                 </div>
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <form method="get" action="/Product/Search">
+                            <div class="input-group">
+                                @Html.TextBox("ProductName", null, new { @class = "form-control", @placeholder = "Search for Products" })
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-light" ><i class=" fa fa-search text-primary"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
