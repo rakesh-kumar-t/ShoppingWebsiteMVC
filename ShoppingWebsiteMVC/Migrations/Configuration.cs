@@ -5,7 +5,7 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ShoppingWebsiteMVC.Models.DBShoppingContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ShoppingWebsiteMVC.Models.DbContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@
             ContextKey = "ShoppingWebsiteMVC.Models.ShoppingBagContext";
         }
 
-        protected override void Seed(ShoppingWebsiteMVC.Models.DBShoppingContext context)
+        protected override void Seed(ShoppingWebsiteMVC.Models.DbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

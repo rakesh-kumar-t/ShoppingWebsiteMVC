@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        DBShoppingContext db = new DBShoppingContext();
+        Models.DbContext db = new Models.DbContext();
         [Authorize]
         public ActionResult Index()
         {
@@ -53,7 +53,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null&&Session["Role"].ToString() == "Admin")
             {
                 ViewBag.SubCategory = db.SubCategories.ToList();
                 ViewBag.Supplier = db.Suppliers.ToList();
@@ -68,7 +68,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = " ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product,HttpPostedFileBase Proimage)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product,HttpPostedFileBase Proimage)
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();
@@ -122,7 +122,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product)
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();
