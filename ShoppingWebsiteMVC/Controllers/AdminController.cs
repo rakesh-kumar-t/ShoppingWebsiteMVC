@@ -267,7 +267,7 @@ namespace ShoppingWebsiteMVC.Controllers
             DateTime dt;
             if(DateTime.TryParse(TDate,out dt ))
             {
-                var trs = db.Transactions.ToList();
+                var trs = db.Orders.ToList();
                 for(int i=0;i<trs.Count;i++)
                 {
                     if (trs[i].TDate.Month != dt.Month)

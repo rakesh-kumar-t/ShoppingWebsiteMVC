@@ -243,7 +243,7 @@ namespace ShoppingWebsiteMVC.Controllers
         public ActionResult MyOrders()
         {
             string UserId = Session["UserId"].ToString();
-            var orders = db.Transactions.Where(c => c.UserId.Equals(UserId)).ToList().OrderBy(o=>o.TDate).ToList();
+            var orders = db.Orders.Where(c => c.UserId.Equals(UserId)).ToList().OrderBy(o=>o.TDate).ToList();
             return View(orders);
         }
         [Authorize]
@@ -265,16 +265,16 @@ namespace ShoppingWebsiteMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CancelallConfirmed(int TId,int BillNo)
         {
-            var transaction = db.Transactions.Find(TId);
-            var ProductId = transaction.ProductId;
+            var order = db.Orders.Find(TId);
+            var ProductId = order.ProductId;
             var products = db.Products.Find(ProductId);
-            products.Units = products.Units + transaction.NoofProduct;
+            products.Units = products.Units + order.NoofProduct;
             db.Entry(products).State = EntityState.Modified;
             db.SaveChanges();
-            double Amount = transaction.Amount;
-            db.Transactions.Remove(transaction);
+            double Amount = order.Amount;
+            db.Orders.Remove(order);
             db.SaveChanges();
-            var bill = db.Bills.Find(BillNo);
+            var bill = db.Transactions.Find(BillNo);
             bill.Amount = bill.Amount - Amount;
             db.Entry(bill).State = EntityState.Modified;
             db.SaveChanges();

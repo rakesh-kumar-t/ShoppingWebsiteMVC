@@ -163,21 +163,21 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
                 else
                 {
-                    Transaction Trx = new Transaction();
-                    Bill newbill = new Bill();
-                    var t=db.Bills.Select(tn => tn.BillNo).DefaultIfEmpty(0).Max()+1;
-                    newbill.BillNo = t;
+                    Order Trx = new Order();
+                    Transaction newbill = new Transaction();
+                    var t=db.Orders.Select(tn => tn.TId).DefaultIfEmpty(0).Max()+1;
+                    newbill.TId = t;
                     newbill.Amount = c.Amount;
-                    db.Bills.Add(newbill);
+                    db.Transactions.Add(newbill);
                     db.SaveChanges();
                    
-                    Trx.BillNo = t;
+                    Trx.TId = t;
                     Trx.UserId = c.UserId;
                     Trx.ProductId = c.ProductId;
                     Trx.NoofProduct = c.NoofProduct;
                     Trx.Amount = c.Amount;
                     Trx.TDate = DateTime.Now;
-                    db.Transactions.Add(Trx);
+                    db.Orders.Add(Trx);
                     db.SaveChanges();
                     p.Units = p.Units - c.NoofProduct;
                     db.Entry(p).State = EntityState.Modified;
@@ -209,17 +209,17 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             string UserId = Session["UserId"].ToString();
             var cart = db.Carts.Where(c => c.UserId.Equals(UserId)).ToList();
-            var t = db.Transactions.Select(tn => tn.BillNo).DefaultIfEmpty(0).Max()+1;
-            Bill newbill = new Bill();
-            newbill.BillNo = t;
-            db.Bills.Add(newbill);
+            var t = db.Transactions.Select(tn => tn.TId).DefaultIfEmpty(0).Max()+1;
+            Transaction newbill = new Transaction();
+            newbill.TId = t;
+            db.Transactions.Add(newbill);
             db.SaveChanges();
             double sum = 0;
            
             for (int i=0;i<cart.Count;i++)
             {
-                Transaction Trx = new Transaction();
-                Trx.BillNo = t;
+                Order Trx = new Order();
+                Trx.TId = t;
                 Trx.UserId = cart[i].UserId;
                 var c = cart[i].ProductId.ToString();
                 Trx.ProductId = c;
@@ -227,7 +227,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 Trx.Amount = cart[i].Amount;
                 sum = sum + Trx.Amount;
                 Trx.TDate = DateTime.Now;
-                db.Transactions.Add(Trx);
+                db.Orders.Add(Trx);
                 db.SaveChanges();
                 
                 var p = db.Products.Where(pro => pro.ProductId.Equals(c)).FirstOrDefault();
