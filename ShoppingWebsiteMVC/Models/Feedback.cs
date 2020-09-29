@@ -13,7 +13,7 @@ namespace ShoppingWebsiteMVC.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FeedbackId { get; set; }
         [Required]
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         [Required]
         public string FeedBack { get; set; }
         [Required]

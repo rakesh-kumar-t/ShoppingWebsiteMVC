@@ -141,6 +141,10 @@
     <Compile Include="Migrations\202009291434356_db change.designer.cs">
       <DependentUpon>202009291434356_db change.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009291457501_datatype.cs" />
+    <Compile Include="Migrations\202009291457501_datatype.designer.cs">
+      <DependentUpon>202009291457501_datatype.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\SubCategory.cs" />
@@ -487,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009291434356_db change.resx">
       <DependentUpon>202009291434356_db change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009291457501_datatype.resx">
+      <DependentUpon>202009291457501_datatype.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

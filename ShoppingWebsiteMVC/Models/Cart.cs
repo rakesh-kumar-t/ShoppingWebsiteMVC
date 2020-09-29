@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Models
         public int CartId { get; set; }
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }//Also a foreign key from user table
-        public string ProductId { get; set; }//Also a foregin key from product table
+        public int ProductId { get; set; }//Also a foregin key from product table
         public int NoofProduct { get; set; }
         public double Amount { get; set; }
         

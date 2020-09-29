@@ -215,7 +215,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 Order Trx = new Order();
                 Trx.TId = t;
                 Trx.UserId = cart[i].UserId;
-                var c = cart[i].ProductId.ToString();
+                var c = cart[i].ProductId;
                 Trx.ProductId = c;
                 Trx.NoofProduct = cart[i].NoofProduct;
                 Trx.Amount = cart[i].Amount;

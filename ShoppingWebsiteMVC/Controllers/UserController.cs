@@ -302,7 +302,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [HttpPost]
         public ActionResult Feedback([Bind(Include = "Feedback")] Feedback fed,string ProductId)
         {
-            fed.ProductId = ProductId;
+            fed.ProductId = int.Parse(ProductId);
             fed.UserId = Session["UserId"].ToString();
             db.Feedbacks.Add(fed);
             db.SaveChanges();

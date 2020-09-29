@@ -13,7 +13,7 @@ namespace ShoppingWebsiteMVC.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         [Display(Name ="ProductCode")]
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         [Required]
         [Display(Name ="ProductName")]
         public string ProductName { get; set; }

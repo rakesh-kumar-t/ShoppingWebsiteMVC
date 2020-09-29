@@ -17,7 +17,7 @@ namespace ShoppingWebsiteMVC.Models
         public int TId { get; set; }
         [DataType(DataType.EmailAddress)]
         public string UserId { get; set; }
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         public int NoofProduct { get; set; }
         public double Amount { get; set; }
         [DataType(DataType.Date)]
