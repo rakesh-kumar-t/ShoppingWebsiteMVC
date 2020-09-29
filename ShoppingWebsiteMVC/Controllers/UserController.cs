@@ -18,7 +18,7 @@ namespace ShoppingWebsiteMVC.Controllers
     {
         ShoppingBagContext db = new ShoppingBagContext();
         // GET: User Home page and Login
-        public ActionResult Index()
+        public ActionResult Index(string ReturnUrl)
         {
             string userid = "admin@gmail.com";
             string password = "Admin@123";
@@ -39,6 +39,10 @@ namespace ShoppingWebsiteMVC.Controllers
                 db.Users.Add(user);
                 db.SaveChanges();
             }
+            if (ReturnUrl != null)
+            {
+                TempData["ReturnUrl"] = ReturnUrl;
+            }
             return View();
         }
         
@@ -55,10 +59,18 @@ namespace ShoppingWebsiteMVC.Controllers
                 Session["UserId"] = user.UserId.ToString();
                 Session["Username"] = (user.Firstname + " " + user.Lastname).ToString();
                 Session["Role"] = user.Role.ToString();
-                if(user.Role=="Admin")
-                return RedirectToAction("Index", "Admin");
+                if (user.Role == "Admin")
+                {
+                    if (TempData["ReturnUrl"] != null)
+                        return Redirect(TempData["ReturnUrl"].ToString());
+                    return RedirectToAction("Index", "Admin");
+                }
                 else
-                return RedirectToAction("Index", "Product");
+                {
+                    if (TempData["ReturnUrl"] != null)
+                        return Redirect(TempData["ReturnUrl"].ToString());
+                    return RedirectToAction("Index", "Product");
+                }
 
             }
             else
