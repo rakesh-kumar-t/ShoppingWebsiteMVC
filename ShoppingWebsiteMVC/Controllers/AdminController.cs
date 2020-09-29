@@ -477,6 +477,96 @@ namespace ShoppingWebsiteMVC.Controllers
                 return RedirectToAction("Index", "User");
             }
         }
+        [Authorize]
+        public ActionResult SubCategories()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+        [Authorize]
+        public ActionResult NewSubCategory()
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewSubCategory([Bind(Include = "Name")] SubCategory subcategory)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (ModelState.IsValid)
+                {
+                    db.SubCategories.Add(subcategory);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(subcategory);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+        [Authorize]
+        public ActionResult EditSubCategory(string id)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                }
+                SubCategory subcategory = db.SubCategories.Find(id);
+                if (subcategory == null)
+                {
+                    return HttpNotFound();
+
+                }
+                return View(subcategory);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSubCategory([Bind(Include = "SubCategoryId,Name,CategoryId")] SubCategory subcategory)
+        {
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(subcategory).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+                return View(subcategory);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
 
 
         //Dispose the database
