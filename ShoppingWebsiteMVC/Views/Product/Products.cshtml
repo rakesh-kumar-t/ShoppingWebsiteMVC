@@ -4,7 +4,12 @@
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+</style>
 
 @if (!string.IsNullOrEmpty(ViewBag.Error))
 {
@@ -18,31 +23,35 @@ else
     }
     else
     {
-        <br />
-        <div class="row mr-3 ">
-        
+    <div class="row p-0 m-0 w-100 mb-2" style="background-image:url('../../Images/banner.png');background-size:contain">
+        <h4 class="p-3 text-black-50 alert-heading">Select from a wide range of products</h4>
+    </div>
+<div class="p-2 m-3">
+    <div class="row ">
+
         @foreach (var item in Model)
         {
-                <div class="card col-3 mr-2 p-1" id="productcard">
-                    <div class="card-img text-center">
-                        @{ var img = item.ProductId + ".jpg";}
-                        <img src="~/Images/@img" height="100" />
-                    </div>
-                    <div class="card-header text-center">
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </div>
-                    <div class="font-weight-bold text-center" style="font-size:large">
-                        @Html.DisplayFor(modelItem => item.BrandName)
-                    </div>
-                    <div class="card-body text-center">
-                        ₹ @Html.DisplayFor(modelItem => item.Price) <br />
-                        <span class="alert-info">@Html.DisplayFor(modelItem => item.Discount)% off</span>
-                    </div>
-                    <div class="card-footer text-center">
-                        @Html.ActionLink("Details", "ProductView", new { id = item.ProductId }, new { @class = "btn btn-info stretched-link" })
-                    </div>
+            <div class="card col-3 mr-2 p-1" id="productcard">
+                <div class="card-img text-center">
+                    @{ var img = item.ProductId + ".jpg";}
+                    <img src="~/Images/@img" height="100" />
                 </div>
+                <div class="card-header text-center">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </div>
+                <div class="font-weight-bold text-center" style="font-size:large">
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </div>
+                <div class="card-body text-center">
+                    ₹ @Html.DisplayFor(modelItem => item.Price) <br />
+                    <span class="alert-info">@Html.DisplayFor(modelItem => item.Discount)% off</span>
+                </div>
+                <div class="card-footer text-center">
+                    @Html.ActionLink("Details", "ProductView", new { id = item.ProductId }, new { @class = "btn btn-info stretched-link" })
+                </div>
+            </div>
         }
     </div>
+</div>
 }
     }
