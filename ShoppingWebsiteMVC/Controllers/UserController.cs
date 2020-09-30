@@ -265,38 +265,45 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult CancelOrder(int? TId)
+        public ActionResult CancelOrder(int? id)
         {
-            if (TId == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var transaction = db.Transactions.Where(t => t.TId==TId).FirstOrDefault();
-            if (transaction == null)
+            var order = db.Orders.Find(id);
+            if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(transaction);
+            return View(order);
         }
         [Authorize]
         [HttpPost, ActionName("CancelOrder")]
         [ValidateAntiForgeryToken]
-        public ActionResult CancelallConfirmed(int TId,int BillNo)
+        public ActionResult CancelallConfirmed(int? id)
         {
-            var order = db.Orders.Find(TId);
-            var ProductId = order.ProductId;
-            var products = db.Products.Find(ProductId);
-            products.Units = products.Units + order.NoofProduct;
-            db.Entry(products).State = EntityState.Modified;
-            db.SaveChanges();
-            double Amount = order.Amount;
-            db.Orders.Remove(order);
-            db.SaveChanges();
-            var bill = db.Transactions.Find(BillNo);
-            bill.Amount = bill.Amount - Amount;
-            db.Entry(bill).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("MyOrders");
+            if (id != null)
+            {
+                var order = db.Orders.Find(id);
+                var ProductId = order.ProductId;
+                var products = db.Products.Find(ProductId);
+                products.Units = products.Units + order.NoofProduct;
+                db.Entry(products).State = EntityState.Modified;
+                db.SaveChanges();
+                double Amount = order.Amount;
+                var bill = db.Transactions.Find(order.TId);
+                bill.Amount = bill.Amount - Amount;
+                db.Entry(bill).State = EntityState.Modified;
+                db.SaveChanges();
+                db.Orders.Remove(order);
+                db.SaveChanges();
+                return RedirectToAction("MyOrders");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
         [Authorize]
         public ActionResult Feedback(string ProductId)
