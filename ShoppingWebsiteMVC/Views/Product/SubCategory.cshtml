@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ShoppingWebsiteMVC.Models.SubCategory>
+
+@{
+    ViewBag.Title = "SubCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert-danger p-3 pl-5 m-3">@ViewBag.Error</div>
+}
+else
+{
+    if (Model.ToList().Count == 0)
+    {
+        <div class="alert-danger p-3 pl-5 m-3">No products found in this category<i class="fa fa-close"></i>. Search Products or select another category</div>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <div class="m-3">
+                @Html.ActionLink(item.Name, "SubCategory", "Product", new { id = item.Name }, new { @class = "list-group-item list-group-item-action" })
+                @Html.ActionLink("View All Products", "Index", "Product", new { id = "All" }, new { @class = "list-group-item list-group-item-action" })
+            </div>
+        }
+    }
+}

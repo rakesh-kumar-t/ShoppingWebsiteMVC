@@ -6,29 +6,35 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Categories</h2>
+<h3>Categories</h3>
 
 <p>
-    @Html.ActionLink("Create New", "NewCategory")
+    @Html.ActionLink("Add New", "NewCategory",null,new { @class="btn btn-sm btn-success"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "NewCategory", new { id = item.CategoryId }) |
-            </td>
-        </tr>
-    }
-
-</table>
+<div class="table-responsive">
+    <table class="table table-striped table-primary table-sm w-50 m-1">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a href="/Admin/EditCategory/@item.CategoryId" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

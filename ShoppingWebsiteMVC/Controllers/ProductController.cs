@@ -12,7 +12,7 @@ namespace ShoppingWebsiteMVC.Controllers
 {
     public class ProductController : Controller
     {
-        ShoppingBagContext db = new ShoppingBagContext();
+        Models.DbShopContext db = new Models.DbShopContext();
         // GET : Products by Category
         [HttpGet]
         public ActionResult Index(string id)
@@ -20,7 +20,7 @@ namespace ShoppingWebsiteMVC.Controllers
             string category = id;
             if(category==null)
             {
-                return View(db.Categories.ToList());
+                return View(db.Categories.Where(p => p.Name != null).ToList());
             }
             else
             {
@@ -36,7 +36,7 @@ namespace ShoppingWebsiteMVC.Controllers
                     if (subcategory != null)
                     {
                         // return the View named Products with the required category lists 
-                        return View("Products",subcategory);
+                        return View("SubCategory",subcategory);
                     }
                     else
                     {
@@ -47,10 +47,33 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
             }
         }
+        //View all the subcategories of a selected category
+        public ActionResult SubCategory(string id)
+        {
+            string subcategory = id;
+            if (subcategory != null)
+            {
+                var products = db.Products.Where(pro => pro.SubCategory.Name.Equals(subcategory)).ToList();
+                if (products != null)
+                {
+                    return View("Products",products);
+                }
+                else
+                {
+                    ViewBag.Error = "Invalid Selection";
+                }
+                return View("Products");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
         
         //Get Search product by productname
-        public ActionResult Search(string ProductName)
+        public ActionResult Search(string id)
         {
+            string ProductName = id;
             var list = new List<Product>();
             if(String.IsNullOrEmpty(ProductName))
             {
@@ -72,64 +95,83 @@ namespace ShoppingWebsiteMVC.Controllers
             return View("Products",list);
         }
         //Get details of a product 
-        [Authorize]
-        public ActionResult ProductView(string ProductId)
+        public ActionResult ProductView(int? id)
         {
-            if (ProductId == null)
+            if (id != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(ProductId);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-           
-            return View(product);
-        }
+                int ProductId = (int)id;
+                
+                Product product = db.Products.Find(ProductId);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                if (TempData["status"] != null && TempData["Error"] != null)
+                {
+                    ViewBag.status = TempData["status"].ToString();
+                    ViewBag.Error = TempData["Error"].ToString();
+                    TempData["status"] = null;
+                    TempData["Error"] = null;
 
-     
-        [Authorize]
-        [HttpPost]
-        public ActionResult AddtoCart(string itemno,string ProductId)
-        {
-            string UserId =Session["UserId"].ToString();
-            int noofunits = int.Parse(itemno);
-            if (String.IsNullOrEmpty(ProductId))
-            {
-                ViewBag.Error = "Empty";
+                }
+                return View(product);
             }
             else
             {
-                var p = db.Products.Where(pro => pro.ProductId.Equals(ProductId)).FirstOrDefault();
-
-                if (noofunits > p.Units)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+     
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddtoCart(string itemno,int? ProductId)
+        {
+            if(Session["UserId"]!=null && Session["Role"].ToString() == "User")
+            {
+                string UserId =Session["UserId"].ToString();
+                int noofunits = int.Parse(itemno);
+                if (ProductId==null)
                 {
-                    ViewBag.Error = "No stock available";
+                    ViewBag.Error = "Empty";
                 }
                 else
                 {
-                    if (db.Carts.Where(car => car.ProductId.Equals(ProductId)&&car.UserId.Equals(UserId)).FirstOrDefault() != null)
-                    {
+                    var p = db.Products.Find(ProductId);
 
-                        Cart cart = db.Carts.Where(car => car.ProductId.Equals(ProductId) && car.UserId.Equals(UserId)).FirstOrDefault();
-                        cart.NoofProduct= cart.NoofProduct+noofunits;
-                        db.Entry(cart).State = EntityState.Modified;
-                        db.SaveChanges();
+                    if (noofunits > p.Units)
+                    {
+                        TempData["status"] = "danger";
+                        TempData["Error"] = "No stock available";
+                        return ProductView(id: ProductId);
                     }
                     else
                     {
-                        Cart cart = new Cart();
-                        cart.UserId = Session["UserId"].ToString();
-                        cart.ProductId = p.ProductId;
-                        cart.NoofProduct = noofunits;
-                        cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
-                        db.Carts.Add(cart);
-                        db.SaveChanges();
+                        if (db.Carts.Where(car => car.ProductId==ProductId && car.UserId.Equals(UserId)).FirstOrDefault() != null)
+                        {
+
+                            Cart cart = db.Carts.Where(car => car.ProductId.Equals(ProductId) && car.UserId.Equals(UserId)).FirstOrDefault();
+                            cart.NoofProduct= cart.NoofProduct+noofunits;
+                            db.Entry(cart).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            Cart cart = new Cart();
+                            cart.UserId = Session["UserId"].ToString();
+                            cart.ProductId = p.ProductId;
+                            cart.NoofProduct = noofunits;
+                            cart.Amount = p.GetAmount(p.Price, p.Discount, noofunits);
+                            db.Carts.Add(cart);
+                            db.SaveChanges();
+                        }
                     }
                 }
+                return RedirectToAction("Cart","User");
             }
-            return RedirectToAction("Cart","User");
+            else
+            {
+                return Redirect("/User/Index?ReturnUrl=/Product/ProductView/"+ProductId+"");
+            }
         }
         [Authorize]
         public ActionResult BuyNow(string UserId,string ProductId)
@@ -140,15 +182,15 @@ namespace ShoppingWebsiteMVC.Controllers
             return View(user);
         }
         [Authorize]
-        public ActionResult ConfirmOrder(string UserId, string ProductId)
+        public ActionResult ConfirmOrder(string UserId, int? ProductId)
         {
-            if (String.IsNullOrEmpty(ProductId))
+            if (ProductId==null)
             {
                 ViewBag.Error = "Empty";
             }
             else
             {
-                var c = db.Carts.Where(cart => cart.UserId.Equals(UserId)&&cart.ProductId.Equals(ProductId)).FirstOrDefault();
+                var c = db.Carts.Where(cart => cart.UserId.Equals(UserId)&&cart.ProductId==ProductId).FirstOrDefault();
 
                 var p = db.Products.Where(product => product.ProductId.Equals(ProductId)).FirstOrDefault();
                 if (c.NoofProduct >p.Units )

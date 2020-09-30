@@ -15,7 +15,7 @@ namespace ShoppingWebsiteMVC.Controllers
     public class AdminController : Controller
     {
         // GET: Adminproduct
-        ShoppingBagContext db = new ShoppingBagContext();
+        DbShopContext db = new DbShopContext();
         [Authorize]
         public ActionResult Index()
         {
@@ -29,14 +29,11 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Get details of a product 
         [Authorize]
-        public ActionResult Details(string ProductId)
+        public ActionResult Details(int? id)
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin" && id!=null)
             {
-                if (ProductId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                int ProductId = (int)id;
                 Product product = db.Products.Find(ProductId);
                 if (product == null)
                 {
@@ -46,14 +43,14 @@ namespace ShoppingWebsiteMVC.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "User");
             }
         }
         //Get create view of new product
         [Authorize]
         public ActionResult Create()
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null&&Session["Role"].ToString() == "Admin")
             {
                 ViewBag.SubCategory = db.SubCategories.ToList();
                 ViewBag.Supplier = db.Suppliers.ToList();
@@ -96,33 +93,41 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Edit Product details
         [Authorize]
-        public ActionResult Edit(string ProductId)
+        public ActionResult Edit(int? id)
         {
-            ViewBag.SubCategory = db.SubCategories.ToList();
-            ViewBag.Supplier = db.Suppliers.ToList();
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-                if (ProductId == null)
+                if (id != null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    int ProductId = (int)id;
+                    ViewBag.SubCategory = db.SubCategories.ToList();
+                    ViewBag.Supplier = db.Suppliers.ToList();
+                    if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+                    {
+                        Product product = db.Products.Find(ProductId);
+                        if (product == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(product);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
-                Product product = db.Products.Find(ProductId);
-                if (product == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(product);
+                return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index","User");
             }
         }
         //Post edit product details
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,BrandName,Price,Units,Discount,SupplierId,SubCategoryId")] Product product, HttpPostedFileBase Proimage)
         {
             ViewBag.SubCategory = db.SubCategories.ToList();
             ViewBag.Supplier = db.Suppliers.ToList();
@@ -130,6 +135,23 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+                if (Proimage != null)
+                {
+                    if (Proimage.ContentLength > 0)
+                    {
+                        if (Path.GetExtension(Proimage.FileName).ToLower() == ".jpg"
+                            || Path.GetExtension(Proimage.FileName).ToLower() == ".jpeg"
+                            || Path.GetExtension(Proimage.FileName).ToLower() == ".png")
+                        {
+                            var path = Path.Combine(Server.MapPath("~/Images/"), product.ProductId + ".jpg");
+                            if (System.IO.File.Exists(path))
+                            {
+                                System.IO.File.Delete(path);
+                            }
+                            Proimage.SaveAs(path);
+                        }
+                    }
+                }
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -184,7 +206,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult AdminEdit()
         {
-            if (Session["Role"].ToString() == "Admin")
+            if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin")
             {
                 string username = User.Identity.Name;
                 User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
@@ -229,7 +251,12 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult ChangePassword()
         {
-            return View();
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "User");
         }
         //Post change password for user
         [Authorize]
@@ -342,15 +369,15 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult EditSupplier(string SupplierId)
+        public ActionResult EditSupplier(int? id)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
-                if (SupplierId == null)
+                if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
                 }
+                int SupplierId = (int)id;
                 Supplier supplier = db.Suppliers.Find(SupplierId);
                 if (supplier == null)
                 {
@@ -433,7 +460,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult EditCategory(string id)
+        public ActionResult EditCategory(int? id)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {
@@ -468,7 +495,6 @@ namespace ShoppingWebsiteMVC.Controllers
                     db.Entry(category).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-
                 }
                 return View(category);
             }
@@ -525,7 +551,7 @@ namespace ShoppingWebsiteMVC.Controllers
             }
         }
         [Authorize]
-        public ActionResult EditSubCategory(string id)
+        public ActionResult EditSubCategory(int? id)
         {
             if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
             {

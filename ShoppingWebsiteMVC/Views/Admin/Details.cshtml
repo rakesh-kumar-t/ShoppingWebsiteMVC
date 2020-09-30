@@ -60,16 +60,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SupplierName)
+            @Html.DisplayNameFor(model => model.Supplier.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SupplierName)
+            @Html.DisplayFor(model => model.Supplier.Name)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { ProductId = Model.ProductId }, new { @class = "btn btn-info" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-info" })
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
 </p>

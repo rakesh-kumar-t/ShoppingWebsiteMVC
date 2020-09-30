@@ -6,35 +6,40 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>SupplierView</h2>
+<h3>SupplierView</h3>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "NewSupplier",null,new { @class="btn btn-sm btn-success"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th></th>
-    </tr>
+<div class="table-responsive">
+    <table class="table table-striped table-primary">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        <a href="/Admin/EditSupplier/@item.SupplierId" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SupplierId }) |
-            </td>
-        </tr>
-    }
-
-</table>
+    </table>
+</div>

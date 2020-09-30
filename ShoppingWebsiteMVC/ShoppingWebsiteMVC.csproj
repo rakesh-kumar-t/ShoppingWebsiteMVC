@@ -133,19 +133,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009291158525_InitialCreate.cs" />
-    <Compile Include="Migrations\202009291158525_InitialCreate.designer.cs">
-      <DependentUpon>202009291158525_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009291434356_db change.cs" />
-    <Compile Include="Migrations\202009291434356_db change.designer.cs">
-      <DependentUpon>202009291434356_db change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009291457501_datatype.cs" />
-    <Compile Include="Migrations\202009291457501_datatype.designer.cs">
-      <DependentUpon>202009291457501_datatype.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\Supplier.cs" />
@@ -155,7 +142,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\ShoppingBagContext.cs" />
+    <Compile Include="Models\DbShopContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -469,10 +456,12 @@
     <Content Include="Views\Admin\EditSubCategory.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Images\**" />
+    <Content Include="Views\Product\SubCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -484,17 +473,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009291158525_InitialCreate.resx">
-      <DependentUpon>202009291158525_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009291434356_db change.resx">
-      <DependentUpon>202009291434356_db change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009291457501_datatype.resx">
-      <DependentUpon>202009291457501_datatype.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
