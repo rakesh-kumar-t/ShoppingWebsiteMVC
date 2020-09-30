@@ -47,6 +47,28 @@ namespace ShoppingWebsiteMVC.Controllers
                 }
             }
         }
+        //View all the subcategories of a selected category
+        public ActionResult SubCategory(string id)
+        {
+            string subcategory = id;
+            if (subcategory != null)
+            {
+                var products = db.Products.Where(pro => pro.SubCategory.Name.Equals(subcategory)).ToList();
+                if (products != null)
+                {
+                    return View("Products",products);
+                }
+                else
+                {
+                    ViewBag.Error = "Invalid Selection";
+                }
+                return View("Products");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
         
         //Get Search product by productname
         public ActionResult Search(string id)
