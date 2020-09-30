@@ -96,8 +96,9 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Get details of a product 
         [Authorize]
-        public ActionResult ProductView(string ProductId)
+        public ActionResult ProductView(int? id)
         {
+            int ProductId = (int)id;
             if (ProductId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
