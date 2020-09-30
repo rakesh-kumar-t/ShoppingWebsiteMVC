@@ -5,48 +5,54 @@
 }
 
 <h2>My Cart</h2>
-
-@if (Model.ToList().Count > 0)
+@if (Model != null)
 {
-<table class="table m-3 p-3">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoofProduct)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    if (Model.ToList().Count > 0)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoofProduct)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.ActionLink("Place Order", "BuyNow","Product", new { UserId = item.UserId, ProductId = item.ProductId },new { @class = "btn btn-info btn-sm" }) 
-                @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
-            </td>
-        </tr>
+        <table class="table m-3 p-3">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoofProduct)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Products.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoofProduct)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Place Order", "BuyNow", "Product", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.ActionLink("Buy All", "BuyAll", "Product", null, new { @class = "btn btn-success col-3 " })
     }
-</table>
-    @Html.ActionLink("Buy All", "BuyAll", "Product",null,new { @class="btn btn-success col-3 "})
+    else
+    {
+        <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
+    }
 }
 else
-{ 
+{
     <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
 }
 <br />
-@Html.ActionLink("Buy More Products", "Index", "Product",null,new { @class="btn btn-info btn-sm mt-2"})
+@Html.ActionLink("Buy More Products", "Index", "Product", null, new { @class = "btn btn-info btn-sm mt-2" })
 

@@ -202,8 +202,10 @@ namespace ShoppingWebsiteMVC.Controllers
         [HttpGet]
         public ActionResult Cart()
         {
-            string id = (string)Session["UserId"];
-                
+            if (Session["UserId"] != null && Session["Role"].ToString() == "User")
+            {
+                string id = Session["UserId"].ToString();
+
                 var carts = db.Carts.Where(c => c.UserId.Equals(id)).ToList();
                 if (carts != null)
                 {
@@ -214,6 +216,11 @@ namespace ShoppingWebsiteMVC.Controllers
                     ViewBag.Error = "Cart Empty";
                 }
                 return View();
+            }
+            else
+            {
+                return Redirect("/User/Index?ReturnUrl=/User/Cart");
+            }
         }
         //Get id for deleting cart details of user
         [Authorize]
@@ -246,9 +253,16 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult MyOrders()
         {
-            string UserId = Session["UserId"].ToString();
-            var orders = db.Orders.Where(c => c.UserId.Equals(UserId)).ToList().OrderBy(o=>o.TDate).ToList();
-            return View(orders);
+            if (Session["UserId"] != null && Session["Role"].ToString() == "User")
+            {
+                string UserId = Session["UserId"].ToString();
+                var orders = db.Orders.Where(c => c.UserId.Equals(UserId)).ToList().OrderBy(o=>o.TDate).ToList();
+                return View(orders);
+            }
+            else
+            {
+                return Redirect("/User/Index?ReturnUrl=/User/MyOrders");
+            }
         }
         [Authorize]
         public ActionResult CancelOrder(int? TId)
