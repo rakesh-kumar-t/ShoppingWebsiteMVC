@@ -192,7 +192,7 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 var c = db.Carts.Where(cart => cart.UserId.Equals(UserId)&&cart.ProductId==ProductId).FirstOrDefault();
 
-                var p = db.Products.Where(product => product.ProductId.Equals(ProductId)).FirstOrDefault();
+                var p = db.Products.Where(product => product.ProductId==ProductId).FirstOrDefault();
                 if (c.NoofProduct >p.Units )
                 {
                     ViewBag.Error = "No stock available";
@@ -266,7 +266,7 @@ namespace ShoppingWebsiteMVC.Controllers
                 db.Orders.Add(Trx);
                 db.SaveChanges();
                 
-                var p = db.Products.Where(pro => pro.ProductId.Equals(c)).FirstOrDefault();
+                var p = db.Products.Where(pro => pro.ProductId==c).FirstOrDefault();
                 p.Units = p.Units - cart[i].NoofProduct;
                 db.Entry(p).State = EntityState.Modified;
                 db.SaveChanges();
