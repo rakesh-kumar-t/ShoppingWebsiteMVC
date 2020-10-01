@@ -1,0 +1,11 @@
+﻿@{
+    if (ViewBag.status != null)
+    {
+        <div class="alert alert-@ViewBag.status alert-dismissible fade show w-50" role="alert">
+            @ViewBag.message
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}

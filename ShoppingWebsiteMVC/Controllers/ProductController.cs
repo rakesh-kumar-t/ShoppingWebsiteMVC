@@ -106,12 +106,12 @@ namespace ShoppingWebsiteMVC.Controllers
                 {
                     return HttpNotFound();
                 }
-                if (TempData["status"] != null && TempData["Error"] != null)
+                if (TempData["status"] != null && TempData["message"] != null)
                 {
                     ViewBag.status = TempData["status"].ToString();
-                    ViewBag.Error = TempData["Error"].ToString();
+                    ViewBag.message = TempData["message"].ToString();
                     TempData["status"] = null;
-                    TempData["Error"] = null;
+                    TempData["message"] = null;
 
                 }
                 return View(product);
@@ -141,7 +141,7 @@ namespace ShoppingWebsiteMVC.Controllers
                     if (noofunits > p.Units)
                     {
                         TempData["status"] = "danger";
-                        TempData["Error"] = "No stock available";
+                        TempData["message"] = "No stock available";
                         return ProductView(id: ProductId);
                     }
                     else
