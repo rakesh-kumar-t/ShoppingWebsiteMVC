@@ -21,7 +21,13 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin")
             {
-                
+                if(TempData["status"]!=null && TempData["message"] != null)
+                {
+                    ViewBag.status = TempData["status"].ToString();
+                    ViewBag.message = TempData["message"].ToString();
+                    TempData["status"] = null;
+                    TempData["message"] = null;
+                }
                 return View(db.Products.ToList());
             }
             else
@@ -73,6 +79,8 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 db.Products.Add(product);
                 db.SaveChanges();
+                TempData["status"] = "success";
+                TempData["message"] = product.ProductName + " added";
                 if (Proimage != null)
                 {
                     if (Proimage.ContentLength > 0)
@@ -87,6 +95,11 @@ namespace ShoppingWebsiteMVC.Controllers
                     }
                 }
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.status = "danger";
+                ViewBag.message = "Please fill all fields and try again";
             }
 
             return View(product);
