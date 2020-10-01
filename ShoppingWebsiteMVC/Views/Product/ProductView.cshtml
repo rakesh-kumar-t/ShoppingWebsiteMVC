@@ -25,7 +25,7 @@
 </div>
 <div class="row p-3 m-0">
     <hr />
-    <div class="col-5 p-2">
+    <div class="col-5 p-2 position-sticky">
         @{ var img = Model.ProductId + ".jpg";}
         <img src="~/Images/@img" height="300" id="productimg" />
         <div class="mt-3 ml-2">
@@ -97,6 +97,21 @@
         </dd>
 
     </dl>
+</div>
+<hr />
+<div class="row p-4 m-0">
+    <div class="card col-md-10">
+        <b class="card-header">Ratings and Reviews</b>
+        <ul>
+            @foreach (var feedbacks in Model.Feedbacks)
+            {
+                <li class="mt-2">
+                    <div>@feedbacks.FeedBack</div>
+                    <div class="font-italic"> - @feedbacks.Users.Firstname</div>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 
 
