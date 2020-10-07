@@ -256,7 +256,7 @@ namespace ShoppingWebsiteMVC.Controllers
             if (Session["UserId"] != null && Session["Role"].ToString() == "User")
             {
                 string UserId = Session["UserId"].ToString();
-                var orders = db.Orders.Where(c => c.UserId.Equals(UserId)).ToList().OrderBy(o=>o.TDate).ToList();
+                var orders = db.Orders.Where(c => c.UserId.Equals(UserId)).ToList().OrderByDescending(o=>o.TDate).ToList();
                 return View(orders);
             }
             else

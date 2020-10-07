@@ -2,8 +2,13 @@
 
 @{
     ViewBag.Title = "View Cart";
+    ViewBag.cart= "active";
 }
-
+<style>
+    #productlink:hover{
+        color:blue!important;
+    }
+</style>
 <div class="card mt-4 row shadow">
     <div class="col-12">
         <h4 class="pt-3 pl-3 pb-0">My Cart</h4>
@@ -22,21 +27,21 @@
                         </div>
                         <div class="col-5">
                             <div class="col-12">
-                                @Html.DisplayFor(modelItem => item.Products.ProductName)
+                                <a href="/Product/ProductView/@item.ProductId" style="text-decoration:none;color:inherit" id="productlink">@Html.DisplayFor(modelItem => item.Products.ProductName)</a>
                             </div>
                             <div class="col-12">
                                 Quantity: @Html.DisplayFor(modelItem => item.NoofProduct)
                             </div>
                             <div class="col-12 text-muted font-italic small">
-                                Seller: @Html.DisplayFor(modelItem=>item.Products.Supplier.Name)
+                                Seller: @Html.DisplayFor(modelItem => item.Products.Supplier.Name)
                             </div>
                             <div class="col-12 font-weight-bolder d-inline" style="font-size:1.2rem;">
                                 ₹ @Html.DisplayFor(modelItem => item.Amount)
                             </div>
                         </div>
                         <div class="col-3 align-content-center">
-                            @Html.ActionLink("Place Order", "BuyNow", "Product", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-info btn-sm" })
-                            @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
+                            @Html.ActionLink("Place Order", "BuyNow", "Product", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-primary btn-sm" })
+                            @Html.ActionLink("Remove", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
                         </div>
                     </div>
                     <hr />
