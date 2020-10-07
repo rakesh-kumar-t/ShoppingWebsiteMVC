@@ -224,14 +224,14 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Get id for deleting cart details of user
         [Authorize]
-        public ActionResult CartDelete(string UserId,string ProductId)
+        public ActionResult CartDelete(string UserId,int? ProductId)
         {
             if (ProductId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
                 
-            Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId)&&c.ProductId.Equals(ProductId)).FirstOrDefault();
+            Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId)&&c.ProductId==ProductId).FirstOrDefault();
             if (cart == null)
             {
                 return HttpNotFound();
@@ -242,9 +242,9 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost, ActionName("CartDelete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string UserId,string ProductId)
+        public ActionResult DeleteConfirmed(string UserId,int? ProductId)
         {
-            Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId) && c.ProductId.Equals(ProductId)).FirstOrDefault();
+            Cart cart = db.Carts.Where(c => c.UserId.Equals(UserId) && c.ProductId==ProductId).FirstOrDefault();
             db.Carts.Remove(cart);
             db.SaveChanges();
             return RedirectToAction("Cart");
