@@ -149,7 +149,7 @@ namespace ShoppingWebsiteMVC.Controllers
                         if (db.Carts.Where(car => car.ProductId==ProductId && car.UserId.Equals(UserId)).FirstOrDefault() != null)
                         {
 
-                            Cart cart = db.Carts.Where(car => car.ProductId.Equals(ProductId) && car.UserId.Equals(UserId)).FirstOrDefault();
+                            Cart cart = db.Carts.Where(car => car.ProductId==ProductId && car.UserId.Equals(UserId)).FirstOrDefault();
                             cart.NoofProduct= cart.NoofProduct+noofunits;
                             db.Entry(cart).State = EntityState.Modified;
                             db.SaveChanges();

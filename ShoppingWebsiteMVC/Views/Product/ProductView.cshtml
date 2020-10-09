@@ -15,78 +15,81 @@
 </div>
 <div class="row p-3 m-0">
     <hr />
-    <div class="col-5 p-2 position-sticky">
+    <div class="col-md-1"></div>
+    <div class="card col-md-5 col-12 p-2 border-0 align-content-center">
         @{ var img = Model.ProductId + ".jpg";}
-        <img src="~/Images/@img" height="300" id="productimg" />
-        <div class="mt-3 ml-2">
-
-            @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post, new { @class = "form-inline" }))
-            {
-                int min = 1;
-                int max = Model.Units;
-                if (Model.Units == 0)
-                {
-                    min = 0;
-                    max = 0;
-                }
-                @Html.TextBox("Itemno", min, new { @class = "form-control", @placeholder = "Quantity", @type = "number", @min = min, @max = max });
-                @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
-                <button type="submit" class="btn btn-success btn-sm ml-2">Add to Cart <i class="fa fa-cart-plus"></i></button>
-            }
-        </div>
+        <img src="~/Images/@img" id="productimg" style="width:100%;height:auto;z-index:9999" />
     </div>
-    <dl class="card p-3 col-5">
-        <dd class="card-title" style="font-size:1.1rem">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
+    <div class="col-md-1"></div>
+    <div class="card p-3 col-md-5 col-12">
+        <dl>
+            <dd class="card-title" style="font-size:1.1rem">
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BrandName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.BrandName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BrandName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.BrandName)
+            </dd>
 
-        <dd>
+            <dd>
 
-            <div class="font-weight-bolder d-inline" style="font-size:1.5rem;">
-                ₹ @(Model.Price - Model.Discount / 100 * Model.Price)
-            </div>
+                <div class="font-weight-bolder d-inline" style="font-size:1.5rem;">
+                    ₹ @(Model.Price - Model.Discount / 100 * Model.Price)
+                </div>
+                @if (Model.Discount != 0)
+                {
+                    <s class="text-muted ml-2">  ₹ @Html.DisplayFor(model => model.Price) </s> <br />
+                }
+            </dd>
+
             @if (Model.Discount != 0)
             {
-                <s class="text-muted ml-2">  ₹ @Html.DisplayFor(model => model.Price) </s> <br />
+                <dd class="font-weight-bold text-success">
+                    @Html.DisplayFor(model => model.Discount)% Off
+                </dd>
             }
-        </dd>
+            else
+            {
+                <dt class="text-warning">No Discount Available!</dt>
+            }
+            @if (Model.Units > 0)
+            {
+                <div class="text-success">In Stock!!</div>
+            }
+            else
+            {
+                <div class="text-danger">Out of Stock!</div>
+                <div class="text-black-50 font-weight-bold">Coming Soon!</div>
+            }
+            <dt class="pt-3">
+                Seller:
+            </dt>
 
-        @if (Model.Discount != 0)
-        {
-            <dd class="font-weight-bold text-success">
-                @Html.DisplayFor(model => model.Discount)% Off
+            <dd>
+                @Html.DisplayFor(model => model.Supplier.Name)
             </dd>
-        }
-        else
-        {
-            <dt class="text-warning">No Discount Available!</dt>
-        }
-        @if (Model.Units > 0)
-        {
-            <div class="text-success">In Stock!!</div>
-        }
-        else
-        {
-            <div class="text-danger">Out of Stock!</div>
-            <div class="text-black-50 font-weight-bold">Coming Soon!</div>
-        }
-        <dt class="pt-3">
-            Seller:
-        </dt>
+            <div class="mt-3 ml-2">
 
-        <dd>
-            @Html.DisplayFor(model => model.Supplier.Name)
-        </dd>
-
-    </dl>
+                @using (Html.BeginForm("AddtoCart", "Product", FormMethod.Post, new { @class = "form-inline" }))
+                {
+                    int min = 1;
+                    int max = Model.Units;
+                    if (Model.Units == 0)
+                    {
+                        min = 0;
+                        max = 0;
+                    }
+                    @Html.TextBox("Itemno", min, new { @class = "form-control", @placeholder = "Quantity", @type = "number", @min = min, @max = max });
+                    @Html.HiddenFor(m => m.ProductId, new { @class = "form-control", @value = Model.ProductId })
+                    <button type="submit" class="btn btn-success btn-sm ml-2">Add to Cart <i class="fa fa-cart-plus"></i></button>
+                }
+            </div>
+        </dl>
+    </div>
 </div>
 <hr />
 <div class="row p-4 m-0">
@@ -103,5 +106,6 @@
         </ul>
     </div>
 </div>
+
 
 
