@@ -19,4 +19,3 @@ Web UI casestudy - shopping website
 * [Swathi Madhavan](https://github.com/swathi363)
 * [Sreelakshmi C](https://github.com/Sree-laksh-mi)
 * [Rakesh Kumar T](https://github.com/rakesh-kumar-t)
----
