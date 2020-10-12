@@ -3,14 +3,13 @@
 Web UI casestudy - shopping website
 > This is training time casestudy project done by us. The project contains admin-user authentication and database manipulation using local sql server.
 
----
 **Recommended Environment**
 * Visual Studio 2019
 * Sql server 2014 or later
 * Best viewed in Chromium based browser
 
 > *An admin account is added into the project by default at first run.A default user account is also present if you are using the App_Data Database. Its credentials are:*
----
+
 |Account Type   | UserID  | Password  |  
 |---|---|---|
 | Admin  | **admin@gmail.com**   |  **Admin@123** |
