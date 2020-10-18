@@ -1,5 +1,5 @@
 # Shopping Website Casestudy using MVC Asp.net
----
+
 Web UI casestudy - shopping website
 > This is training time casestudy project done by us. The project contains admin-user authentication and database manipulation using local sql server.
 
@@ -14,8 +14,14 @@ Web UI casestudy - shopping website
 |---|---|---|
 | Admin  | **admin@gmail.com**   |  **Admin@123** |
 | User  | **user@demo.com**  | **User@123**  |  
-
+ 
 #### Project done by
 * [Swathi Madhavan](https://github.com/swathi363)
 * [Sreelakshmi C](https://github.com/Sree-laksh-mi)
 * [Rakesh Kumar T](https://github.com/rakesh-kumar-t)
+
+```diff
+- In some cases the first run shows an error similar to
+- Could not find a part of the path 'C:\..\..\..\..\bin\roslyn\csc.exe'. 
+- Then just Clean the Solution and Rebuild
+```
