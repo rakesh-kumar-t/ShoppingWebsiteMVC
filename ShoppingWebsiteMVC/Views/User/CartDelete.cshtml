@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "CartDelete";
+    ViewBag.cart= "active";
+
 }
 
 <h3 class="alert-danger p-3 m-2">Are you sure you want to remove this from your cart?</h3>
@@ -9,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
+            @Html.DisplayNameFor(model => model.Products.ProductName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductName)
+            @Html.DisplayFor(model => model.Products.ProductName)
         </dd>
 
         <dt>
@@ -34,12 +36,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> 
-            @Html.ActionLink("Back to Cart", "Cart",null,new { @class="btn btn-info btn-sm"})
+            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+            @Html.ActionLink("Back to Cart", "Cart", null, new { @class = "btn btn-info btn-sm" })
         </div>
     }
 </div>

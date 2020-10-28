@@ -21,7 +21,13 @@ namespace ShoppingWebsiteMVC.Controllers
         {
             if (Session["UserId"]!=null && Session["Role"].ToString() == "Admin")
             {
-                
+                if(TempData["status"]!=null && TempData["message"] != null)
+                {
+                    ViewBag.status = TempData["status"].ToString();
+                    ViewBag.message = TempData["message"].ToString();
+                    TempData["status"] = null;
+                    TempData["message"] = null;
+                }
                 return View(db.Products.ToList());
             }
             else
@@ -73,6 +79,8 @@ namespace ShoppingWebsiteMVC.Controllers
             {
                 db.Products.Add(product);
                 db.SaveChanges();
+                TempData["status"] = "success";
+                TempData["message"] = product.ProductName + " added";
                 if (Proimage != null)
                 {
                     if (Proimage.ContentLength > 0)
@@ -87,6 +95,11 @@ namespace ShoppingWebsiteMVC.Controllers
                     }
                 }
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.status = "danger";
+                ViewBag.message = "Please fill all fields and try again";
             }
 
             return View(product);
@@ -230,23 +243,29 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         public ActionResult AdminEdit(User usr)
         {
-            
-            string username = User.Identity.Name;
-            User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
-            user.Firstname = usr.Firstname;
-            user.Lastname = usr.Lastname;
-            Session["Username"] = usr.Firstname + " " + usr.Lastname;
-            user.Address = usr.Address;
-            user.ContactNumber = usr.ContactNumber;
-            user.City = usr.City;
-            user.Country = usr.Country;
-            user.Password = user.Password;
-            user.ConfirmPassword = user.Password;
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-
-            return View(usr);
-            
+            if (Session["UserId"] != null && Session["Role"].ToString() == "Admin")
+            {
+                string username = User.Identity.Name;
+                User user = db.Users.FirstOrDefault(u => u.UserId.Equals(username));
+                user.Firstname = usr.Firstname;
+                user.Lastname = usr.Lastname;
+                Session["Username"] = usr.Firstname + " " + usr.Lastname;
+                user.Address = usr.Address;
+                user.ContactNumber = usr.ContactNumber;
+                user.City = usr.City;
+                user.Country = usr.Country;
+                user.Password = user.Password;
+                user.ConfirmPassword = user.Password;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.status = "success";
+                ViewBag.message = "Details updated";
+                return View(usr);
+            }
+            else
+            {
+                return RedirectToAction("Edit", "User");
+            }
         }
         [Authorize]
         public ActionResult ChangePassword()
@@ -271,7 +290,10 @@ namespace ShoppingWebsiteMVC.Controllers
             user.ConfirmPassword = usr.ConfirmPassword;
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Settings");
+            ModelState.Clear();
+            ViewBag.status = "success";
+            ViewBag.message = "Password changed";
+            return View(usr);
         }
       
         [Authorize]

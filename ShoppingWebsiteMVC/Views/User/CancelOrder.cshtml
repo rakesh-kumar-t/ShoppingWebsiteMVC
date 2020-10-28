@@ -1,4 +1,4 @@
-﻿@model ShoppingWebsiteMVC.Models.Transaction
+﻿@model ShoppingWebsiteMVC.Models.Order
 
 @{
     ViewBag.Title = "CancelOrder";
@@ -11,11 +11,11 @@
     <dl class="dl-horizontal">
 
         <dt>
-            @Html.DisplayNameFor(model => model.product.ProductName)
+            @Html.DisplayNameFor(model => model.Products.ProductName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.product.ProductName)
+            @Html.DisplayFor(model => model.Products.ProductName)
         </dd>
 
         <dt>
@@ -40,8 +40,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="hidden" value=@Model.TId name="TId"/>
-            <input type="hidden" value="@Model.BillNo" name="BillNo" />
+            <input type="hidden" value=@Model.Id name="id"/>
             <input type="submit" value="Cancel Order" class="btn btn-danger" /> |
             @Html.ActionLink("Back to Orders", "MyOrders",null,new {@class="btn btn-success" })
         </div>

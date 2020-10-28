@@ -6,11 +6,15 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h3>All Products</h3>
+<h3>All Products
+    <p class="float-right">
+        <a href="/admin/create" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Product</a>
+        <a href="/admin/NewSupplier" class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Add Supplier</a>
+    </p>
+</h3>
 
-<p>
-    <a href="/admin/create" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Product</a>
-</p>
+
+@Html.Partial("_alertdiv")
 <div class="table-responsive">
     <table class="table table-primary table-striped">
         <thead class="thead-light">
@@ -60,11 +64,5 @@
                 </tr>
         }
             </tbody>
-
-
     </table>
-</div>
-<div>
-    <a href="/admin/NewSupplier" class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Add Supplier</a>
-    <a href="/admin/SupplierView" class="btn btn-dark btn-sm"><i class="fa fa-eye"></i> View Suppliers</a>
 </div>

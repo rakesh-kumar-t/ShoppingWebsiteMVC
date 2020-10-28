@@ -8,66 +8,85 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubCategory.Category.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BrandName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BrandName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Units)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Units)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Discount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Discount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Supplier.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Supplier.Name)
-        </dd>
-
-    </dl>
+<div class="row">
+    <div class="col-12">
+        <hr />  
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="table">
+            <table class="table-bordered">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.SubCategory.Category.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        SubCategory
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.SubCategory.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BrandName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.BrandName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <td>
+                        ₹ @Html.DisplayFor(model => model.Price)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Units)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Units)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Discount)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Discount) %
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Supplier.Name)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Supplier.Name)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6 col-12">
+        <h6>Product Image</h6>
+        @{ var img = Model.ProductId + ".jpg";}
+        <img src="~/Images/@img" height="300" />
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-info" })

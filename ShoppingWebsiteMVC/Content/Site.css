@@ -13,12 +13,10 @@ body {
     white-space: normal;
 }
 
-.card {
-    border-radius: 10px;
-}
 
 #logincard {
     box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.52);
+
 }
 
 .text-box {
@@ -40,9 +38,13 @@ textarea:focus, input:focus {
 }
 #productcard:hover {
     box-shadow: 0px 3px 6px 0px rgba(50, 50, 50, 0.52);
-    transition:0.3s step-start;
+    transition:0.3s ease-in;
 }
 #productimg:hover{
     transform:scale(1.2);
 }
+#ProductName{
+    border:none!important;
+}
+
 

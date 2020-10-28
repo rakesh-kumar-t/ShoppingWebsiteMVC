@@ -2,9 +2,19 @@
 
 @{
     ViewBag.Title = "MyOrders";
+    ViewBag.order = "active";
 }
+<style>
+    .card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition:0.3s ease-in-out;
+    }
+    .card {
+        transition: 0.3s ease-in-out;
+    }
+</style>
 
-<h2 class="m-3 h2 alert-success p-2">MyOrders</h2>
+<h2 class="m-3 h2 text-secondary p-2">MyOrders</h2>
 
 
 @if (Model != null)
@@ -12,49 +22,41 @@
 
     if (Model.ToList().Count > 0)
     {
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NoofProduct)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TDate)
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-            @foreach (var item in Model)
+            foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Products.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NoofProduct)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TDate)
-                    </td>
-                    <td>
-                        @if (DateTime.Now < item.TDate.AddDays(5))
-                        {
-                            @Html.ActionLink("Cancel Order", "CancelOrder", new { TId = item.TId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
-                        }
-                        @Html.ActionLink("Give Feedback", "Feedback", new { ProductId = item.ProductId }, new { @class = "btn btn-info btn-sm" })
-                    </td>
-                </tr>
+                <div class="card p-3 m-2">
+                    <div class="row p-3">
+                        <div class="col-md-3 col-12 align-content-center text-center">
+                            @{ var img = item.ProductId + ".jpg";}
+                            <img src="~/Images/@img" height="120" />
+                        </div>
+                        <div class="col-md-6 col-12 text-justify">
+                            <div class="col-12">
+                                @Html.DisplayFor(modelItem => item.Products.ProductName)
+                            </div>
+                            <div class="col-12">
+                                Quantity: @Html.DisplayFor(modelItem => item.NoofProduct)
+                            </div>
+                            <div class="col-12 text-muted font-italic small">
+                                Seller: @Html.DisplayFor(modelItem => item.Products.Supplier.Name)
+                            </div>
+                            <div class="col-12 font-weight-bolder d-inline" style="font-size:1.2rem;">
+                                ₹ @Html.DisplayFor(modelItem => item.Amount)
+                            </div>
+                            <div class="text-secondary col-12">
+                                Ordered on: @Html.DisplayFor(modelItem => item.TDate)
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12 align-content-center">
+                            @if (DateTime.Now < item.TDate.AddDays(5))
+                            {
+                                @Html.ActionLink("Cancel Order", "CancelOrder", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                            }
+                            @Html.ActionLink("Give Feedback", "Feedback", new { ProductId = item.ProductId }, new { @class = "btn btn-info btn-sm" })
+                        </div>
+                    </div>
+                </div>
             }
-        </table>
     }
     else
     {

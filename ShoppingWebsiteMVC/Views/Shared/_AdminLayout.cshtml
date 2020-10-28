@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title -Shopping Bag</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
@@ -17,9 +17,9 @@
     <div class="wrapper">
         @Html.Partial("_Sidebar")
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content" class="active">
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <button type="button" id="sidebarCollapse" class="btn btn-light btn-sm mr-2">
+                <button type="button" id="sidebarCollapse" class="btn btn-dark btn-sm mr-2">
                     <i class="fa fa-align-left"></i>
                 </button>
                 <div class="navbar-brand">

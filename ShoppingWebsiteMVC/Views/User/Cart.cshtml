@@ -2,57 +2,94 @@
 
 @{
     ViewBag.Title = "View Cart";
+    ViewBag.cart= "active";
+    double totprice=0;
+    int quantity=0;
 }
-
-<h2>My Cart</h2>
-@if (Model != null)
-{
-    if (Model.ToList().Count > 0)
-    {
-        <table class="table m-3 p-3">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NoofProduct)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Products.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NoofProduct)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Place Order", "BuyNow", "Product", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-info btn-sm" })
-                        @Html.ActionLink("Delete Item", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
-                    </td>
-                </tr>
-            }
-        </table>
-        @Html.ActionLink("Buy All", "BuyAll", "Product", null, new { @class = "btn btn-success col-3 " })
+<style>
+    #productlink:hover{
+        color:blue!important;
     }
-    else
-    {
-        <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
+    .row{
+        margin-left:0;
+        margin-right:0;
     }
-}
-else
-{
-    <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
-}
+</style>
+<div class="row">
+    <div class="card-deck">
+        <div class="card mt-4 row shadow col-12 col-md-9">
+            <div class="col-12">
+                <h4 class="pt-3 pl-3 pb-0 text-muted">MY CART</h4>
+                <hr />
+
+                @if (Model != null)
+                {
+                    if (Model.ToList().Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="row p-2">
+                                <div class="offset-md-1 col-md-3 col-12 align-content-center text-center">
+                                    @{ var img = item.ProductId + ".jpg";}
+                                    <img src="~/Images/@img" height="100" id="productimg" />
+                                </div>
+                                <div class="col-md-5 col-12 text-justify">
+                                    <div class="col-12">
+                                        <a href="/Product/ProductView/@item.ProductId" style="text-decoration:none;color:inherit" id="productlink">@Html.DisplayFor(modelItem => item.Products.ProductName)</a>
+                                    </div>
+                                    <div class="col-12">
+                                        Quantity: @Html.DisplayFor(modelItem => item.NoofProduct)
+                                    </div>
+                                    <div class="col-12 text-muted font-italic small">
+                                        Seller: @Html.DisplayFor(modelItem => item.Products.Supplier.Name)
+                                    </div>
+                                    <div class="col-12 font-weight-bolder" style="font-size:1.2rem;">
+                                        ₹ @Html.DisplayFor(modelItem => item.Amount)
+                                        @{ totprice = totprice + item.Amount; quantity++;}
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12 align-content-center text-center mt-2">
+                                    @Html.ActionLink("Place Order", "BuyNow", "Product", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-primary btn-sm m-1" })
+                                    @Html.ActionLink("Remove", "CartDelete", new { UserId = item.UserId, ProductId = item.ProductId }, new { @class = "btn btn-danger btn-sm" })
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                        <div class="row">
+                            <div class="col-12 text-right mb-2">
+                                @Html.ActionLink("Buy All", "BuyAll", "Product", null, new { @class = "btn btn-success col-md-3 col-6" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert-warning p-2 m-3">Your cart<i class="fa fa-shopping-cart"></i> is empty </div>
+                }
+            </div>
+        </div>
+        <div class="card mt-4 row shadow col-md-3" style="height:50vh">
+            <div class="col-12">
+                <h5 class="pt-3 pl-3 pb-0 text-muted">PRICE DETAILS</h5>
+                <hr />
+                <div class="small">
+                    Items in cart: @quantity
+                </div>
+                <div class="small">
+                    Total Price : ₹ <b>@totprice</b>
+                </div>
+                <hr />
+                <div class="text-black-50">
+                    Total : ₹ <b>@totprice</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <br />
 @Html.ActionLink("Buy More Products", "Index", "Product", null, new { @class = "btn btn-info btn-sm mt-2" })
 

@@ -16,6 +16,7 @@
 <div class="form-horizontal">
     <h4 class="m-2">Edit Details</h4>
     <hr />
+    @Html.Partial("_alertdiv")
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.UserId)
 
