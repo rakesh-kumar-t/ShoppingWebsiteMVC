@@ -158,11 +158,11 @@ namespace ShoppingWebsiteMVC.Controllers
         }
         //Get Delete product 
         [Authorize]
-        public ActionResult Delete(string ProductId)
+        public ActionResult Delete(int ProductId)
         {
             if (Session["Role"].ToString() == "Admin")
             {
-                if (ProductId == null)
+                if (ProductId == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -182,7 +182,7 @@ namespace ShoppingWebsiteMVC.Controllers
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ProductId)
+        public ActionResult DeleteConfirmed(int ProductId)
         {
             Product product = db.Products.Find(ProductId);
             product.Units = 0;
